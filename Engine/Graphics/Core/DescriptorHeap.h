@@ -15,8 +15,6 @@ public:
     DescriptorHeap();
 
     void Create(D3D12_DESCRIPTOR_HEAP_TYPE type, uint32_t numDescriptors);
-    // Reset関数で解放できる
-    // 任意に解放はできない
     DescriptorHandle Allocate();
     void Free(DescriptorHandle* descriptorHandle);
 
