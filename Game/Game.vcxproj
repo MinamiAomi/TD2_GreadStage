@@ -16,7 +16,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BattleScene\BattleScene.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MasterGame\MasterGame.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BattleScene\BattleScene.h" />
+    <ClInclude Include="MasterGame\MasterGame.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

@@ -2,5 +2,30 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MasterGame\MasterGame.cpp">
+      <Filter>MasterGame</Filter>
+    </ClCompile>
+    <ClCompile Include="BattleScene\BattleScene.cpp">
+      <Filter>GameScene\BattleScene</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="MasterGame">
+      <UniqueIdentifier>{3e79ea90-881f-47ff-b4d1-254fa34c854e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameScene">
+      <UniqueIdentifier>{904340f7-0133-46c4-bce9-d9daa94bc1dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameScene\BattleScene">
+      <UniqueIdentifier>{e57c93a3-a3af-46ec-944b-474d5c6cd1eb}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MasterGame\MasterGame.h">
+      <Filter>MasterGame</Filter>
+    </ClInclude>
+    <ClInclude Include="BattleScene\BattleScene.h">
+      <Filter>GameScene\BattleScene</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
