@@ -8,6 +8,9 @@
     <ClCompile Include="BattleScene\BattleScene.cpp">
       <Filter>GameScene\BattleScene</Filter>
     </ClCompile>
+    <ClCompile Include="Player\Player.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="MasterGame">
@@ -19,6 +22,9 @@
     <Filter Include="GameScene\BattleScene">
       <UniqueIdentifier>{e57c93a3-a3af-46ec-944b-474d5c6cd1eb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Player">
+      <UniqueIdentifier>{438f8d48-57ed-47a8-a438-1e01424c734d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MasterGame\MasterGame.h">
@@ -26,6 +32,9 @@
     </ClInclude>
     <ClInclude Include="BattleScene\BattleScene.h">
       <Filter>GameScene\BattleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\Player.h">
+      <Filter>Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
