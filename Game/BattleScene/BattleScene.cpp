@@ -9,6 +9,10 @@ void BattleScene::OnInitialize() {
 	player_->Initialize();
 	camera_->Initialize();
 
+	// セット
+	player_->SetCamera(camera_);
+	camera_->SetTarget(&player_->transform);
+
 }
 
 void BattleScene::OnUpdate() {

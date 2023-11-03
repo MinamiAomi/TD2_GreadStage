@@ -1,7 +1,6 @@
 #include "CameraAnimation.h"
 
 #include "Graphics/RenderManager.h"
-#include "Graphics/ImGuiManager.h"
 
 void CameraAnimation::Initialize() {
 	// 生成
@@ -15,9 +14,11 @@ void CameraAnimation::Initialize() {
 
 void CameraAnimation::Update() {
 
-	ImGui::Begin("Camera");
-	ImGui::DragFloat3("trans", &transform_->translate.x);
-	ImGui::End();
+	if (target_) {
+		Vector3 offset = { 0.0f, 3.0f, -10.0f };
+		offset = transform_->rotate * offset;
+		transform_->translate = target_->worldMatrix.GetTranslate() + offset;
+	}
 
 	camera_->SetPosition(transform_->translate);
 	camera_->SetRotate(transform_->rotate);

@@ -1,6 +1,7 @@
 #include "Player.h"
 
 #include "Graphics/ResourceManager.h"
+#include "Engine/Input/Input.h"
 
 void Player::Initialize() {
 	SetName("Player");
@@ -16,17 +17,62 @@ void Player::Initialize() {
 
 void Player::Update() {
 	
+	Move();
+	MoveLimit();
+
 	UpdateTransform();
 }
 
-Vector3 Player::GetTranslate() const {
-	Vector3 result;
-	result.x = transform.worldMatrix.m[3][0];
-	result.y = transform.worldMatrix.m[3][1];
-	result.z = transform.worldMatrix.m[3][2];
-	return result;
+void Player::UpdateTransform() {
+	// 座標更新
+	transform.UpdateMatrix();
+	// モデル座標更新
+	model_->SetWorldMatrix(transform.worldMatrix);
 }
 
-void Player::UpdateTransform() {
-	transform.UpdateMatrix();
+void Player::KeyInput() {
+	
+
+}
+
+void Player::Move() {
+
+	auto input = Input::GetInstance();
+	Vector3 move;
+
+	// キーボードでの移動
+	if (input->IsKeyPressed(DIK_W)) {
+		move.z += moveSpeed_;
+	}
+	if (input->IsKeyPressed(DIK_S)) {
+		move.z -= moveSpeed_;
+	}
+	if (input->IsKeyPressed(DIK_A)) {
+		move.x -= moveSpeed_;
+	}
+	if (input->IsKeyPressed(DIK_D)) {
+		move.x += moveSpeed_;
+	}
+
+
+
+	// 移動処理
+	if (move != Vector3::zero) {
+		move = move.Normalized();
+		// カメラの角度に移動ベクトルを回転
+		move = camera_->GetCamera()->GetRotate() * move;
+		move = move.Normalized() * moveSpeed_;
+		move.y = 0.0f;
+
+		// 移動
+		transform.translate += move;
+		// 回転
+		transform.rotate = Quaternion::Slerp(0.2f, transform.rotate, Quaternion::MakeLookRotation(move));
+	}
+}
+
+void Player::MoveLimit() {
+	if (transform.translate.y <= 0.0f) {
+		transform.translate.y = 0.0f;
+	}
 }
