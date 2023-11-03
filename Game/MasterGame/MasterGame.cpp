@@ -22,8 +22,8 @@ void MasterGame::OnInitialize() {
 	resourceManager->AddToonModel("Player", toonModel);
 	// 地面
 	toonModel = std::make_shared<ToonModel>();
-	toonModel->Create(ModelData::LoadObjFile("Resources/Model/ground.obj"));
-	resourceManager->AddToonModel("Ground", toonModel);
+	toonModel->Create(ModelData::LoadObjFile("Resources/Model/floor.obj"));
+	resourceManager->AddToonModel("Floor", toonModel);
 
 }
 

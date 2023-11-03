@@ -23,8 +23,9 @@ public: // セッター
 private: // メンバ変数
 	// モデル
 	std::unique_ptr<ToonModelInstance> model_;
-
 	std::shared_ptr<CameraAnimation> camera_;
+
+	Transform modelTrans_;
 
 	float moveSpeed_ = 1.0f;
 	bool isMoved_; /*true 動いている false 止まっている*/

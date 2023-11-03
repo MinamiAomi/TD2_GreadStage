@@ -13,6 +13,12 @@ void Player::Initialize() {
 	model_ = std::make_unique<ToonModelInstance>();
 	model_->SetModel(ResourceManager::GetInstance()->FindModel("Player"));
 	model_->SetIsActive(true);
+
+	modelTrans_.translate = Vector3(0.0f, 0.8f, 0.0f);
+	modelTrans_.UpdateMatrix();
+	// 座標更新してからでなければローカルデータが消えてしまう
+	modelTrans_.SetParent(&transform);
+
 }
 
 void Player::Update() {
@@ -26,8 +32,9 @@ void Player::Update() {
 void Player::UpdateTransform() {
 	// 座標更新
 	transform.UpdateMatrix();
+	modelTrans_.UpdateMatrix();
 	// モデル座標更新
-	model_->SetWorldMatrix(transform.worldMatrix);
+	model_->SetWorldMatrix(modelTrans_.worldMatrix);
 }
 
 void Player::KeyInput() {

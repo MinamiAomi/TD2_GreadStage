@@ -3,7 +3,7 @@
 #include <memory>
 #include <vector>
 
-#include "Ground/Ground.h"
+#include "Floor/Floor.h"
 
 class Stage {
 public:
@@ -11,5 +11,5 @@ public:
     void Update();
 
 private:
-    std::shared_ptr<Ground> ground_;
+    std::vector<std::shared_ptr<Floor>> floors_;
 };
