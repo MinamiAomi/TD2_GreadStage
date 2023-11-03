@@ -17,12 +17,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BattleScene\BattleScene.cpp" />
+    <ClCompile Include="CameraAnimation\CameraAnimation.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MasterGame\MasterGame.cpp" />
     <ClCompile Include="Player\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BattleScene\BattleScene.h" />
+    <ClInclude Include="CameraAnimation\CameraAnimation.h" />
     <ClInclude Include="MasterGame\MasterGame.h" />
     <ClInclude Include="Player\Player.h" />
   </ItemGroup>

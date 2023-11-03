@@ -15,9 +15,16 @@ void Player::Initialize() {
 }
 
 void Player::Update() {
-
 	
 	UpdateTransform();
+}
+
+Vector3 Player::GetTranslate() const {
+	Vector3 result;
+	result.x = transform.worldMatrix.m[3][0];
+	result.y = transform.worldMatrix.m[3][1];
+	result.z = transform.worldMatrix.m[3][2];
+	return result;
 }
 
 void Player::UpdateTransform() {

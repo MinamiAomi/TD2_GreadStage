@@ -11,6 +11,9 @@
     <ClCompile Include="Player\Player.cpp">
       <Filter>Player</Filter>
     </ClCompile>
+    <ClCompile Include="CameraAnimation\CameraAnimation.cpp">
+      <Filter>CameraAnimation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="MasterGame">
@@ -25,6 +28,9 @@
     <Filter Include="Player">
       <UniqueIdentifier>{438f8d48-57ed-47a8-a438-1e01424c734d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CameraAnimation">
+      <UniqueIdentifier>{90dbfa81-bc7a-4de6-9da3-412d96b8fb5f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MasterGame\MasterGame.h">
@@ -35,6 +41,9 @@
     </ClInclude>
     <ClInclude Include="Player\Player.h">
       <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraAnimation\CameraAnimation.h">
+      <Filter>CameraAnimation</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

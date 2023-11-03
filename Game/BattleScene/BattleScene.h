@@ -3,6 +3,7 @@
 #include <memory>
 
 #include "Game/Player/Player.h"
+#include "Game/CameraAnimation/CameraAnimation.h"
 
 class BattleScene : public BaseScene {
 public:
@@ -13,5 +14,6 @@ public:
 
 private: // メンバ変数
 	std::shared_ptr<Player> player_;
+	std::shared_ptr<CameraAnimation> camera_;
 
 };
