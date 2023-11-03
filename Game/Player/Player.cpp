@@ -74,7 +74,7 @@ void Player::Move() {
 		// 移動
 		transform.translate += move;
 		// 回転
-		transform.rotate = Quaternion::Slerp(0.2f, transform.rotate, Quaternion::MakeLookRotation(move));
+		transform.rotate = Quaternion::Quaternion::MakeLookRotation(move);
 	}
 }
 
