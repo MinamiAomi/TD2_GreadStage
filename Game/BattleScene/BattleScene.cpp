@@ -1,5 +1,7 @@
 #include "BattleScene.h"
 
+#include "Collision/CollisionManager.h"
+
 void BattleScene::OnInitialize() {
 	// 生成
 	player_ = std::make_shared<Player>();
@@ -21,6 +23,7 @@ void BattleScene::OnUpdate() {
 	stage_->Update();
 	player_->Update();
 
+	CollisionManager::GetInstance()->CheckCollision();
 	// カメラの更新
 	camera_->Update();
 }

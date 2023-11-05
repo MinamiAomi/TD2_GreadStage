@@ -2,6 +2,7 @@
 
 #include "Graphics/ResourceManager.h"
 #include "Engine/Input/Input.h"
+#include "Collision/CollisionManager.h"
 
 void Player::Initialize() {
 	SetName("Player");
@@ -14,16 +15,31 @@ void Player::Initialize() {
 	model_->SetModel(ResourceManager::GetInstance()->FindModel("Player"));
 	model_->SetIsActive(true);
 
-	modelTrans_.translate = Vector3(0.0f, 0.8f, 0.0f);
+	modelTrans_.translate = colliderOffset_;
 	modelTrans_.UpdateMatrix();
 	// 座標更新してからでなければローカルデータが消えてしまう
 	modelTrans_.SetParent(&transform);
+
+	collider_ = std::make_unique<BoxCollider>();
+	collider_->SetGameObject(this);
+	collider_->SetName("Player");
+	collider_->SetCenter(modelTrans_.translate);
+	collider_->SetSize({ 1.0f, 2.0f, 1.0f });
+	collider_->SetCallback([this](const CollisionInfo& collisionInfo) { OnCollision(collisionInfo); });
+
+	// パラメーター初期化
+	moveSpeed_ = 0.5f;
+	jumpParamerets_.isJumped_ = false;
+	jumpParamerets_.fallSpeed_ = 0.0f;
+	jumpParamerets_.jumpPower_ = 1.0f;
 
 }
 
 void Player::Update() {
 	
-	Move();
+	MoveUpdate();
+	JumpUpdate();
+
 	MoveLimit();
 
 	UpdateTransform();
@@ -33,16 +49,18 @@ void Player::UpdateTransform() {
 	// 座標更新
 	transform.UpdateMatrix();
 	modelTrans_.UpdateMatrix();
+
+	Vector3 scale, translate;
+	Quaternion rotate;
+	transform.worldMatrix.GetAffineValue(scale, rotate, translate);
+	collider_->SetCenter(translate + colliderOffset_);
+	collider_->SetOrientation(rotate);
+
 	// モデル座標更新
 	model_->SetWorldMatrix(modelTrans_.worldMatrix);
 }
 
-void Player::KeyInput() {
-	
-
-}
-
-void Player::Move() {
+void Player::MoveUpdate() {
 
 	auto input = Input::GetInstance();
 	Vector3 move;
@@ -55,13 +73,21 @@ void Player::Move() {
 		move.z -= moveSpeed_;
 	}
 	if (input->IsKeyPressed(DIK_A)) {
-		move.x -= moveSpeed_;
+		if (isWallRun_) {
+			move.y += moveSpeed_;
+		}
+		else {
+			move.x -= moveSpeed_;
+		}
 	}
 	if (input->IsKeyPressed(DIK_D)) {
-		move.x += moveSpeed_;
+		if (isWallRun_) {
+			move.y -= moveSpeed_;
+		}
+		else {
+			move.x += moveSpeed_;
+		}
 	}
-
-
 
 	// 移動処理
 	if (move != Vector3::zero) {
@@ -69,6 +95,7 @@ void Player::Move() {
 		// カメラの角度に移動ベクトルを回転
 		move = camera_->GetCamera()->GetRotate() * move;
 		move = move.Normalized() * moveSpeed_;
+		// Y軸移動を削除
 		move.y = 0.0f;
 
 		// 移動
@@ -80,6 +107,64 @@ void Player::Move() {
 
 void Player::MoveLimit() {
 	if (transform.translate.y <= 0.0f) {
+		jumpParamerets_.isJumped_ = false;
 		transform.translate.y = 0.0f;
 	}
+}
+
+void Player::JumpUpdate() {
+	auto input = Input::GetInstance();
+	const float gravity = 0.08f;
+
+	if (!jumpParamerets_.isJumped_ && input->IsKeyTrigger(DIK_SPACE)) {
+		jumpParamerets_.isJumped_ = true;
+		jumpParamerets_.fallSpeed_ = jumpParamerets_.jumpPower_;
+	}
+
+	if (jumpParamerets_.isJumped_) {
+		jumpParamerets_.fallSpeed_ -= gravity;
+		transform.translate.y += jumpParamerets_.fallSpeed_;
+	}
+
+
+}
+
+void Player::OnCollision(const CollisionInfo& collisionInfo) {
+	if (collisionInfo.collider->GetName() == "Floor") {
+		// ワールド空間の押し出しベクトル
+		Vector3 pushVector = collisionInfo.normal * collisionInfo.depth;
+		transform.translate += pushVector;
+
+		// 衝突位置の法線
+		float dot = Dot(collisionInfo.normal, Vector3::up);
+		// 地面と見なす角度
+		const float kGroundGradientAngle = 45.0f * Math::ToRadian;
+		if (std::abs(std::acos(dot)) < kGroundGradientAngle) {
+			jumpParamerets_.isJumped_ = false;
+			jumpParamerets_.fallSpeed_ = 0.0f;
+		}
+	}
+	
+	if (collisionInfo.collider->GetName() == "Wall") {
+		// ワールド空間の押し出しベクトル
+		Vector3 pushVector = collisionInfo.normal * collisionInfo.depth;
+		transform.translate += pushVector;
+
+		// 衝突位置の法線
+		float dot = Dot(collisionInfo.normal, Vector3::left);
+		// 壁と見なす角度
+		const float kWallDownAngle = 45.0f * Math::ToRadian;
+		//const float kWallUpAngle = 125.0f * Math::ToRadian;
+		if (std::abs(std::acos(dot)) > kWallDownAngle /*&& std::abs(std::acos(dot)) < kWallUpAngle*/) {
+			isWallRun_ = true;
+			modelTrans_.rotate = Quaternion::Quaternion::MakeForZAxis(-90.0f * Math::ToRadian);
+		}
+		else {
+			isWallRun_ = false;
+		}
+	}
+	
+	
+	UpdateTransform();
+
 }

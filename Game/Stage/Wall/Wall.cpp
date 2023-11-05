@@ -1,21 +1,21 @@
-#include "Floor.h"
+#include "Wall.h"
 
 #include "Graphics/ResourceManager.h"
 #include "Collision/CollisionManager.h"
 
-void Floor::Initialize(const Vector3& basePosition, float radian) {
-    SetName("Floor");
+void Wall::Initialize(const Vector3& basePosition, float radian) {
+    SetName("Wall");
     model_ = std::make_unique<ToonModelInstance>();
     collider_ = std::make_unique<BoxCollider>();
 
-    model_->SetModel(ResourceManager::GetInstance()->FindModel("Floor"));
+    model_->SetModel(ResourceManager::GetInstance()->FindModel("Wall"));
     model_->SetIsActive(true);
     model_->SetUseOutline(false);
 
-    collider_->SetName("Floor");
+    collider_->SetName("Wall");
     collider_->SetGameObject(this);
     collider_->SetOrientation(transform.rotate);
-    collider_->SetSize({ 5.0f, 2.0f, 5.0f });
+    collider_->SetSize({ 2.0f, 5.0f, 5.0f });
     collider_->SetCenter(transform.translate);
 
     basePosition_ = basePosition;
@@ -26,7 +26,7 @@ void Floor::Initialize(const Vector3& basePosition, float radian) {
 
 }
 
-void Floor::Update() {
+void Wall::Update() {
     
     // 当たり判定、描画を更新
     transform.UpdateMatrix();

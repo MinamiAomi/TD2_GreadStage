@@ -20,6 +20,9 @@
     <ClCompile Include="Stage\Floor\Floor.cpp">
       <Filter>Stage\Floor</Filter>
     </ClCompile>
+    <ClCompile Include="Stage\Wall\Wall.cpp">
+      <Filter>Stage\Wall</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="MasterGame">
@@ -43,6 +46,9 @@
     <Filter Include="Stage\Floor">
       <UniqueIdentifier>{800a3e6a-afc4-494c-9d51-d3c405a8e0cd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Stage\Wall">
+      <UniqueIdentifier>{8c57ccdc-521c-4293-ba53-ac3c07fb29fc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MasterGame\MasterGame.h">
@@ -62,6 +68,9 @@
     </ClInclude>
     <ClInclude Include="Stage\Floor\Floor.h">
       <Filter>Stage\Floor</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage\Wall\Wall.h">
+      <Filter>Stage\Wall</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

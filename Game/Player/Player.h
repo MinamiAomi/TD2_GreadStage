@@ -6,6 +6,7 @@
 
 #include "Math/Transform.h"
 #include "CameraAnimation/CameraAnimation.h"
+#include "Collision/Collider.h"
 
 class Player : public GameObject {
 public:
@@ -27,17 +28,32 @@ private: // メンバ変数
 
 	Transform modelTrans_;
 
-	float moveSpeed_ = 1.0f;
-	bool isMoved_; /*true 動いている false 止まっている*/
+	std::unique_ptr<BoxCollider> collider_;
+	Vector3 colliderOffset_ = { 0.0f,0.5f,0.0f };
+
+	float moveSpeed_ = 0.0f;
+
+	struct JumpParameters {
+		bool isJumped_ = false; /*true している false していない*/
+		float fallSpeed_ = 0.0f;
+		float jumpPower_ = 1.0f;
+	};
+	JumpParameters jumpParamerets_;
+	
+	bool isWallRun_ = false;
+
 
 private: // メンバ関数
 	// 座標更新
 	void UpdateTransform();
-	// キー入力
-	void KeyInput();
 	// 移動
-	void Move();
+	void MoveUpdate();
 	// 移動制限
 	void MoveLimit();
+	// ジャンプ
+	void JumpUpdate();
+
+
+	void OnCollision(const CollisionInfo& collisionInfo);
 
 };

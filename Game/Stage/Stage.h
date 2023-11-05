@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "Floor/Floor.h"
+#include "Wall/Wall.h"
 
 class Stage {
 public:
@@ -12,4 +13,5 @@ public:
 
 private:
     std::vector<std::shared_ptr<Floor>> floors_;
+    std::vector<std::shared_ptr<Wall>> walls_;
 };
