@@ -84,7 +84,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalOptions>/utf-8 </AdditionalOptions>
+      <AdditionalOptions>/source-charset:utf-8</AdditionalOptions>
       <ExceptionHandling>SyncCThrow</ExceptionHandling>
       <AdditionalIncludeDirectories>$(SolutionDir);$(ProjectDir);$(SolutionDir)Engine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -114,7 +114,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalOptions>/utf-8 </AdditionalOptions>
+      <AdditionalOptions>/source-charset:utf-8</AdditionalOptions>
       <ExceptionHandling>SyncCThrow</ExceptionHandling>
       <AdditionalIncludeDirectories>$(SolutionDir);$(ProjectDir);$(SolutionDir)Engine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>

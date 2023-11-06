@@ -4,6 +4,8 @@
 #include "Engine/Input/Input.h"
 #include "Collision/CollisionManager.h"
 
+#include "Graphics/ImGuiManager.h"
+
 void Player::Initialize() {
 	SetName("Player");
 
@@ -41,6 +43,8 @@ void Player::Update() {
 	JumpUpdate();
 
 	MoveLimit();
+
+	isWallRun_ = false;
 
 	UpdateTransform();
 }
@@ -96,7 +100,9 @@ void Player::MoveUpdate() {
 		move = camera_->GetCamera()->GetRotate() * move;
 		move = move.Normalized() * moveSpeed_;
 		// Y軸移動を削除
-		move.y = 0.0f;
+		if (!isWallRun_) {
+			move.y = 0.0f;
+		}
 
 		// 移動
 		transform.translate += move;
@@ -106,6 +112,7 @@ void Player::MoveUpdate() {
 }
 
 void Player::MoveLimit() {
+	jumpParamerets_.isJumped_ = true;
 	if (transform.translate.y <= 0.0f) {
 		jumpParamerets_.isJumped_ = false;
 		transform.translate.y = 0.0f;
@@ -143,27 +150,28 @@ void Player::OnCollision(const CollisionInfo& collisionInfo) {
 			jumpParamerets_.isJumped_ = false;
 			jumpParamerets_.fallSpeed_ = 0.0f;
 		}
+		ImGui::Text("floorTrue");
 	}
-	
+
 	if (collisionInfo.collider->GetName() == "Wall") {
+		ImGui::Text("wallTrue");
 		// ワールド空間の押し出しベクトル
 		Vector3 pushVector = collisionInfo.normal * collisionInfo.depth;
 		transform.translate += pushVector;
 
-		// 衝突位置の法線
-		float dot = Dot(collisionInfo.normal, Vector3::left);
+		// 壁の右側法線の位置との衝突位置の取得
+		float dotRight = Dot(collisionInfo.normal, Vector3::right);
+		// 壁の左側法線の位置との衝突位置の取得
+		float dotLeft = Dot(collisionInfo.normal, Vector3::left);
 		// 壁と見なす角度
 		const float kWallDownAngle = 45.0f * Math::ToRadian;
-		//const float kWallUpAngle = 125.0f * Math::ToRadian;
-		if (std::abs(std::acos(dot)) > kWallDownAngle /*&& std::abs(std::acos(dot)) < kWallUpAngle*/) {
+		if (std::abs(std::acos(dotRight)) < kWallDownAngle
+			|| std::abs(std::acos(dotLeft)) < kWallDownAngle) {
 			isWallRun_ = true;
-			modelTrans_.rotate = Quaternion::Quaternion::MakeForZAxis(-90.0f * Math::ToRadian);
-		}
-		else {
-			isWallRun_ = false;
+			jumpParamerets_.isJumped_ = false;
 		}
 	}
-	
+		
 	
 	UpdateTransform();
 
