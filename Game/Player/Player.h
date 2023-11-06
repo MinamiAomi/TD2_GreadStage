@@ -42,6 +42,9 @@ private: // メンバ変数
 	
 	bool isWallRun_ = false;
 
+	Vector3 dotLeft_;
+	Vector3 dotUp_;
+
 
 private: // メンバ関数
 	// 座標更新
@@ -53,6 +56,7 @@ private: // メンバ関数
 	// ジャンプ
 	void JumpUpdate();
 
+	void WallUpdate();
 
 	void OnCollision(const CollisionInfo& collisionInfo);
 

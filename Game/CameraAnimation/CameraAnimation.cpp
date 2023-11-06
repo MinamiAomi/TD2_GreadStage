@@ -15,7 +15,7 @@ void CameraAnimation::Initialize() {
 void CameraAnimation::Update() {
 
 	if (target_) {
-		Vector3 offset = { 0.0f, 3.0f, -10.0f };
+		Vector3 offset = { 0.0f, 3.0f, -15.0f };
 		offset = transform_->rotate * offset;
 		transform_->translate = target_->worldMatrix.GetTranslate() + offset;
 	}

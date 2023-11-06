@@ -77,20 +77,14 @@ void Player::MoveUpdate() {
 		move.z -= moveSpeed_;
 	}
 	if (input->IsKeyPressed(DIK_A)) {
-		if (isWallRun_) {
-			move.y += moveSpeed_;
-		}
-		else {
-			move.x -= moveSpeed_;
-		}
+		move.x -= moveSpeed_;
 	}
 	if (input->IsKeyPressed(DIK_D)) {
-		if (isWallRun_) {
-			move.y -= moveSpeed_;
-		}
-		else {
-			move.x += moveSpeed_;
-		}
+		move.x += moveSpeed_;
+	}
+
+	if (isWallRun_) {
+		move = Cross(move, dotUp_);
 	}
 
 	// 移動処理
@@ -103,7 +97,6 @@ void Player::MoveUpdate() {
 		if (!isWallRun_) {
 			move.y = 0.0f;
 		}
-
 		// 移動
 		transform.translate += move;
 		// 回転
@@ -136,6 +129,10 @@ void Player::JumpUpdate() {
 
 }
 
+void Player::WallUpdate() {
+
+}
+
 void Player::OnCollision(const CollisionInfo& collisionInfo) {
 	if (collisionInfo.collider->GetName() == "Floor") {
 		// ワールド空間の押し出しベクトル
@@ -163,6 +160,10 @@ void Player::OnCollision(const CollisionInfo& collisionInfo) {
 		float dotRight = Dot(collisionInfo.normal, Vector3::right);
 		// 壁の左側法線の位置との衝突位置の取得
 		float dotLeft = Dot(collisionInfo.normal, Vector3::left);
+
+		dotUp_ = Cross(collisionInfo.normal, Vector3::up);
+		dotLeft_ = Cross(collisionInfo.normal, Vector3::left);
+
 		// 壁と見なす角度
 		const float kWallDownAngle = 45.0f * Math::ToRadian;
 		if (std::abs(std::acos(dotRight)) < kWallDownAngle
@@ -170,6 +171,7 @@ void Player::OnCollision(const CollisionInfo& collisionInfo) {
 			isWallRun_ = true;
 			jumpParamerets_.isJumped_ = false;
 		}
+
 	}
 		
 	
