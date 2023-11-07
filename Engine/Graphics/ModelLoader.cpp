@@ -33,38 +33,40 @@ namespace {
                 currentMaterial = &materials.emplace_back();
                 currentMaterial->name = materialName;
             }
-            else if (identifier == "map_Kd") {
-                std::string textureName;
-                iss >> textureName;
-                std::filesystem::path textureFilePath = parentPath / textureName;
-                auto iter = std::find_if(textures.begin(), textures.end(),
-                    [&](const auto& texture) {
-                        return texture.filePath == textureFilePath;
-                    });
-                if (iter != textures.end()) {
-                    currentMaterial->textureIndex = uint32_t(std::distance(textures.begin(), iter));
+            else if (currentMaterial) {
+
+                if (identifier == "map_Kd") {
+                    std::string textureName;
+                    iss >> textureName;
+                    std::filesystem::path textureFilePath = parentPath / textureName;
+                    auto iter = std::find_if(textures.begin(), textures.end(),
+                        [&](const auto& texture) {
+                            return texture.filePath == textureFilePath;
+                        });
+                    if (iter != textures.end()) {
+                        currentMaterial->textureIndex = uint32_t(std::distance(textures.begin(), iter));
+                    }
+                    else {
+                        auto& texture = textures.emplace_back();
+                        texture.filePath = textureFilePath;
+                        currentMaterial->textureIndex = uint32_t(textures.size() - 1);
+                    }
                 }
-                else {
-                    auto& texture = textures.emplace_back();
-                    texture.filePath = textureFilePath;
-                    currentMaterial->textureIndex = uint32_t(textures.size() - 1);
+                else if (identifier == "Kd") {
+                    assert(currentMaterial);
+                    Vector3 diffuse;
+                    iss >> diffuse.x >> diffuse.y >> diffuse.z;
+                    currentMaterial->diffuse = diffuse;
                 }
-            }
-            else if (identifier == "Kd") {
-                assert(currentMaterial);
-                Vector3 diffuse;
-                iss >> diffuse.x >> diffuse.y >> diffuse.z;
-                currentMaterial->diffuse = diffuse;
-            }
-            else if (identifier == "Ks") {
-                assert(currentMaterial);
-                Vector3 specular;
-                iss >> specular.x >> specular.y >> specular.z;
-                currentMaterial->specular = specular;
+                else if (identifier == "Ks") {
+                    assert(currentMaterial);
+                    Vector3 specular;
+                    iss >> specular.x >> specular.y >> specular.z;
+                    currentMaterial->specular = specular;
+                }
             }
         }
     }
-
 }
 
 ModelData ModelData::LoadObjFile(const std::filesystem::path& path) {
