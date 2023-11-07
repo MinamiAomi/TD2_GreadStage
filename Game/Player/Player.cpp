@@ -143,9 +143,9 @@ void Player::MoveUpdate() {
 
 void Player::MoveLimit() {
 	jumpParamerets_.isJumped_ = true;
-	if (transform.translate.y <= 0.0f) {
+	if (transform.translate.y <= -10.0f) {
 		jumpParamerets_.isJumped_ = false;
-		transform.translate.y = 0.0f;
+		transform.translate = Vector3(0.0f, 1.5f, -20.0f);
 	}
 }
 
