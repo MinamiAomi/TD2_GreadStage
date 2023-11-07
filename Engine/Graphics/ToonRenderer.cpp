@@ -30,9 +30,9 @@ void ToonRenderer::Render(CommandContext& commandContext, const Camera& camera) 
 
     struct InstanceConstant {
         Matrix4x4 worldMatrix;
-        float outlineWidth;
+        float outlineWidth{};
         Vector3 outlineColor;
-        uint32_t useLighting;
+        uint32_t useLighting{};
     };
 
     auto& instanceList = ToonModelInstance::GetInstanceList();
@@ -62,8 +62,8 @@ void ToonRenderer::Render(CommandContext& commandContext, const Camera& camera) 
             commandContext.SetPipelineState(toonPipelineState_);
             for (auto& mesh : instance->model_->meshes_) {
                 commandContext.SetConstantBuffer(ToonRootIndex::Material, mesh.material->constantBuffer.GetGPUVirtualAddress());
-                if (mesh.material->texture->textureResource) {
-                    commandContext.SetDescriptorTable(ToonRootIndex::Texture, mesh.material->texture->textureResource->GetSRV());
+                if (mesh.material->texture) {
+                    commandContext.SetDescriptorTable(ToonRootIndex::Texture, mesh.material->texture->GetSRV());
                 }
                 else {
                     commandContext.SetDescriptorTable(ToonRootIndex::Texture, DefaultTexture::White.GetSRV());

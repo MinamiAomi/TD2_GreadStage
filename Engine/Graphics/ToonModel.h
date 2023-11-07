@@ -18,17 +18,14 @@ public:
     void Create(const ModelData& modelData);
     
 private:
-    struct Texture {
-        std::unique_ptr<TextureResource> textureResource;
-    };
     struct Material {
         UploadBuffer constantBuffer;
-        std::shared_ptr<Texture> texture;
+        std::shared_ptr<TextureResource> texture;
     };
     struct Mesh {
         UploadBuffer vertexBuffer;
         UploadBuffer indexBuffer;
-        uint32_t indexCount;
+        uint32_t indexCount{};
         std::shared_ptr<Material> material;
     };
 
