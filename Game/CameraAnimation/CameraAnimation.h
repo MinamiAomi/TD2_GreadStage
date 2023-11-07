@@ -20,7 +20,7 @@ public: //	セッター
 private: //	メンバ変数
 	std::shared_ptr<Transform> transform_;
 	std::shared_ptr<Camera> camera_;
-
+	Vector3 offset_;
 	const Transform* target_ = nullptr;
 
 };
