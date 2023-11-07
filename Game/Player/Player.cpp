@@ -5,12 +5,14 @@
 #include "Collision/CollisionManager.h"
 
 #include "Graphics/ImGuiManager.h"
+#include <numbers>
 
 void Player::Initialize() {
 	SetName("Player");
 
 	// 初期座標の設定
 	transform.translate.z = -20.0f;
+	//transform.rotate = Quaternion::MakeForYAxis(0.45f);
 
 	// モデルの取得
 	model_ = std::make_unique<ToonModelInstance>();
@@ -38,7 +40,13 @@ void Player::Initialize() {
 }
 
 void Player::Update() {
-	
+#ifdef _DEBUG
+	DrawImGui();
+	if (Input::GetInstance()->IsKeyTrigger(DIK_R)) {
+		transform.translate = Vector3::zero;
+	}
+#endif // DEBUG
+
 	MoveUpdate();
 	JumpUpdate();
 
@@ -84,24 +92,53 @@ void Player::MoveUpdate() {
 	}
 
 	if (isWallRun_) {
-		move = Cross(move, dotUp_);
-	}
+		//move = move.Normalized();
+		/*auto ro = Quaternion::Quaternion::MakeFromTwoVector(move, dotUp_);
+		move = ro * move;*/
 
+		//move = move - (Dot(move, dotUp_) * dotUp_);
+		
+		
+
+		Vector3 characterDir = move.Normalized();
+		Vector3 wallDir = dotUp_.Normalized();
+
+		// キャラクターの進行ベクトルを壁に対して射影
+		float dotProduct = Dot(characterDir, wallDir);
+		if (dotProduct < 0.0f) {
+			// 移動ベクトルを強引に上へ
+			move = Vector3(0.0f, 0.5f, 0.0f);
+		}
+	}
+	
 	// 移動処理
 	if (move != Vector3::zero) {
 		move = move.Normalized();
 		// カメラの角度に移動ベクトルを回転
 		move = camera_->GetCamera()->GetRotate() * move;
-		move = move.Normalized() * moveSpeed_;
 		// Y軸移動を削除
 		if (!isWallRun_) {
 			move.y = 0.0f;
 		}
+		else {
+			//move = Cross(move, dotUp_);
+			/*float a = Vector3::Angle(move, dotUp_);
+			float cosA = std::cos(a);
+			float sinA = std::sin(a);
+			move.x = move.x * cosA - move.y * sinA;
+			move.y = move.x * sinA + move.y * cosA;*/
+		}
+		//move = transform.rotate * move.Normalized() * moveSpeed_;
+		move = move.Normalized() * moveSpeed_;
 		// 移動
 		transform.translate += move;
 		// 回転
-		transform.rotate = Quaternion::Quaternion::MakeLookRotation(move);
+		/*if (Dot(transform.rotate.GetForward(), move.Normalized()) < 0.9999f) {
+			Quaternion diff = Quaternion::MakeFromTwoVector(transform.rotate.GetForward(), move.Normalized());
+		}*/
+		//transform.rotate = Quaternion::Slerp(0.1f, transform.rotate, Quaternion::MakeLookRotation(move));
 	}
+		
 }
 
 void Player::MoveLimit() {
@@ -125,12 +162,15 @@ void Player::JumpUpdate() {
 		jumpParamerets_.fallSpeed_ -= gravity;
 		transform.translate.y += jumpParamerets_.fallSpeed_;
 	}
+	else {
+		jumpParamerets_.fallSpeed_ = 0.0f;
+	}
 
 
 }
 
-void Player::WallUpdate() {
-
+void Player::WallUpdate(Vector3 moveVec) {
+	moveVec;
 }
 
 void Player::OnCollision(const CollisionInfo& collisionInfo) {
@@ -147,11 +187,9 @@ void Player::OnCollision(const CollisionInfo& collisionInfo) {
 			jumpParamerets_.isJumped_ = false;
 			jumpParamerets_.fallSpeed_ = 0.0f;
 		}
-		ImGui::Text("floorTrue");
 	}
 
 	if (collisionInfo.collider->GetName() == "Wall") {
-		ImGui::Text("wallTrue");
 		// ワールド空間の押し出しベクトル
 		Vector3 pushVector = collisionInfo.normal * collisionInfo.depth;
 		transform.translate += pushVector;
@@ -161,20 +199,32 @@ void Player::OnCollision(const CollisionInfo& collisionInfo) {
 		// 壁の左側法線の位置との衝突位置の取得
 		float dotLeft = Dot(collisionInfo.normal, Vector3::left);
 
-		dotUp_ = Cross(collisionInfo.normal, Vector3::up);
+		dotUp_ = collisionInfo.normal;
 		dotLeft_ = Cross(collisionInfo.normal, Vector3::left);
+
+		// Quaternionは後ろからかける
+		Vector3 up = transform.rotate.GetUp();
+		Vector3 normal = collisionInfo.normal.Normalized();
+		if (Dot(up, normal) < 0.9999f) {
+			Quaternion diff = Quaternion::MakeFromTwoVector(up, normal);
+			transform.rotate = diff * transform.rotate;
+		}
 
 		// 壁と見なす角度
 		const float kWallDownAngle = 45.0f * Math::ToRadian;
 		if (std::abs(std::acos(dotRight)) < kWallDownAngle
 			|| std::abs(std::acos(dotLeft)) < kWallDownAngle) {
-			isWallRun_ = true;
-			jumpParamerets_.isJumped_ = false;
+			
 		}
-
+		isWallRun_ = true;
+		jumpParamerets_.isJumped_ = false;
 	}
 		
 	
 	UpdateTransform();
 
+}
+
+void Player::DrawImGui() {
+	ImGui::DragFloat3("trans", &transform.translate.x, 0.1f);
 }

@@ -6,11 +6,13 @@ struct BoxInitData {
 };
 
 static const BoxInitData floorInits[] = {
-	{Vector3(0.0f,0.0f,0.0f),0.0f},
+	{Vector3(0.0f,0.0f,-10.0f),0.0f},
 };
 
 static const BoxInitData wallInits[] = {
-	{Vector3(-10.0f,2.0f,0.0f),0.0f},
+	{Vector3(-10.0f,2.0f,0.0f),90.0f * Math::ToRadian},
+	{Vector3(-5.0f,2.0f,0.0f),90.0f * Math::ToRadian},
+	{Vector3(0.0f,2.0f,0.0f),90.0f * Math::ToRadian},
 };
 
 void Stage::Initialize() {
