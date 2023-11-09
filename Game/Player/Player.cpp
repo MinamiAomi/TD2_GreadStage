@@ -66,7 +66,7 @@ void Player::UpdateTransform() {
 	Quaternion rotate;
 	transform.worldMatrix.GetAffineValue(scale, rotate, translate);
 	Vector3 rotOffset = rotate * colliderOffset_;
-	collider_->SetCenter(translate + rotOffset);
+	collider_->SetCenter(translate + colliderOffset_);
 	collider_->SetOrientation(rotate);
 
 	// モデル座標更新
@@ -204,5 +204,24 @@ void Player::OnCollision(const CollisionInfo& collisionInfo) {
 }
 
 void Player::DrawImGui() {
-	ImGui::DragFloat3("trans", &transform.translate.x, 0.1f);
+	ImGui::Begin("test", nullptr, ImGuiWindowFlags_MenuBar);
+	if (ImGui::BeginMenuBar()) {
+		if (ImGui::BeginMenu("Player")) {
+			if (ImGui::TreeNode("Translate")) {
+				ImGui::DragFloat3("trans", &transform.translate.x, 0.1f);
+				ImGui::TreePop();
+			}
+			ImGui::Text("A");
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("Player2")) {
+			if (ImGui::TreeNode("Rotation")) {
+				ImGui::DragFloat3("rota", &transform.rotate.x, 0.1f);
+				ImGui::TreePop();
+			}
+			ImGui::EndMenu();
+		}
+		ImGui::EndMenuBar();
+	}
+	ImGui::End();
 }
