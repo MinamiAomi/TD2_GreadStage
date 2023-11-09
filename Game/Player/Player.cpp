@@ -11,7 +11,7 @@ void Player::Initialize() {
 	SetName("Player");
 
 	// 初期座標の設定
-	transform.translate.z = -20.0f;
+	transform.translate = Vector3(0.0f, 2.0f, -20.0f);
 	//transform.rotate = Quaternion::MakeForYAxis(0.45f);
 
 	// モデルの取得
@@ -19,15 +19,15 @@ void Player::Initialize() {
 	model_->SetModel(ResourceManager::GetInstance()->FindModel("Player"));
 	model_->SetIsActive(true);
 
-	modelTrans_.translate = colliderOffset_;
-	modelTrans_.UpdateMatrix();
 	// 座標更新してからでなければローカルデータが消えてしまう
 	modelTrans_.SetParent(&transform);
+	modelTrans_.translate = {};
+	modelTrans_.UpdateMatrix();
 
 	collider_ = std::make_unique<BoxCollider>();
 	collider_->SetGameObject(this);
 	collider_->SetName("Player");
-	collider_->SetCenter(modelTrans_.translate);
+	collider_->SetCenter(transform.translate + colliderOffset_);
 	collider_->SetSize({ 1.0f, 2.0f, 1.0f });
 	collider_->SetCallback([this](const CollisionInfo& collisionInfo) { OnCollision(collisionInfo); });
 
@@ -65,7 +65,8 @@ void Player::UpdateTransform() {
 	Vector3 scale, translate;
 	Quaternion rotate;
 	transform.worldMatrix.GetAffineValue(scale, rotate, translate);
-	collider_->SetCenter(translate + colliderOffset_);
+	Vector3 rotOffset = rotate * colliderOffset_;
+	collider_->SetCenter(translate + rotOffset);
 	collider_->SetOrientation(rotate);
 
 	// モデル座標更新
@@ -79,10 +80,10 @@ void Player::MoveUpdate() {
 
 	// キーボードでの移動
 	if (input->IsKeyPressed(DIK_W)) {
-		move.z += moveSpeed_;
+		move.y += moveSpeed_;
 	}
 	if (input->IsKeyPressed(DIK_S)) {
-		move.z -= moveSpeed_;
+		move.y -= moveSpeed_;
 	}
 	if (input->IsKeyPressed(DIK_A)) {
 		move.x -= moveSpeed_;
@@ -91,52 +92,33 @@ void Player::MoveUpdate() {
 		move.x += moveSpeed_;
 	}
 
-	if (isWallRun_) {
-		//move = move.Normalized();
-		/*auto ro = Quaternion::Quaternion::MakeFromTwoVector(move, dotUp_);
-		move = ro * move;*/
-
-		//move = move - (Dot(move, dotUp_) * dotUp_);
-		
-		
-
-		Vector3 characterDir = move.Normalized();
-		Vector3 wallDir = dotUp_.Normalized();
-
-		// キャラクターの進行ベクトルを壁に対して射影
-		float dotProduct = Dot(characterDir, wallDir);
-		if (dotProduct < 0.0f) {
-			// 移動ベクトルを強引に上へ
-			move = Vector3(0.0f, 0.5f, 0.0f);
-		}
+	auto xinput = input->GetXInputState();
+	if (std::abs(xinput.Gamepad.sThumbLX) > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) {
+		move.x = 0.0f;
+		move.x = xinput.Gamepad.sThumbLX;
 	}
-	
+	if (std::abs(xinput.Gamepad.sThumbLY) > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) {
+		move.y = 0.0f;
+		move.y = xinput.Gamepad.sThumbLY;
+	}
+
 	// 移動処理
 	if (move != Vector3::zero) {
 		move = move.Normalized();
-		// カメラの角度に移動ベクトルを回転
-		move = camera_->GetCamera()->GetRotate() * move;
-		// Y軸移動を削除
-		if (!isWallRun_) {
-			move.y = 0.0f;
-		}
-		else {
-			//move = Cross(move, dotUp_);
-			/*float a = Vector3::Angle(move, dotUp_);
-			float cosA = std::cos(a);
-			float sinA = std::sin(a);
-			move.x = move.x * cosA - move.y * sinA;
-			move.y = move.x * sinA + move.y * cosA;*/
-		}
-		//move = transform.rotate * move.Normalized() * moveSpeed_;
-		move = move.Normalized() * moveSpeed_;
+
+		Matrix4x4 viewProjInv = camera_->GetCamera()->GetViewProjectionMatrix().Inverse();
+		Vector3 origin = viewProjInv.ApplyTransformWDivide(Vector3::zero);
+		move = viewProjInv.ApplyTransformWDivide(move);
+		move = (move - origin).Normalized();
+
+		Quaternion rotate = Quaternion::MakeFromTwoVector(-camera_->GetCamera()->GetForward(), transform.rotate.GetUp());
+		move = rotate * move;
+
+		move *= moveSpeed_;
+
 		// 移動
 		transform.translate += move;
-		// 回転
-		/*if (Dot(transform.rotate.GetForward(), move.Normalized()) < 0.9999f) {
-			Quaternion diff = Quaternion::MakeFromTwoVector(transform.rotate.GetForward(), move.Normalized());
-		}*/
-		//transform.rotate = Quaternion::Slerp(0.1f, transform.rotate, Quaternion::MakeLookRotation(move));
+
 	}
 		
 }
@@ -145,7 +127,8 @@ void Player::MoveLimit() {
 	jumpParamerets_.isJumped_ = true;
 	if (transform.translate.y <= -10.0f) {
 		jumpParamerets_.isJumped_ = false;
-		transform.translate = Vector3(0.0f, 1.5f, -20.0f);
+		transform.translate = Vector3(0.0f, 2.0f, -20.0f);
+		transform.rotate = Quaternion::identity;
 	}
 }
 
@@ -165,8 +148,6 @@ void Player::JumpUpdate() {
 	else {
 		jumpParamerets_.fallSpeed_ = 0.0f;
 	}
-
-
 }
 
 void Player::WallUpdate(Vector3 moveVec) {
@@ -186,6 +167,13 @@ void Player::OnCollision(const CollisionInfo& collisionInfo) {
 		if (std::abs(std::acos(dot)) < kGroundGradientAngle) {
 			jumpParamerets_.isJumped_ = false;
 			jumpParamerets_.fallSpeed_ = 0.0f;
+			// Quaternionは後ろからかける
+			Vector3 up = transform.rotate.GetUp();
+			Vector3 normal = collisionInfo.normal.Normalized();
+			if (Dot(up, normal) < 0.9999f) {
+				Quaternion diff = Quaternion::MakeFromTwoVector(up, normal);
+				transform.rotate = diff * transform.rotate;
+			}
 		}
 	}
 
@@ -193,14 +181,6 @@ void Player::OnCollision(const CollisionInfo& collisionInfo) {
 		// ワールド空間の押し出しベクトル
 		Vector3 pushVector = collisionInfo.normal * collisionInfo.depth;
 		transform.translate += pushVector;
-
-		// 壁の右側法線の位置との衝突位置の取得
-		float dotRight = Dot(collisionInfo.normal, Vector3::right);
-		// 壁の左側法線の位置との衝突位置の取得
-		float dotLeft = Dot(collisionInfo.normal, Vector3::left);
-
-		dotUp_ = collisionInfo.normal;
-		dotLeft_ = Cross(collisionInfo.normal, Vector3::left);
 
 		// Quaternionは後ろからかける
 		Vector3 up = transform.rotate.GetUp();
@@ -210,17 +190,15 @@ void Player::OnCollision(const CollisionInfo& collisionInfo) {
 			transform.rotate = diff * transform.rotate;
 		}
 
-		// 壁と見なす角度
-		const float kWallDownAngle = 45.0f * Math::ToRadian;
-		if (std::abs(std::acos(dotRight)) < kWallDownAngle
-			|| std::abs(std::acos(dotLeft)) < kWallDownAngle) {
-			
-		}
 		isWallRun_ = true;
+
+	}
+
+	if (collisionInfo.collider->GetName() == "WallRange") {
+
 		jumpParamerets_.isJumped_ = false;
 	}
 		
-	
 	UpdateTransform();
 
 }

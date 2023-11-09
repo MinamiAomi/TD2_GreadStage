@@ -19,7 +19,11 @@ static const BoxInitData floorInits[] = {
 };
 
 static const BoxInitData wallInits[] = {
-	{Vector3(-10.0f,2.0f,0.0f),90.0f * Math::ToRadian},
+	{Vector3(-10.0f,2.0f,-5.0f),90.0f * Math::ToRadian},
+	{Vector3(-5.0f,2.0f,-5.0f),90.0f * Math::ToRadian},
+	{Vector3(0.0f,2.0f,-5.0f),90.0f * Math::ToRadian},
+	{Vector3(5.0f,2.0f,-5.0f),90.0f * Math::ToRadian},
+	{Vector3(10.0f,2.0f,-5.0f),90.0f * Math::ToRadian},
 };
 
 void Stage::Initialize() {

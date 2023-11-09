@@ -29,7 +29,7 @@ private: // メンバ変数
 	Transform modelTrans_;
 
 	std::unique_ptr<BoxCollider> collider_;
-	Vector3 colliderOffset_ = { 0.0f,0.5f,0.0f };
+	Vector3 colliderOffset_ = { 0.0f,1.0f,0.0f };
 
 	float moveSpeed_ = 0.0f;
 
@@ -42,7 +42,6 @@ private: // メンバ変数
 	
 	bool isWallRun_ = false;
 
-	Vector3 dotLeft_;
 	Vector3 dotUp_;
 
 

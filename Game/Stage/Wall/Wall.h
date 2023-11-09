@@ -18,6 +18,7 @@ protected:
     std::unique_ptr<ToonModelInstance> model_;
 
     std::unique_ptr<BoxCollider> collider_;
+    std::unique_ptr<BoxCollider> colliderWallRange_;
 
     Vector3 basePosition_;
 };
