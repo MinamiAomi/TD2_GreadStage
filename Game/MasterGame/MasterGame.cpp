@@ -16,7 +16,7 @@ void MasterGame::OnInitialize() {
 	ResourceManager* resourceManager = ResourceManager::GetInstance();
 
 	// モデルの追加
-	std::shared_ptr<ToonModel> toonModel = std::make_shared<ToonModel>();;
+	std::shared_ptr<ToonModel> toonModel = std::make_shared<ToonModel>();
 	// プレイヤー
 	toonModel->Create(ModelData::LoadObjFile("Resources/Model/player.obj"));
 	resourceManager->AddToonModel("Player", toonModel);

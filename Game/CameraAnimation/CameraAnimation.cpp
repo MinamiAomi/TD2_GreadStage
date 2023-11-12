@@ -22,7 +22,7 @@ void CameraAnimation::Update() {
 		//transform_->translate.x = target_->worldMatrix.GetTranslate().x;
 	}
 	ImGui::DragFloat3("Position", &transform_->translate.x, 0.01f);	
-	static Vector3 r = {50.0f, 0.0f,0.0f};
+	static Vector3 r = {0.0f, 0.0f,0.0f};
 	ImGui::DragFloat3("Rotate", &r.x, 0.1f, -360.0f, 360.0f);
 	transform_->rotate = Quaternion::MakeFromEulerAngle(r * Math::ToRadian);
 
