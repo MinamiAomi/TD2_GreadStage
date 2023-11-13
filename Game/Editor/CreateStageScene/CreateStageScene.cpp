@@ -7,7 +7,7 @@ void CreateStageScene::OnInitialize() {
 	camera_ = std::make_shared<CameraAnimation>();
 	camera_->Initialize();
 	global_ = GlobalVariables::GetInstance();
-	global_->CreateGroup(groupName);
+	global_->CreateGroup(groupName_);
 }
 
 void CreateStageScene::OnUpdate() {
@@ -37,28 +37,55 @@ void CreateStageScene::DrawImGui() {
 				boxes_.push_back(std::make_shared<Box>());
 				(*boxes_.rbegin())->Initialize(vec3, Vector3::one);
 			}
-			if (ImGui::Button("Save")) {
-				global_->AddItem(groupName, "Confirmation : ", static_cast<int>(boxes_.size()));
-				for (int i = 0; i < boxes_.size(); i++) {
-					global_->AddItem(groupName, ("BoxNumber : " + std::to_string(i) + " : Scale").c_str(), boxes_[i]->transform.scale);
-					//global_->AddItem(groupName, ("BoxNumber : " + std::to_string(i + 1) + " : Rotate").c_str(), boxes_[i]->transform.rotate);
-					global_->AddItem(groupName, ("BoxNumber : " + std::to_string(i) + " : Translate").c_str(), boxes_[i]->transform.translate);
+			if (ImGui::TreeNode("FileSave")) {
+				ImGui::InputText("FileName", itemName_, sizeof(itemName_));
+				if (ImGui::Button("Save")) {
+					if (!boxes_.empty()) {
+						global_->CreateGroup(itemName_);
+						global_->AddItem(itemName_, "Confirmation : ", static_cast<int>(boxes_.size()));
+						for (int i = 0; i < boxes_.size(); i++) {
+							global_->AddItem(itemName_, ("BoxNumber : " + std::to_string(i) + " : Scale").c_str(), boxes_[i]->transform.scale);
+							//global_->AddItem(groupName, ("BoxNumber : " + std::to_string(i + 1) + " : Rotate").c_str(), boxes_[i]->transform.rotate);
+							global_->AddItem(itemName_, ("BoxNumber : " + std::to_string(i) + " : Translate").c_str(), boxes_[i]->transform.translate);
+						}
+						global_->SaveFile(itemName_);
+						global_->SaveMessage(itemName_);
+						bool flag = false;
+						for (auto& i : fileName_) {
+							if (i.c_str() == std::string() + itemName_) {
+								flag = true;
+								break;
+							}
+						}
+						if (!flag) {
+							fileName_.push_back(itemName_);
+						}
+					}
 				}
-				global_->SaveFile(groupName);
-				global_->SaveMessage(groupName);
+				ImGui::TreePop();
 			}
-			if (ImGui::Button("Load")) {
-				global_->LoadFile(groupName);
-				global_->LoadMessage(groupName);
-				int num = global_->GetIntValue(groupName, "Confirmation : ");
-				boxes_.clear(); // 要素の全削除
-				for (int i = 0; i < num; i++) {
-					Vector3 trans = global_->GetVector3Value(groupName, ("BoxNumber : " + std::to_string(i) + " : Translate").c_str());
-					Vector3 scal = global_->GetVector3Value(groupName, ("BoxNumber : " + std::to_string(i) + " : Scale").c_str());
-					boxes_.push_back(std::make_shared<Box>());
-					(*boxes_.rbegin())->Initialize(trans, scal);
+
+			if (ImGui::TreeNode("FileLoad")) {
+				/*for (size_t i = 0; i < fileName_.size(); i++) {
+					if (ImGui::RadioButton(fileName_[i].c_str(), &fileNumber, static_cast<int>(i))) {
+						Name_ = fileName_[fileNumber].c_str();
+					}
+				}*/
+
+				if (ImGui::Button("Load")) {
+					global_->LoadFile(groupName_);
+					global_->LoadMessage(groupName_);
+					int num = global_->GetIntValue(groupName_, "Confirmation : ");
+					boxes_.clear(); // 要素の全削除
+					for (int i = 0; i < num; i++) {
+						Vector3 trans = global_->GetVector3Value(groupName_, ("BoxNumber : " + std::to_string(i) + " : Translate").c_str());
+						Vector3 scal = global_->GetVector3Value(groupName_, ("BoxNumber : " + std::to_string(i) + " : Scale").c_str());
+						boxes_.push_back(std::make_shared<Box>());
+						(*boxes_.rbegin())->Initialize(trans, scal);
+					}
 				}
-			}
+				ImGui::TreePop();
+			}			
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Boxes")) {

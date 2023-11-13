@@ -18,8 +18,12 @@ public:
 private: // メンバ変数
 	std::vector<std::shared_ptr<Box>> boxes_;
 	std::shared_ptr<CameraAnimation> camera_;
+
 	GlobalVariables* global_ = nullptr;
-	const std::string groupName = "Stage";
+	const std::string groupName_ = "Stage";
+	std::vector<std::string> fileName_;
+	char itemName_[256]{};
+
 private:
 	void DrawImGui();
 
