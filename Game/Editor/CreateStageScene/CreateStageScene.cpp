@@ -17,7 +17,6 @@ void CreateStageScene::OnInitialize() {
 
 void CreateStageScene::OnUpdate() {
 	DrawImGui();
-	global_->Update();
 
 	for (auto& i : boxes_) {
 		i->Update();
