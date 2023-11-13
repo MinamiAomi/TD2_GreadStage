@@ -353,6 +353,39 @@ void GlobalVariables::LoadFile(const std::string& groupName) {
 	}
 }
 
+void GlobalVariables::ChackFiles(std::vector<std::string>& fileName) {
+	if (!std::filesystem::exists(kDirectoryPath)) {
+		std::string message = "Failed open data file for write.";
+		MessageBoxA(nullptr, message.c_str(), "Element", 0);
+		assert(0);
+		return;
+	}
+
+	std::filesystem::directory_iterator dir_it(kDirectoryPath);
+
+	for (const std::filesystem::directory_entry& entry : dir_it) {
+		//ファイルパスを取得
+		const std::filesystem::path& filePath = entry.path();
+
+		//ファイル拡張子を取得
+		std::string extension = filePath.extension().string();
+		//.jsonファイル以外はスキップ
+		if (extension.compare(".json") != 0) {
+			continue;
+		}
+
+		bool flag = false;
+		for (auto& i : fileName) {
+			if (i.c_str() == filePath.stem().string()) {
+				flag = true;
+			}
+		}
+		if (!flag) {
+			fileName.push_back(filePath.stem().string());
+		}
+	}
+}
+
 void GlobalVariables::LoadMessage(const std::string& groupName) {
 	std::string message = std::format("{}.json load", groupName);
 	MessageBoxA(nullptr, message.c_str(), "GlobalVariables", 0);

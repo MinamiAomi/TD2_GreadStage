@@ -7,7 +7,12 @@ void CreateStageScene::OnInitialize() {
 	camera_ = std::make_shared<CameraAnimation>();
 	camera_->Initialize();
 	global_ = GlobalVariables::GetInstance();
-	global_->CreateGroup(groupName_);
+	global_->ChackFiles(fileName_);
+	for (auto& i : fileName_) {
+		global_->CreateGroup(i.c_str());
+	}
+	fileNumber_ = 0;
+	loadSelectName_ = fileName_[fileNumber_].c_str();
 }
 
 void CreateStageScene::OnUpdate() {
@@ -42,7 +47,7 @@ void CreateStageScene::DrawImGui() {
 				if (ImGui::Button("Save")) {
 					if (!boxes_.empty()) {
 						global_->CreateGroup(itemName_);
-						global_->AddItem(itemName_, "Confirmation : ", static_cast<int>(boxes_.size()));
+						global_->AddItem(itemName_, "Confirmation : " + std::string(), static_cast<int>(boxes_.size()));
 						for (int i = 0; i < boxes_.size(); i++) {
 							global_->AddItem(itemName_, ("BoxNumber : " + std::to_string(i) + " : Scale").c_str(), boxes_[i]->transform.scale);
 							//global_->AddItem(groupName, ("BoxNumber : " + std::to_string(i + 1) + " : Rotate").c_str(), boxes_[i]->transform.rotate);
@@ -66,20 +71,19 @@ void CreateStageScene::DrawImGui() {
 			}
 
 			if (ImGui::TreeNode("FileLoad")) {
-				/*for (size_t i = 0; i < fileName_.size(); i++) {
-					if (ImGui::RadioButton(fileName_[i].c_str(), &fileNumber, static_cast<int>(i))) {
-						Name_ = fileName_[fileNumber].c_str();
+				for (size_t i = 0; i < fileName_.size(); i++) {
+					if (ImGui::RadioButton(fileName_[i].c_str(), &fileNumber_, static_cast<int>(i))) {
+						loadSelectName_ = fileName_[fileNumber_].c_str();
 					}
-				}*/
-
+				}
 				if (ImGui::Button("Load")) {
-					global_->LoadFile(groupName_);
-					global_->LoadMessage(groupName_);
-					int num = global_->GetIntValue(groupName_, "Confirmation : ");
+					global_->LoadFile(loadSelectName_);
+					global_->LoadMessage(loadSelectName_);
+					int num = global_->GetIntValue(loadSelectName_, "Confirmation : ");
 					boxes_.clear(); // 要素の全削除
 					for (int i = 0; i < num; i++) {
-						Vector3 trans = global_->GetVector3Value(groupName_, ("BoxNumber : " + std::to_string(i) + " : Translate").c_str());
-						Vector3 scal = global_->GetVector3Value(groupName_, ("BoxNumber : " + std::to_string(i) + " : Scale").c_str());
+						Vector3 trans = global_->GetVector3Value(loadSelectName_, ("BoxNumber : " + std::to_string(i) + " : Translate").c_str());
+						Vector3 scal = global_->GetVector3Value(loadSelectName_, ("BoxNumber : " + std::to_string(i) + " : Scale").c_str());
 						boxes_.push_back(std::make_shared<Box>());
 						(*boxes_.rbegin())->Initialize(trans, scal);
 					}

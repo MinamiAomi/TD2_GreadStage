@@ -20,9 +20,10 @@ private: // メンバ変数
 	std::shared_ptr<CameraAnimation> camera_;
 
 	GlobalVariables* global_ = nullptr;
-	const std::string groupName_ = "Stage";
 	std::vector<std::string> fileName_;
+	std::string loadSelectName_;
 	char itemName_[256]{};
+	int fileNumber_ = 0;
 
 private:
 	void DrawImGui();

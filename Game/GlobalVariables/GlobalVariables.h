@@ -3,6 +3,7 @@
 #include <variant>
 #include <map>
 #include <string>
+#include <vector>
 
 class GlobalVariables {
 public:
@@ -33,6 +34,8 @@ public:
 	void LoadFiles();
 
 	void LoadFile(const std::string& groupName);
+
+	void ChackFiles(std::vector<std::string>& fileName);
 
 	void LoadMessage(const std::string& groupName);
 	void SaveMessage(const std::string& groupName);
