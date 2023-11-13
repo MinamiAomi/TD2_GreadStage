@@ -32,6 +32,9 @@
     <ClCompile Include="Stage\Box\Box.cpp">
       <Filter>Stage\Box</Filter>
     </ClCompile>
+    <ClCompile Include="GlobalVariables\GlobalVariables.cpp">
+      <Filter>GlobalVariables</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="MasterGame">
@@ -67,6 +70,9 @@
     <Filter Include="Stage\Box">
       <UniqueIdentifier>{c6f2fbf2-7633-4d95-8361-1651a3847aa1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GlobalVariables">
+      <UniqueIdentifier>{fa641b57-32ad-4ffa-b6ee-c2bfde91b7f8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MasterGame\MasterGame.h">
@@ -98,6 +104,9 @@
     </ClInclude>
     <ClInclude Include="Stage\Box\Box.h">
       <Filter>Stage\Box</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalVariables\GlobalVariables.h">
+      <Filter>GlobalVariables</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

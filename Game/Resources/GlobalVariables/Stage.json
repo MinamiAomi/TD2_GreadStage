@@ -1,0 +1,55 @@
+{
+    "Stage": {
+        "BoxNumber : 0 : Scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "BoxNumber : 0 : Translate": [
+            5.199999809265137,
+            0.0,
+            0.0
+        ],
+        "BoxNumber : 1 : Scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "BoxNumber : 1 : Translate": [
+            -0.20000000298023224,
+            0.0,
+            0.0
+        ],
+        "BoxNumber : 2 : Scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "BoxNumber : 2 : Translate": [
+            -0.20000000298023224,
+            4.099999904632568,
+            0.0
+        ],
+        "BoxNumber : 3 : Scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "BoxNumber : 3 : Translate": [
+            10.800000190734863,
+            3.0999999046325684,
+            0.0
+        ],
+        "BoxNumber : 4 : Scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "BoxNumber : 4 : Translate": [
+            8.600000381469727,
+            -2.5,
+            0.0
+        ],
+        "Confirmation : ": 5
+    }
+}
