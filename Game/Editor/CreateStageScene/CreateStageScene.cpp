@@ -51,6 +51,7 @@ void CreateStageScene::DrawImGui() {
 				global_->LoadFile(groupName);
 				global_->LoadMessage(groupName);
 				int num = global_->GetIntValue(groupName, "Confirmation : ");
+				boxes_.clear(); // 要素の全削除
 				for (int i = 0; i < num; i++) {
 					Vector3 trans = global_->GetVector3Value(groupName, ("BoxNumber : " + std::to_string(i) + " : Translate").c_str());
 					Vector3 scal = global_->GetVector3Value(groupName, ("BoxNumber : " + std::to_string(i) + " : Scale").c_str());
