@@ -2,7 +2,7 @@
 #include "Graphics/ResourceManager.h"
 #include "Graphics/ImGuiManager.h"
 
-void Box::Initialize(const Vector3& position, const Vector3& scale) {
+void Box::Initialize(const Vector3& position, const Vector4& rotate, const Vector3& scale) {
     SetName("Box");
     model_ = std::make_unique<ModelInstance>();
     collider_ = std::make_unique<BoxCollider>();
@@ -10,10 +10,10 @@ void Box::Initialize(const Vector3& position, const Vector3& scale) {
     model_->SetModel(ResourceManager::GetInstance()->FindModel("Box"));
     model_->SetIsActive(true);
 
-    rotate_ = { 0.0f,0.0f,0.0f };
+    rotate_ = Vector3(rotate.x, rotate.y, rotate.z);
 
     transform.translate = position;
-    transform.rotate = Quaternion::MakeFromEulerAngle(Vector3::zero);
+    transform.rotate = Quaternion::MakeFromAngleAxis(rotate.w, Vector3(rotate.x, rotate.y, rotate.z));
     transform.scale = scale;
     transform.UpdateMatrix();
 
