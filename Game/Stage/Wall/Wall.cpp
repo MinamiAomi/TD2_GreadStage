@@ -5,13 +5,12 @@
 
 void Wall::Initialize(const Vector3& basePosition, float radian) {
     SetName("Wall");
-    model_ = std::make_unique<ToonModelInstance>();
+    model_ = std::make_unique<ModelInstance>();
     collider_ = std::make_unique<BoxCollider>();
     colliderWallRange_ = std::make_unique<BoxCollider>();
 
     model_->SetModel(ResourceManager::GetInstance()->FindModel("Wall"));
     model_->SetIsActive(true);
-    model_->SetUseOutline(false);
 
     basePosition_ = basePosition;
     transform.translate = basePosition;

@@ -15,7 +15,7 @@ void Player::Initialize() {
 	//transform.rotate = Quaternion::MakeForYAxis(0.45f);
 
 	// モデルの取得
-	model_ = std::make_unique<ToonModelInstance>();
+	model_ = std::make_unique<ModelInstance>();
 	model_->SetModel(ResourceManager::GetInstance()->FindModel("Player"));
 	model_->SetIsActive(true);
 

@@ -7,7 +7,7 @@
 #include "Core/ColorBuffer.h"
 #include "Core/DepthBuffer.h"
 #include "Bloom.h"
-#include "ToonRenderer.h"
+#include "Renderer.h"
 #include "PostEffect.h"
 #include "Timer.h"
 
@@ -34,7 +34,7 @@ private:
     ColorBuffer mainColorBuffer_;
     DepthBuffer mainDepthBuffer_;
 
-    ToonRenderer toonRenderer_;
+    ModelRenderer renderer_;
     Bloom bloom_;
     PostEffect postEffect_;
     

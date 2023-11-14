@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 #include "Game/Stage/Box/Box.h"
-#include "Game/CameraAnimation/CameraAnimation.h"
+#include "Game/DebugCamera.h"
 
 class GlobalVariables;
 
@@ -17,7 +17,7 @@ public:
 
 private: // メンバ変数
 	std::vector<std::shared_ptr<Box>> boxes_;
-	std::shared_ptr<CameraAnimation> camera_;
+	std::shared_ptr<DebugCamera> camera_;
 
 	GlobalVariables* global_ = nullptr;
 	std::vector<std::string> fileName_;

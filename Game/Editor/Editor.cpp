@@ -1,7 +1,7 @@
 #include "Editor.h"
 #include "Scene/SceneManager.h"
 #include "Engine/Graphics/ResourceManager.h"
-#include "Engine/Graphics/ToonModel.h"
+#include "Engine/Graphics/Model.h"
 
 #include "Game/Editor/CreateStageScene/CreateStageScene.h"
 
@@ -15,7 +15,7 @@ void Editor::OnInitialize() {
 	ResourceManager* resourceManager = ResourceManager::GetInstance();
 
 	// モデルの追加
-	std::shared_ptr<ToonModel> toonModel = std::make_shared<ToonModel>();
+	std::shared_ptr<Model> toonModel = std::make_shared<Model>();
 	// 箱
 	toonModel->Create(ModelData::LoadObjFile("Resources/Model/box.obj"));
 	resourceManager->AddToonModel("Box", toonModel);

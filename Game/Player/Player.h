@@ -1,6 +1,6 @@
 #pragma once
 #include "Collision/GameObject.h"
-#include "Graphics/ToonModel.h"
+#include "Graphics/Model.h"
 
 #include <memory>
 
@@ -23,7 +23,7 @@ public: // セッター
 
 private: // メンバ変数
 	// モデル
-	std::unique_ptr<ToonModelInstance> model_;
+	std::unique_ptr<ModelInstance> model_;
 	std::shared_ptr<CameraAnimation> camera_;
 
 	Transform modelTrans_;

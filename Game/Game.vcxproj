@@ -18,6 +18,7 @@
   <ItemGroup>
     <ClCompile Include="BattleScene\BattleScene.cpp" />
     <ClCompile Include="CameraAnimation\CameraAnimation.cpp" />
+    <ClCompile Include="DebugCamera.cpp" />
     <ClCompile Include="Editor\CreateStageScene\CreateStageScene.cpp" />
     <ClCompile Include="Editor\Editor.cpp" />
     <ClCompile Include="GlobalVariables\GlobalVariables.cpp" />
@@ -32,6 +33,7 @@
   <ItemGroup>
     <ClInclude Include="BattleScene\BattleScene.h" />
     <ClInclude Include="CameraAnimation\CameraAnimation.h" />
+    <ClInclude Include="DebugCamera.h" />
     <ClInclude Include="Editor\CreateStageScene\CreateStageScene.h" />
     <ClInclude Include="Editor\Editor.h" />
     <ClInclude Include="GlobalVariables\GlobalVariables.h" />

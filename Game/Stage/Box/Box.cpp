@@ -4,12 +4,11 @@
 
 void Box::Initialize(const Vector3& position, const Vector3& scale) {
     SetName("Box");
-    model_ = std::make_unique<ToonModelInstance>();
+    model_ = std::make_unique<ModelInstance>();
     collider_ = std::make_unique<BoxCollider>();
 
     model_->SetModel(ResourceManager::GetInstance()->FindModel("Box"));
     model_->SetIsActive(true);
-    model_->SetUseOutline(false);
 
     rotate_ = { 0.0f,0.0f,0.0f };
 
@@ -39,4 +38,7 @@ void Box::DrawImGui() {
     ImGui::DragFloat3("rotate", &rotate_.x, 0.1f, -360.0f, 360.0f);
     transform.rotate = Quaternion::MakeFromEulerAngle(rotate_ * Math::ToRadian);
     ImGui::DragFloat3("translate", &transform.translate.x, 0.1f);
+    if (ImGui::ColorEdit3("color", &color_.x)) {
+        model_->SetColor(color_);
+    }
 }

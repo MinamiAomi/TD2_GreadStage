@@ -35,6 +35,9 @@
     <ClCompile Include="GlobalVariables\GlobalVariables.cpp">
       <Filter>GlobalVariables</Filter>
     </ClCompile>
+    <ClCompile Include="DebugCamera.cpp">
+      <Filter>Editor\DebugCamera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="MasterGame">
@@ -73,6 +76,9 @@
     <Filter Include="GlobalVariables">
       <UniqueIdentifier>{fa641b57-32ad-4ffa-b6ee-c2bfde91b7f8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Editor\DebugCamera">
+      <UniqueIdentifier>{da84ee4d-5833-4279-9dba-e0d5fe86729f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MasterGame\MasterGame.h">
@@ -107,6 +113,9 @@
     </ClInclude>
     <ClInclude Include="GlobalVariables\GlobalVariables.h">
       <Filter>GlobalVariables</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugCamera.h">
+      <Filter>Editor\DebugCamera</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

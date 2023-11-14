@@ -4,7 +4,7 @@
 #include "GlobalVariables/GlobalVariables.h"
 
 void CreateStageScene::OnInitialize() {
-	camera_ = std::make_shared<CameraAnimation>();
+	camera_ = std::make_shared<DebugCamera>();
 	camera_->Initialize();
 	global_ = GlobalVariables::GetInstance();
 	global_->ChackFiles(fileName_);
