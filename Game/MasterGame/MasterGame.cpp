@@ -4,13 +4,13 @@
 #include "Engine/Graphics/ResourceManager.h"
 #include "Engine/Graphics/Model.h"
 
-#include "BattleScene/BattleScene.h"
+#include "Game/Scene/TitleScene/TitleScene.h"
 
 void MasterGame::OnInitialize() {
 	// シーンのシングルトンの取得
 	SceneManager* sceneManager = SceneManager::GetInstance();
 	// シーンの設定
-	sceneManager->ChangeScene<BattleScene>();
+	sceneManager->ChangeScene<TitleScene>();
 
 	// リソースマネージャーのシングルトンの取得
 	ResourceManager* resourceManager = ResourceManager::GetInstance();

@@ -3,8 +3,7 @@
 #include "Math/Transform.h"
 #include <memory>
 
-class CameraAnimation
-{
+class CameraAnimation {
 public:
 	void Initialize();
 	void Update();
