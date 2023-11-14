@@ -39,7 +39,7 @@ void CreateStageScene::DrawImGui() {
 			ImGui::DragFloat3("transform", &vec3.x, 0.1f);
 			if (ImGui::Button("Create")) {
 				boxes_.push_back(std::make_shared<Box>());
-				(*boxes_.rbegin())->Initialize(vec3, Vector3::one);
+				(*boxes_.rbegin())->Initialize(vec3, Vector4(0.0f, 0.0f, 0.0f, 1.0f), Vector3::one);
 			}
 			if (ImGui::TreeNode("FileSave")) {
 				ImGui::InputText("FileName", itemName_, sizeof(itemName_));
@@ -48,9 +48,10 @@ void CreateStageScene::DrawImGui() {
 						global_->CreateGroup(itemName_);
 						global_->AddItem(itemName_, "Confirmation : " + std::string(), static_cast<int>(boxes_.size()));
 						for (int i = 0; i < boxes_.size(); i++) {
-							global_->AddItem(itemName_, ("BoxNumber : " + std::to_string(i) + " : Scale").c_str(), boxes_[i]->transform.scale);
-							//global_->AddItem(groupName, ("BoxNumber : " + std::to_string(i + 1) + " : Rotate").c_str(), boxes_[i]->transform.rotate);
-							global_->AddItem(itemName_, ("BoxNumber : " + std::to_string(i) + " : Translate").c_str(), boxes_[i]->transform.translate);
+							auto boxHandle = boxes_[i]->transform;
+							global_->AddItem(itemName_, ("BoxNumber : " + std::to_string(i) + " : Scale").c_str(), boxHandle.scale);
+							global_->AddItem(itemName_, ("BoxNumber : " + std::to_string(i) + " : Rotate").c_str(), Vector4(boxHandle.rotate.x, boxHandle.rotate.y, boxHandle.rotate.z, boxHandle.rotate.w));
+							global_->AddItem(itemName_, ("BoxNumber : " + std::to_string(i) + " : Translate").c_str(), boxHandle.translate);
 						}
 						global_->SaveFile(itemName_);
 						global_->SaveMessage(itemName_);
@@ -82,9 +83,10 @@ void CreateStageScene::DrawImGui() {
 					boxes_.clear(); // 要素の全削除
 					for (int i = 0; i < num; i++) {
 						Vector3 trans = global_->GetVector3Value(loadSelectName_, ("BoxNumber : " + std::to_string(i) + " : Translate").c_str());
+						Vector4 rot = global_->GetVector4Value(loadSelectName_, ("BoxNumber : " + std::to_string(i) + " : Rotate").c_str());
 						Vector3 scal = global_->GetVector3Value(loadSelectName_, ("BoxNumber : " + std::to_string(i) + " : Scale").c_str());
 						boxes_.push_back(std::make_shared<Box>());
-						(*boxes_.rbegin())->Initialize(trans, scal);
+						(*boxes_.rbegin())->Initialize(trans, rot, scal);
 					}
 				}
 				ImGui::TreePop();
