@@ -18,19 +18,19 @@ public:
 	void SetValue(const std::string& groupName, const std::string& key, float value);
 	void SetValue(const std::string& groupName, const std::string& key, Vector2 value);
 	void SetValue(const std::string& groupName, const std::string& key, Vector3 value);
-	void SetValue(const std::string& groupName, const std::string& key, Vector4 value);
+	void SetValue(const std::string& groupName, const std::string& key, Quaternion value);
 
 	void AddItem(const std::string& groupName, const std::string& key, int32_t value);
 	void AddItem(const std::string& groupName, const std::string& key, float value);
 	void AddItem(const std::string& groupName, const std::string& key, const Vector2& value);
 	void AddItem(const std::string& groupName, const std::string& key, const Vector3& value);
-	void AddItem(const std::string& groupName, const std::string& key, const Vector4& value);
+	void AddItem(const std::string& groupName, const std::string& key, const Quaternion& value);
 
 	int32_t GetIntValue(const std::string& groupName, const std::string& key) const;
 	float GetFloatValue(const std::string& groupName, const std::string& key) const;
 	Vector2 GetVector2Value(const std::string& groupName, const std::string& key) const;
 	Vector3 GetVector3Value(const std::string& groupName, const std::string& key) const;
-	Vector4 GetVector4Value(const std::string& groupName, const std::string& key) const;
+	Quaternion GetQuaternionValue(const std::string& groupName, const std::string& key) const;
 
 	void SaveFile(const std::string& groupName);
 
@@ -53,7 +53,7 @@ private:
 private:
 
 
-	using Item = std::variant<int32_t, float, Vector2, Vector3, Vector4>;
+	using Item = std::variant<int32_t, float, Vector2, Vector3, Quaternion>;
 
 	using Group = std::map<std::string, Item>;
 

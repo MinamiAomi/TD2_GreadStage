@@ -118,7 +118,7 @@ void GlobalVariables::SetValue(const std::string& groupName, const std::string& 
 	group[key] = newItem;
 }
 
-void GlobalVariables::SetValue(const std::string& groupName, const std::string& key, Vector4 value) {
+void GlobalVariables::SetValue(const std::string& groupName, const std::string& key, Quaternion value) {
 	Group& group = datas_[groupName];
 
 	Item newItem{};
@@ -169,7 +169,7 @@ void GlobalVariables::AddItem(const std::string& groupName, const std::string& k
 	}
 }
 
-void GlobalVariables::AddItem(const std::string& groupName, const std::string& key, const Vector4& value) {
+void GlobalVariables::AddItem(const std::string& groupName, const std::string& key, const Quaternion& value) {
 	std::map<std::string, Group>::iterator itGroup = datas_.find(groupName);
 
 	Group& group = itGroup->second;
@@ -223,15 +223,14 @@ Vector3 GlobalVariables::GetVector3Value(const std::string& groupName, const std
 	return std::get<Vector3>(group.find(key)->second);
 }
 
-Vector4 GlobalVariables::GetVector4Value(const std::string& groupName, const std::string& key) const
-{
+Quaternion GlobalVariables::GetQuaternionValue(const std::string& groupName, const std::string& key) const {
 	assert(datas_.find(groupName) != datas_.end());
 
 	const Group& group = datas_.at(groupName);
 
 	assert(group.find(key) != group.end());
 
-	return std::get<Vector4>(group.find(key)->second);
+	return std::get<Quaternion>(group.find(key)->second);
 }
 
 void GlobalVariables::SaveFile(const std::string& groupName) {
@@ -272,9 +271,9 @@ void GlobalVariables::SaveFile(const std::string& groupName) {
 
 			Vector3 value = std::get<Vector3>(item);
 			root[groupName][itemName] = nlohmann::json::array({ value.x, value.y, value.z });
-		}else if (std::holds_alternative<Vector4>(item)) {
+		}else if (std::holds_alternative<Quaternion>(item)) {
 
-			Vector4 value = std::get<Vector4>(item);
+			Quaternion value = std::get<Quaternion>(item);
 			root[groupName][itemName] = nlohmann::json::array({ value.x, value.y, value.z,value.w });
 		}
 
@@ -384,7 +383,7 @@ void GlobalVariables::LoadFile(const std::string& groupName) {
 			SetValue(groupName, itemName, value);
 		} else if (itItem->is_array() && itItem->size() == 4) {
 
-			Vector4 value = { itItem->at(0), itItem->at(1), itItem->at(2), itItem->at(3) };
+			Quaternion value{ itItem->at(0), itItem->at(1), itItem->at(2), itItem->at(3) };
 			SetValue(groupName, itemName, value);
 		}
 	}
