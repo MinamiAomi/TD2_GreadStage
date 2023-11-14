@@ -21,14 +21,10 @@ void MasterGame::OnInitialize() {
 	// プレイヤー
 	toonModel->Create(ModelData::LoadObjFile("Resources/Model/player.obj"));
 	resourceManager->AddToonModel("Player", toonModel);
-	// 地面
+
 	toonModel = std::make_shared<Model>();
-	toonModel->Create(ModelData::LoadObjFile("Resources/Model/floor.obj"));
-	resourceManager->AddToonModel("Floor", toonModel);
-	// 壁
-	toonModel = std::make_shared<Model>();
-	toonModel->Create(ModelData::LoadObjFile("Resources/Model/Wall/wall.obj"));
-	resourceManager->AddToonModel("Wall", toonModel);
+	toonModel->Create(ModelData::LoadObjFile("Resources/Model/box.obj"));
+	resourceManager->AddToonModel("Box", toonModel);
 
 	std::shared_ptr<Texture> sprite = std::make_shared<Texture>();
 	sprite->Load("Resources/Texture/title.png");

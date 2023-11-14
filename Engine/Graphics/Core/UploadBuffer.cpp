@@ -47,7 +47,7 @@ void UploadBuffer::Copy(const void* srcData, size_t copySize) const {
 
 void UploadBuffer::Destroy() {
     if (cpuData_ && resource_) {
-        resource_->Unmap(0, nullptr);
+        //resource_->Unmap(0, nullptr);
         resource_.Reset();
         cpuData_ = nullptr;
     }

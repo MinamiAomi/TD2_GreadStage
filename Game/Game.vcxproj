@@ -28,10 +28,7 @@
     <ClCompile Include="Scene\SelectScene\SelectScene.cpp" />
     <ClCompile Include="Scene\TitleScene\TitleScene.cpp" />
     <ClCompile Include="Stage\Box\Box.cpp" />
-    <ClCompile Include="Stage\Floor\Floor.cpp" />
     <ClCompile Include="Stage\Stage.cpp" />
-    <ClCompile Include="Stage\Wall\Wall.cpp" />
-    <ClCompile Include="Transition\Transition.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CameraAnimation\CameraAnimation.h" />
@@ -45,10 +42,7 @@
     <ClInclude Include="Scene\SelectScene\SelectScene.h" />
     <ClInclude Include="Scene\TitleScene\TitleScene.h" />
     <ClInclude Include="Stage\Box\Box.h" />
-    <ClInclude Include="Stage\Floor\Floor.h" />
     <ClInclude Include="Stage\Stage.h" />
-    <ClInclude Include="Stage\Wall\Wall.h" />
-    <ClInclude Include="Transition\Transition.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

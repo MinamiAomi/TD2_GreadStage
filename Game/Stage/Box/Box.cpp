@@ -2,7 +2,7 @@
 #include "Graphics/ResourceManager.h"
 #include "Graphics/ImGuiManager.h"
 
-void Box::Initialize(const Vector3& position, const Quaternion& rotate, const Vector3& scale) {
+void Box::Initialize() {
     SetName("Box");
     model_ = std::make_unique<ModelInstance>();
     collider_ = std::make_unique<BoxCollider>();
@@ -11,11 +11,6 @@ void Box::Initialize(const Vector3& position, const Quaternion& rotate, const Ve
     model_->SetIsActive(true);
 
     rotate_ = Vector3(rotate.x, rotate.y, rotate.z) * Math::ToRadian;
-
-    transform.translate = position;
-    transform.rotate = rotate;
-    transform.scale = scale;
-    transform.UpdateMatrix();
 
     collider_->SetName("Box");
     collider_->SetGameObject(this);

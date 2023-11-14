@@ -18,6 +18,10 @@ void CollisionManager::RemoveCollider(Collider* collider) {
 
 void CollisionManager::CheckCollision() {
 
+    for (auto& collider : colliders_) {
+        collider->UpdateAABB();
+    }
+
     auto iter1 = colliders_.begin();
     for (; iter1 != colliders_.end(); ++iter1) {
         Collider* collider1 = *iter1;
