@@ -9,7 +9,7 @@ class ColorBuffer;
 class DepthBuffer;
 class Camera;
 
-struct ToonRootIndex {
+struct ModelRootIndex {
     enum Index {
         Scene = 0,
         Instance,
@@ -22,7 +22,7 @@ struct ToonRootIndex {
     };
 };
 
-class ToonRenderer {
+class ModelRenderer {
 public:
 
     void Initialize(const ColorBuffer& colorBuffer, const DepthBuffer& depthBuffer);
@@ -30,11 +30,8 @@ public:
 
 private:
     void InitializeRootSignature();
-    void InitializeOutlinePass(DXGI_FORMAT rtvFormat, DXGI_FORMAT dsvFormat);
-    void InitializeToonPass(DXGI_FORMAT rtvFormat, DXGI_FORMAT dsvFormat);
+    void InitializePipelineState(DXGI_FORMAT rtvFormat, DXGI_FORMAT dsvFormat);
 
     RootSignature rootSignature_;
-
-    PipelineState outlinePipelineState_;    
-    PipelineState toonPipelineState_;
+    PipelineState pipelineState_;
 };

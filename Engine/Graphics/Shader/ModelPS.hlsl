@@ -8,8 +8,7 @@ ConstantBuffer<Scene> scene_ : register(b0);
 
 struct Instance {
     float4x4 worldMatrix;
-    float outlineWidth;
-    float3 outlineColor;
+    float3 color;
     uint useLighting;
 };
 ConstantBuffer<Instance> instance_ : register(b1);
@@ -44,21 +43,6 @@ struct PSOutput {
     float4 color : SV_TARGET0;
 };
 
-float ToonDiffuse(float3 normal, float3 lightDirection) {
-    const float threshold = 0.2f;
-    
-    float t = LambertReflection(normal, lightDirection);
-    return lerp(1.0f, 0.7f, step(t, threshold));
-}
-
-float ToonSpecular(float3 normal, float3 pixelToCamera, float3 lightDirection) {
-    const float shininess = 10.0f;
-    const float threshold = 0.8f;
-    
-    float t = BlinnPhongReflection(normal, lightDirection, pixelToCamera, shininess);
-    return step(threshold, t);
-}
-
 PSOutput main(PSInput input) {
     // 位置
     float3 position = input.worldPosition;
@@ -73,12 +57,11 @@ PSOutput main(PSInput input) {
     directionalLight_.color = float3(1.0f, 1.0f, 1.0f);
     
     // テクスチャの色
-    float3 textureColor = texture_.Sample(sampler_, input.texcoord).rgb;
-    //float3 textureColor = float3(0.6f, 0.6f, 0.6f);
+    float3 textureColor = texture_.Sample(sampler_, input.texcoord).rgb * instance_.color;
     // 拡散反射
-    float3 diffuse = material_.diffuse * ToonDiffuse(normal, directionalLight_.direction);
+    float3 diffuse = material_.diffuse * HalfLambertReflection(normal, directionalLight_.direction);
     // 鏡面反射
-    float3 specular = material_.specular * ToonSpecular(normal, pixelToCamera, directionalLight_.direction);
+    float3 specular = material_.specular * BlinnPhongReflection(normal, directionalLight_.direction, pixelToCamera, 10.0f);
     // シェーディングによる色
     float3 shadeColor = (diffuse + specular) * directionalLight_.color * directionalLight_.intensity;
     // ライティングを使用しない場合テクスチャの色をそのまま使う
