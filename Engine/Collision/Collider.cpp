@@ -71,8 +71,13 @@ bool Collider::CanCollision(uint32_t mask) const {
     return (this->collisionAttribute_ & mask);
 }
 
+void SphereCollider::UpdateAABB() {
+    aabb_.min = sphere_.center + Vector3(-sphere_.radius);
+    aabb_.max = sphere_.center + Vector3(sphere_.radius);
+}
+
 bool SphereCollider::IsCollision(Collider* other, CollisionInfo& collisionInfo) {
-    if (CanCollision(other)) {
+    if (CanCollision(other) && this->GetAABB().Intersect(other->GetAABB())) {
         return  other->IsCollision(this, collisionInfo);
     }
     return false;
@@ -107,13 +112,11 @@ bool SphereCollider::IsCollision(BoxCollider* other, CollisionInfo& collisionInf
     Matrix4x4 obbWorldInverse = Matrix4x4::MakeAffineInverse(obbRotateMatrix, obb.center);
     Vector3 centerInOBBLocal = sphere.center * obbWorldInverse;
     Vector3 halfSize = obb.size * 0.5f;
-    Math::AABB aabbInOBBLocal{ -halfSize, halfSize };
-    Math::Sphere sphereInOBBLocal{ centerInOBBLocal, sphere.radius };
 
     Vector3 point = {
-          std::clamp(centerInOBBLocal.x, -obb.size.x, obb.size.x),
-          std::clamp(centerInOBBLocal.y, -obb.size.y, obb.size.y),
-          std::clamp(centerInOBBLocal.z, -obb.size.z, obb.size.z) };
+          std::clamp(centerInOBBLocal.x, -halfSize.x, halfSize.x),
+          std::clamp(centerInOBBLocal.y, -halfSize.y, halfSize.y),
+          std::clamp(centerInOBBLocal.z, -halfSize.z, halfSize.z) };
     Vector3 diff = point - centerInOBBLocal;
 
     if (diff.LengthSquare() > sphere.radius * sphere.radius) {
@@ -148,8 +151,16 @@ bool SphereCollider::RayCast(const Vector3& origin, const Vector3& diff, uint32_
     return true;
 }
 
+void BoxCollider::UpdateAABB() {
+    auto vertices = GetVertices(this->obb_);
+    aabb_.max = aabb_.min = vertices[0];
+    for (uint32_t i = 1; i < vertices.size(); ++i) {
+        aabb_.Merge(vertices[i]);
+    }
+}
+
 bool BoxCollider::IsCollision(Collider* other, CollisionInfo& collisionInfo) {
-    if (CanCollision(other)) {
+    if (CanCollision(other) && this->GetAABB().Intersect(other->GetAABB())) {
         return  other->IsCollision(this, collisionInfo);
     }
     return false;
@@ -163,13 +174,11 @@ bool BoxCollider::IsCollision(SphereCollider* other, CollisionInfo& collisionInf
     Matrix4x4 obbWorldInverse = Matrix4x4::MakeAffineInverse(obbRotateMatrix, obb.center);
     Vector3 centerInOBBLocal = sphere.center * obbWorldInverse;
     Vector3 halfSize = obb.size * 0.5f;
-    Math::AABB aabbInOBBLocal{ -halfSize, halfSize };
-    Math::Sphere sphereInOBBLocal{ centerInOBBLocal, sphere.radius };
 
     Vector3 point = {
-          std::clamp(centerInOBBLocal.x, -obb.size.x, obb.size.x),
-          std::clamp(centerInOBBLocal.y, -obb.size.y, obb.size.y),
-          std::clamp(centerInOBBLocal.z, -obb.size.z, obb.size.z) };
+          std::clamp(centerInOBBLocal.x, -halfSize.x, halfSize.x),
+          std::clamp(centerInOBBLocal.y, -halfSize.y, halfSize.y),
+          std::clamp(centerInOBBLocal.z, -halfSize.z, halfSize.z) };
     Vector3 diff = centerInOBBLocal - point;
 
     if (diff.LengthSquare() > sphere.radius * sphere.radius) {

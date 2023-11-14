@@ -30,6 +30,7 @@ public:
     Collider();
     virtual ~Collider();
 
+    virtual void UpdateAABB() = 0;
     virtual bool IsCollision(Collider* collider, CollisionInfo& collisionInfo) = 0;
     virtual bool IsCollision(SphereCollider* collider, CollisionInfo& collisionInfo) = 0;
     virtual bool IsCollision(BoxCollider* collider, CollisionInfo& collisionInfo) = 0;
@@ -44,6 +45,7 @@ public:
 
     GameObject* GetGameObject() const { return gameObject_; }
     const std::string& GetName() const { return name_; }
+    const Math::AABB& GetAABB() const { return aabb_; }
 
     void OnCollision(const CollisionInfo& collisionInfo);
 
@@ -54,6 +56,7 @@ protected:
     std::string name_;
     GameObject* gameObject_;
     Callback callback_;
+    Math::AABB aabb_;
     uint32_t collisionAttribute_ = 0xFFFFFFFF;
     uint32_t collisionMask_ = 0xFFFFFFFF;
     bool isActive_ = true;
@@ -63,11 +66,11 @@ class SphereCollider :
     public Collider {
     friend class BoxCollider;
 public:
+    void UpdateAABB() override;
     bool IsCollision(Collider* collider, CollisionInfo& collisionInfo) override;
     bool IsCollision(SphereCollider* collider, CollisionInfo& collisionInfo) override;
     bool IsCollision(BoxCollider* collider, CollisionInfo& collisionInfo) override;
     bool RayCast(const Vector3& origin, const Vector3& diff, uint32_t mask, RayCastInfo& nearest) override;
-
 
     void SetCenter(const Vector3& center) { sphere_.center = center; }
     void SetRadius(float radius) { sphere_.radius = radius; }
@@ -80,6 +83,7 @@ class BoxCollider :
     public Collider {
     friend class SphereCollider;
 public:
+    void UpdateAABB() override;
     bool IsCollision(Collider* other, CollisionInfo& collisionInfo) override;
     bool IsCollision(SphereCollider* other, CollisionInfo& collisionInfo) override;
     bool IsCollision(BoxCollider* other, CollisionInfo& collisionInfo) override;
