@@ -11,7 +11,7 @@ class Box : public GameObject {
 public:
     ~Box() {}
 
-    void Initialize(const Vector3& position, const Vector4& rotate, const Vector3& scale);
+    void Initialize(const Vector3& position, const Quaternion& rotate, const Vector3& scale);
     void Update();
 
     void DrawImGui();
