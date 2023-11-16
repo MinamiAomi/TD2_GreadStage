@@ -10,7 +10,7 @@ void Box::Initialize() {
     model_->SetModel(ResourceManager::GetInstance()->FindModel("Box"));
     model_->SetIsActive(true);
 
-    rotate_ = Vector3(rotate.x, rotate.y, rotate.z) * Math::ToRadian;
+    //rotate_ = Vector3(rotate.x, rotate.y, rotate.z) * Math::ToRadian;
 
     collider_->SetName("Box");
     collider_->SetGameObject(this);
