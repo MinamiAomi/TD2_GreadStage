@@ -118,6 +118,15 @@ void GlobalVariables::SetValue(const std::string& groupName, const std::string& 
 	group[key] = newItem;
 }
 
+void GlobalVariables::SetValue(const std::string& groupName, const std::string& key, Quaternion value) {
+	Group& group = datas_[groupName];
+
+	Item newItem{};
+	newItem = value;
+
+	group[key] = newItem;
+}
+
 void GlobalVariables::AddItem(const std::string& groupName, const std::string& key, int32_t value) {
 
 	std::map<std::string, Group>::iterator itGroup = datas_.find(groupName);
@@ -151,6 +160,16 @@ void GlobalVariables::AddItem(const std::string& groupName, const std::string& k
 }
 
 void GlobalVariables::AddItem(const std::string& groupName, const std::string& key, const Vector3& value) {
+	std::map<std::string, Group>::iterator itGroup = datas_.find(groupName);
+
+	Group& group = itGroup->second;
+
+	if (group.find(key) == group.end()) {
+		SetValue(groupName, key, value);
+	}
+}
+
+void GlobalVariables::AddItem(const std::string& groupName, const std::string& key, const Quaternion& value) {
 	std::map<std::string, Group>::iterator itGroup = datas_.find(groupName);
 
 	Group& group = itGroup->second;
@@ -204,6 +223,16 @@ Vector3 GlobalVariables::GetVector3Value(const std::string& groupName, const std
 	return std::get<Vector3>(group.find(key)->second);
 }
 
+Quaternion GlobalVariables::GetQuaternionValue(const std::string& groupName, const std::string& key) const {
+	assert(datas_.find(groupName) != datas_.end());
+
+	const Group& group = datas_.at(groupName);
+
+	assert(group.find(key) != group.end());
+
+	return std::get<Quaternion>(group.find(key)->second);
+}
+
 void GlobalVariables::SaveFile(const std::string& groupName) {
 
 
@@ -242,6 +271,10 @@ void GlobalVariables::SaveFile(const std::string& groupName) {
 
 			Vector3 value = std::get<Vector3>(item);
 			root[groupName][itemName] = nlohmann::json::array({ value.x, value.y, value.z });
+		}else if (std::holds_alternative<Quaternion>(item)) {
+
+			Quaternion value = std::get<Quaternion>(item);
+			root[groupName][itemName] = nlohmann::json::array({ value.x, value.y, value.z,value.w });
 		}
 
 	}
@@ -267,7 +300,7 @@ void GlobalVariables::SaveFile(const std::string& groupName) {
 		return;
 	}
 
-	ofs << std::setw(4) << root << std::endl;
+	ofs << std::setw(5) << root << std::endl;
 
 	ofs.close();
 }
@@ -344,10 +377,13 @@ void GlobalVariables::LoadFile(const std::string& groupName) {
 
 			Vector2 value = {itItem->at(0), itItem->at(1)};
 			SetValue(groupName, itemName, value);
-		}
-		else if (itItem->is_array() && itItem->size() == 3) {
+		} else if (itItem->is_array() && itItem->size() == 3) {
 
 			Vector3 value = { itItem->at(0), itItem->at(1), itItem->at(2) };
+			SetValue(groupName, itemName, value);
+		} else if (itItem->is_array() && itItem->size() == 4) {
+
+			Quaternion value{ itItem->at(0), itItem->at(1), itItem->at(2), itItem->at(3) };
 			SetValue(groupName, itemName, value);
 		}
 	}
