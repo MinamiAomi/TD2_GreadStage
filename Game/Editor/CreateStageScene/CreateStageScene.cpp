@@ -4,28 +4,28 @@
 #include "GlobalVariables/GlobalVariables.h"
 
 void CreateStageScene::OnInitialize() {
-	camera_ = std::make_shared<DebugCamera>();
-	camera_->Initialize();
-	global_ = GlobalVariables::GetInstance();
-	global_->ChackFiles(fileName_);
-	for (auto& i : fileName_) {
-		global_->CreateGroup(i.c_str());
-	}
-	fileNumber_ = 0;
-	loadSelectName_ = fileName_[fileNumber_].c_str();
+    camera_ = std::make_shared<DebugCamera>();
+    camera_->Initialize();
+    global_ = GlobalVariables::GetInstance();
+    global_->ChackFiles(fileName_);
+    for (auto& i : fileName_) {
+        global_->CreateGroup(i.c_str());
+    }
+    fileNumber_ = 0;
+    loadSelectName_ = fileName_[fileNumber_].c_str();
 
-	stage_ = std::make_unique<Stage>();
-	stage_->Initialize();
+    stage_ = std::make_unique<Stage>();
+    stage_->Initialize();
 }
 
 void CreateStageScene::OnUpdate() {
-	DrawImGui();
+    DrawImGui();
 
-	stage_->Update();
+    stage_->Update();
 
-	CollisionManager::GetInstance()->CheckCollision();
-	// カメラの更新
-	camera_->Update();
+    CollisionManager::GetInstance()->CheckCollision();
+    // カメラの更新
+    camera_->Update();
 }
 
 void CreateStageScene::OnFinalize() {
@@ -72,34 +72,37 @@ void CreateStageScene::DrawImGui() {
 				ImGui::TreePop();
 			}
 
-			if (ImGui::TreeNode("FileLoad")) {
-				for (size_t i = 0; i < fileName_.size(); i++) {
-					if (ImGui::RadioButton(fileName_[i].c_str(), &fileNumber_, static_cast<int>(i))) {
-						loadSelectName_ = fileName_[fileNumber_].c_str();
-					}
-				}
-				if (ImGui::Button("Load")) {
-					stage_->Load(loadSelectName_);
-				}
-				ImGui::TreePop();
-			}			
-			ImGui::EndMenu();
-		}
-		if (ImGui::BeginMenu("Boxes")) {
-			for (int i = 0; i < stage_->GetBoxes().size(); i++) {
-				if (ImGui::TreeNode(("BoxNumber : " + std::to_string(i + 1)).c_str())) {
-					stage_->GetBoxes()[i]->DrawImGui();
-					ImGui::TreePop();
-				}
-			}
-			ImGui::EndMenu();
-		}
-		if (ImGui::BeginMenu("Confirmation")) {
-			// 要素数確認
-			ImGui::Text("ElementCount = %d", stage_->GetBoxes().size());
-			ImGui::EndMenu();
-		}
-		ImGui::EndMenuBar();
-	}
-	ImGui::End();
+            if (ImGui::TreeNode("FileLoad")) {
+                for (size_t i = 0; i < fileName_.size(); i++) {
+                    if (ImGui::RadioButton(fileName_[i].c_str(), &fileNumber_, static_cast<int>(i))) {
+                        loadSelectName_ = fileName_[fileNumber_].c_str();
+                    }
+                }
+                if (ImGui::Button("Load")) {
+                    stage_->Load(loadSelectName_);
+                }
+                ImGui::TreePop();
+            }
+            ImGui::EndMenu();
+        }
+        if (ImGui::BeginMenu("Boxes")) {
+            for (int i = 0; i < stage_->GetBoxes().size(); i++) {
+                if (ImGui::TreeNode(("BoxNumber : " + std::to_string(i + 1)).c_str())) {
+                    stage_->GetBoxes()[i]->DrawImGui();
+                    if (ImGui::Button("Delete")) {
+                        stage_->Delete(i);
+                    }
+                    ImGui::TreePop();
+                }
+            }
+            ImGui::EndMenu();
+        }
+        if (ImGui::BeginMenu("Confirmation")) {
+            // 要素数確認
+            ImGui::Text("ElementCount = %d", stage_->GetBoxes().size());
+            ImGui::EndMenu();
+        }
+        ImGui::EndMenuBar();
+    }
+    ImGui::End();
 }
