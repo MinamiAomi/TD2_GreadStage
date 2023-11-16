@@ -2,16 +2,20 @@
 
 #include <memory>
 #include <vector>
+#include <filesystem>
 
-#include "Floor/Floor.h"
-#include "Wall/Wall.h"
+#include "Box/Box.h"
 
 class Stage {
 public:
     void Initialize();
     void Update();
 
+    void Add(const std::shared_ptr<Box>& box);
+    void Load(const std::filesystem::path& loadFile);
+
+    const std::vector<std::shared_ptr<Box>>& GetBoxes() const { return boxes_; }
+
 private:
-    std::vector<std::shared_ptr<Floor>> floors_;
-    std::vector<std::shared_ptr<Wall>> walls_;
+    std::vector<std::shared_ptr<Box>> boxes_;
 };

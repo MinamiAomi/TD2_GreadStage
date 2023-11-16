@@ -1,12 +1,12 @@
-#include "ToonModel.h"
+#include "Model.h"
 
 #include "Core/Graphics.h"
 #include "Core/CommandContext.h"
 #include "Core/SamplerManager.h"
-#include "ToonRenderer.h"
+#include "Renderer.h"
 #include "DefaultTextures.h"
 
-void ToonModel::Create(const ModelData& modelData) {
+void Model::Create(const ModelData& modelData) {
 
     struct MaterialData {
         Vector3 diffuse;
@@ -30,7 +30,7 @@ void ToonModel::Create(const ModelData& modelData) {
     // マテリアル
     for (auto& srcMaterial : modelData.materials) {
         auto& destMaterial = createdMaterials.emplace_back(std::make_shared<Material>());
-        destMaterial->constantBuffer.CreateConstantBuffer(L"ToonModel ConstantBuffer", sizeof(MaterialData));
+        destMaterial->constantBuffer.CreateConstantBuffer(L"Model ConstantBuffer", sizeof(MaterialData));
         MaterialData materialData{};
         materialData.diffuse = srcMaterial.diffuse;
         materialData.specular = srcMaterial.specular;
@@ -45,11 +45,11 @@ void ToonModel::Create(const ModelData& modelData) {
         // 生成するメッシュ
         auto& destMesh = meshes_.emplace_back();
         // 頂点バッファを作成
-        destMesh.vertexBuffer.Create(L"ToonModel VertexBuffer", sizeof(srcMesh.vertices[0]), srcMesh.vertices.size());
+        destMesh.vertexBuffer.Create(L"Model VertexBuffer", sizeof(srcMesh.vertices[0]), srcMesh.vertices.size());
         destMesh.vertexBuffer.Copy(srcMesh.vertices.data(), destMesh.vertexBuffer.GetBufferSize());
         // インデックスバッファを作成
         destMesh.indexCount = uint32_t(srcMesh.indices.size());
-        destMesh.indexBuffer.Create(L"ToonModel indexBuffer", sizeof(srcMesh.indices[0]), srcMesh.indices.size());
+        destMesh.indexBuffer.Create(L"Model indexBuffer", sizeof(srcMesh.indices[0]), srcMesh.indices.size());
         destMesh.indexBuffer.Copy(srcMesh.indices.data(), destMesh.indexBuffer.GetBufferSize());
 
         assert(srcMesh.materialIndex < createdMaterials.size());
@@ -65,13 +65,13 @@ void ToonModel::Create(const ModelData& modelData) {
 }
 
 
-std::list<ToonModelInstance*> ToonModelInstance::instanceLists_;
+std::list<ModelInstance*> ModelInstance::instanceLists_;
 
-ToonModelInstance::ToonModelInstance() {
+ModelInstance::ModelInstance() {
     instanceLists_.emplace_back(this);
 }
 
-ToonModelInstance::~ToonModelInstance() {
+ModelInstance::~ModelInstance() {
     auto iter = std::find(instanceLists_.begin(), instanceLists_.end(), this);
     if (iter != instanceLists_.end()) {
         instanceLists_.erase(iter);

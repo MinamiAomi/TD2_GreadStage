@@ -1,6 +1,6 @@
 #pragma once
 #include "Collision/GameObject.h"
-#include "Graphics/ToonModel.h"
+#include "Graphics/Model.h"
 
 #include <memory>
 
@@ -23,13 +23,14 @@ public: // セッター
 
 private: // メンバ変数
 	// モデル
-	std::unique_ptr<ToonModelInstance> model_;
+	std::unique_ptr<ModelInstance> model_;
 	std::shared_ptr<CameraAnimation> camera_;
 
 	Transform modelTrans_;
 
-	std::unique_ptr<BoxCollider> collider_;
-	Vector3 colliderOffset_ = { 0.0f,1.0f,0.0f };
+	std::unique_ptr<SphereCollider> collider_;
+	Collider* floorCollider_;
+	Vector3 colliderOffset_ = { 0.0f,0.5f,0.0f };
 
 	float moveSpeed_ = 0.0f;
 

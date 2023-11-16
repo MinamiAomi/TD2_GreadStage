@@ -17,12 +17,6 @@
     <ClCompile Include="Stage\Stage.cpp">
       <Filter>Stage</Filter>
     </ClCompile>
-    <ClCompile Include="Stage\Floor\Floor.cpp">
-      <Filter>Stage\Floor</Filter>
-    </ClCompile>
-    <ClCompile Include="Stage\Wall\Wall.cpp">
-      <Filter>Stage\Wall</Filter>
-    </ClCompile>
     <ClCompile Include="Editor\Editor.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
@@ -34,6 +28,9 @@
     </ClCompile>
     <ClCompile Include="GlobalVariables\GlobalVariables.cpp">
       <Filter>GlobalVariables</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugCamera.cpp">
+      <Filter>Editor\DebugCamera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -55,12 +52,6 @@
     <Filter Include="Stage">
       <UniqueIdentifier>{98f80384-86a8-4dbf-ba26-a7b10a565ccb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Stage\Floor">
-      <UniqueIdentifier>{800a3e6a-afc4-494c-9d51-d3c405a8e0cd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Stage\Wall">
-      <UniqueIdentifier>{8c57ccdc-521c-4293-ba53-ac3c07fb29fc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Editor">
       <UniqueIdentifier>{38273b24-06c3-42e6-b555-a8881cc8ab00}</UniqueIdentifier>
     </Filter>
@@ -72,6 +63,9 @@
     </Filter>
     <Filter Include="GlobalVariables">
       <UniqueIdentifier>{fa641b57-32ad-4ffa-b6ee-c2bfde91b7f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor\DebugCamera">
+      <UniqueIdentifier>{da84ee4d-5833-4279-9dba-e0d5fe86729f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -90,12 +84,6 @@
     <ClInclude Include="Stage\Stage.h">
       <Filter>Stage</Filter>
     </ClInclude>
-    <ClInclude Include="Stage\Floor\Floor.h">
-      <Filter>Stage\Floor</Filter>
-    </ClInclude>
-    <ClInclude Include="Stage\Wall\Wall.h">
-      <Filter>Stage\Wall</Filter>
-    </ClInclude>
     <ClInclude Include="Editor\Editor.h">
       <Filter>Editor</Filter>
     </ClInclude>
@@ -107,6 +95,9 @@
     </ClInclude>
     <ClInclude Include="GlobalVariables\GlobalVariables.h">
       <Filter>GlobalVariables</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugCamera.h">
+      <Filter>Editor\DebugCamera</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

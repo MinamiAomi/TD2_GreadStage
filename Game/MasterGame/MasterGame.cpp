@@ -2,7 +2,7 @@
 
 #include "Scene/SceneManager.h"
 #include "Engine/Graphics/ResourceManager.h"
-#include "Engine/Graphics/ToonModel.h"
+#include "Engine/Graphics/Model.h"
 
 #include "BattleScene/BattleScene.h"
 
@@ -16,18 +16,14 @@ void MasterGame::OnInitialize() {
 	ResourceManager* resourceManager = ResourceManager::GetInstance();
 
 	// モデルの追加
-	std::shared_ptr<ToonModel> toonModel = std::make_shared<ToonModel>();
+	std::shared_ptr<Model> toonModel = std::make_shared<Model>();
 	// プレイヤー
 	toonModel->Create(ModelData::LoadObjFile("Resources/Model/player.obj"));
 	resourceManager->AddToonModel("Player", toonModel);
-	// 地面
-	toonModel = std::make_shared<ToonModel>();
-	toonModel->Create(ModelData::LoadObjFile("Resources/Model/floor.obj"));
-	resourceManager->AddToonModel("Floor", toonModel);
-	// 壁
-	toonModel = std::make_shared<ToonModel>();
-	toonModel->Create(ModelData::LoadObjFile("Resources/Model/Wall/wall.obj"));
-	resourceManager->AddToonModel("Wall", toonModel);
+
+	toonModel = std::make_shared<Model>();
+	toonModel->Create(ModelData::LoadObjFile("Resources/Model/box.obj"));
+	resourceManager->AddToonModel("Box", toonModel);
 
 }
 
