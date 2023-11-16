@@ -3,6 +3,7 @@
 #include "Scene/SceneManager.h"
 #include "Engine/Graphics/ResourceManager.h"
 #include "Engine/Graphics/Model.h"
+#include "Engine/Graphics/Sprite.h"
 
 #include "Game/Scene/TitleScene/TitleScene.h"
 
@@ -28,6 +29,10 @@ void MasterGame::OnInitialize() {
 	toonModel = std::make_shared<Model>();
 	toonModel->Create(ModelData::LoadObjFile("Resources/Model/Wall/wall.obj"));
 	resourceManager->AddToonModel("Wall", toonModel);
+
+	std::shared_ptr<Texture> sprite = std::make_shared<Texture>();
+	sprite->Load("Resources/Texture/title.png");
+	
 
 }
 

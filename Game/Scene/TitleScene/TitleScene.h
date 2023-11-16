@@ -18,4 +18,6 @@ private: // メンバ変数
 	std::shared_ptr<CameraAnimation> camera_;
 	std::shared_ptr<Stage> stage_;
 
+
+
 };
