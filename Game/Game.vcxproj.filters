@@ -105,5 +105,6 @@
     <ClInclude Include="Easing\Easing.h">
       <Filter>Easing</Filter>
     </ClInclude>
+    <ClInclude Include="CollisionConfig.h" />
   </ItemGroup>
 </Project>

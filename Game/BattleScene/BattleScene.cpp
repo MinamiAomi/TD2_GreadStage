@@ -24,7 +24,9 @@ void BattleScene::OnUpdate() {
 	stage_->Update();
 	player_->Update();
 
+	player_->PreCollisionUpdate();
 	CollisionManager::GetInstance()->CheckCollision();
+	player_->PostCollisionUpdate();
 	// カメラの更新
 	camera_->Update();
 }

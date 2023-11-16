@@ -32,6 +32,22 @@
             0.0,
             5.0
         ],
-        "Confirmation : ": 2
+        "BoxNumber : 2 : Scale": [
+            5.0,
+            10.0,
+            10.0
+        ],
+        "BoxNumber : 2 : Rotate": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+        ],
+        "BoxNumber : 2 : Translate": [
+            5.0,
+            0.0,
+            2.5
+        ],
+        "Confirmation : ": 3
     }
 }

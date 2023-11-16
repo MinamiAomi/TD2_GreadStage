@@ -6,6 +6,7 @@
 
 #include "Graphics/ImGuiManager.h"
 #include <numbers>
+#include "CollisionConfig.h"
 
 void Player::Initialize() {
     SetName("Player");
@@ -29,6 +30,8 @@ void Player::Initialize() {
     collider_->SetName("Player");
     collider_->SetCenter(transform.translate + colliderOffset_);
     collider_->SetRadius(0.5f);
+    collider_->SetCollisionAttribute(CollisionConfig::Player);
+    collider_->SetCollisionMask(~CollisionConfig::Player);
     //collider_->SetSize({ 1.0f, 2.0f, 1.0f });
     collider_->SetCallback([this](const CollisionInfo& collisionInfo) { OnCollision(collisionInfo); });
 
@@ -54,9 +57,33 @@ void Player::Update() {
 
     MoveLimit();
 
-    isWallRun_ = false;
-
     UpdateTransform();
+}
+
+void Player::PreCollisionUpdate() {
+    if (moveDirection_.Length() <= 0.00001f) {
+        return;
+    }
+
+    wallColliders_.clear();
+    auto collisionManager = CollisionManager::GetInstance();
+
+    float angles[] = {
+        0.0f,
+        45.0f * Math::ToRadian,
+       -45.0f * Math::ToRadian,
+        90.0f * Math::ToRadian,
+       -90.0f * Math::ToRadian,
+    };
+    Vector3 axis = transform.rotate.GetUp();
+    for (uint32_t i = 0; i < _countof(angles); ++i) {
+        RayCastInfo rayCastInfo{};
+        Vector3 origin = colliderOffset_ * transform.worldMatrix;
+        Vector3 direction = Quaternion::MakeFromAngleAxis(angles[i], axis) * moveDirection_.Normalized() * 0.6f;
+        if (collisionManager->RayCast(origin, direction, CollisionConfig::Stage, &rayCastInfo)) {
+            wallColliders_.emplace_back(rayCastInfo.collider);
+        }
+    }
 }
 
 void Player::UpdateTransform() {
@@ -65,6 +92,7 @@ void Player::UpdateTransform() {
     modelTrans_.UpdateMatrix();
 
     collider_->SetCenter(colliderOffset_ * transform.worldMatrix);
+    overlapCollider_->SetCenter(colliderOffset_ * transform.worldMatrix);
     //collider_->SetOrientation(rotate);
 
     // モデル座標更新
@@ -109,6 +137,7 @@ void Player::MoveUpdate() {
         transform.translate += move;
     }
 
+    moveDirection_ = move;
 }
 
 void Player::MoveLimit() {
@@ -157,41 +186,28 @@ void Player::OnCollision(const CollisionInfo& collisionInfo) {
         // if (std::abs(std::acos(dot)) < kGroundGradientAngle) {
         //     floorCollider_ = collisionInfo.collider;
         // }
-        jumpParamerets_.isJumped_ = false;
-        jumpParamerets_.fallSpeed_ = 0.0f;
+
 
         //if (floorCollider_ == collisionInfo.collider) {
             // Quaternionは後ろからかける
+
+        // 事前に飛ばしたレイに当たったコライダーは処理を通さない
+        auto wallCollider = std::find(wallColliders_.begin(), wallColliders_.end(), collisionInfo.collider);
+        if (wallCollider == wallColliders_.end()) {
+
+            jumpParamerets_.isJumped_ = false;
+            jumpParamerets_.fallSpeed_ = 0.0f;
+
             Vector3 up = transform.rotate.GetUp();
             Vector3 normal = collisionInfo.normal.Normalized();
             if (Dot(up, normal) < 0.9999f) {
                 Quaternion diff = Quaternion::MakeFromTwoVector(up, normal);
                 transform.rotate = diff * transform.rotate;
             }
+        }
         //}
     }
 
-    if (collisionInfo.collider->GetName() == "Wall") {
-        // ワールド空間の押し出しベクトル
-        Vector3 pushVector = collisionInfo.normal * collisionInfo.depth;
-        transform.translate += pushVector;
-
-        // Quaternionは後ろからかける
-        Vector3 up = transform.rotate.GetUp();
-        Vector3 normal = collisionInfo.normal.Normalized();
-        if (Dot(up, normal) < 0.9999f) {
-            Quaternion diff = Quaternion::MakeFromTwoVector(up, normal);
-            transform.rotate = diff * transform.rotate;
-        }
-
-        isWallRun_ = true;
-
-    }
-
-    if (collisionInfo.collider->GetName() == "WallRange") {
-
-        jumpParamerets_.isJumped_ = false;
-    }
 
     UpdateTransform();
 

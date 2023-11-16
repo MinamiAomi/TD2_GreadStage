@@ -31,6 +31,7 @@
   <ItemGroup>
     <ClInclude Include="BattleScene\BattleScene.h" />
     <ClInclude Include="CameraAnimation\CameraAnimation.h" />
+    <ClInclude Include="CollisionConfig.h" />
     <ClInclude Include="DebugCamera.h" />
     <ClInclude Include="Easing\Easing.h" />
     <ClInclude Include="Editor\CreateStageScene\CreateStageScene.h" />

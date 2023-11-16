@@ -3,6 +3,7 @@
 #include "Graphics/Model.h"
 
 #include <memory>
+#include <map>
 
 #include "Math/Transform.h"
 #include "CameraAnimation/CameraAnimation.h"
@@ -14,6 +15,7 @@ public:
 	void Initialize();
 	// 更新処理
 	void Update();
+	void PreCollisionUpdate();
 
 public: // ゲッター
 	Transform GetTransform() { return transform; }
@@ -41,10 +43,10 @@ private: // メンバ変数
 	};
 	JumpParameters jumpParamerets_;
 	
-	bool isWallRun_ = false;
-
 	Vector3 dotUp_;
 
+	Vector3 moveDirection_;
+	std::vector<Collider*> wallColliders_;
 
 private: // メンバ関数
 	// 座標更新
@@ -59,6 +61,7 @@ private: // メンバ関数
 	void WallUpdate(Vector3 moveVec);
 
 	void OnCollision(const CollisionInfo& collisionInfo);
+	void OnCollisionOverlap(const CollisionInfo& collisionInfo);
 
 
 	void DrawImGui();

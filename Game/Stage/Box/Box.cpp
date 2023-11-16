@@ -1,6 +1,7 @@
 #include "Box.h"
 #include "Graphics/ResourceManager.h"
 #include "Graphics/ImGuiManager.h"
+#include "CollisionConfig.h"
 
 void Box::Initialize() {
     SetName("Box");
@@ -17,6 +18,8 @@ void Box::Initialize() {
     collider_->SetOrientation(transform.rotate);
     collider_->SetSize(transform.scale);
     collider_->SetCenter(transform.translate);
+    collider_->SetCollisionAttribute(CollisionConfig::Stage);
+    collider_->SetCollisionMask(~CollisionConfig::Stage);
 }
 
 void Box::Update() {

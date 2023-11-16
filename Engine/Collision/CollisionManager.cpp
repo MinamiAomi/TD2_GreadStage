@@ -61,6 +61,7 @@ bool CollisionManager::RayCast(const Vector3& origin, const Vector3& diff, uint3
         if (collider->RayCast(origin, diff, mask, info)) {
             if (info.nearest < tmpNearest.nearest) {
                 tmpNearest = info;
+                tmpNearest.collider = collider;
             }
         }   
     }
