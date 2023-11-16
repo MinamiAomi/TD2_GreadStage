@@ -33,6 +33,7 @@
   <ItemGroup>
     <ClInclude Include="CameraAnimation\CameraAnimation.h" />
     <ClInclude Include="DebugCamera.h" />
+    <ClInclude Include="Easing\Easing.h" />
     <ClInclude Include="Editor\CreateStageScene\CreateStageScene.h" />
     <ClInclude Include="Editor\Editor.h" />
     <ClInclude Include="GlobalVariables\GlobalVariables.h" />

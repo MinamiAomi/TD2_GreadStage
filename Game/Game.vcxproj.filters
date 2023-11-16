@@ -117,5 +117,8 @@
     <ClInclude Include="Scene\SelectScene\SelectScene.h">
       <Filter>GameScene\SelectScene</Filter>
     </ClInclude>
+    <ClInclude Include="Easing\Easing.h">
+      <Filter>Easing</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
