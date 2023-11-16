@@ -28,8 +28,9 @@ private: // メンバ変数
 
 	Transform modelTrans_;
 
-	std::unique_ptr<BoxCollider> collider_;
-	Vector3 colliderOffset_ = { 0.0f,1.0f,0.0f };
+	std::unique_ptr<SphereCollider> collider_;
+	Collider* floorCollider_;
+	Vector3 colliderOffset_ = { 0.0f,0.5f,0.0f };
 
 	float moveSpeed_ = 0.0f;
 

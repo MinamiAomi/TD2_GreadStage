@@ -17,12 +17,6 @@
     <ClCompile Include="Stage\Stage.cpp">
       <Filter>Stage</Filter>
     </ClCompile>
-    <ClCompile Include="Stage\Floor\Floor.cpp">
-      <Filter>Stage\Floor</Filter>
-    </ClCompile>
-    <ClCompile Include="Stage\Wall\Wall.cpp">
-      <Filter>Stage\Wall</Filter>
-    </ClCompile>
     <ClCompile Include="Editor\Editor.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
@@ -58,12 +52,6 @@
     <Filter Include="Stage">
       <UniqueIdentifier>{98f80384-86a8-4dbf-ba26-a7b10a565ccb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Stage\Floor">
-      <UniqueIdentifier>{800a3e6a-afc4-494c-9d51-d3c405a8e0cd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Stage\Wall">
-      <UniqueIdentifier>{8c57ccdc-521c-4293-ba53-ac3c07fb29fc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Editor">
       <UniqueIdentifier>{38273b24-06c3-42e6-b555-a8881cc8ab00}</UniqueIdentifier>
     </Filter>
@@ -95,12 +83,6 @@
     </ClInclude>
     <ClInclude Include="Stage\Stage.h">
       <Filter>Stage</Filter>
-    </ClInclude>
-    <ClInclude Include="Stage\Floor\Floor.h">
-      <Filter>Stage\Floor</Filter>
-    </ClInclude>
-    <ClInclude Include="Stage\Wall\Wall.h">
-      <Filter>Stage\Wall</Filter>
     </ClInclude>
     <ClInclude Include="Editor\Editor.h">
       <Filter>Editor</Filter>
