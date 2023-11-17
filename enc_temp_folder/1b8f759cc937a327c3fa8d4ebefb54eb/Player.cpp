@@ -92,6 +92,7 @@ void Player::UpdateTransform() {
     modelTrans_.UpdateMatrix();
 
     collider_->SetCenter(colliderOffset_ * transform.worldMatrix);
+    overlapCollider_->SetCenter(colliderOffset_ * transform.worldMatrix);
     //collider_->SetOrientation(rotate);
 
     // モデル座標更新
