@@ -37,9 +37,9 @@ void Player::Initialize() {
 
     // パラメーター初期化
     moveSpeed_ = 0.25f;
-    jumpParamerets_.isJumped_ = false;
-    jumpParamerets_.fallSpeed_ = 0.0f;
-    jumpParamerets_.jumpPower_ = 1.0f;
+    jumpParameters_.isJumped = false;
+    jumpParameters_.fallSpeed = 0.0f;
+    jumpParameters_.jumpPower = 0.5f;
 
     floorCollider_ = nullptr;
 }
@@ -90,7 +90,7 @@ void Player::PreCollisionUpdate() {
 
 void Player::PostCollisionUpdate() {
     // 球コライダーが衝突していなかったら
-    if (!isCollision_) {
+    if (!isCollision_ && !jumpParameters_.isJumped) {
         auto collisionManager = CollisionManager::GetInstance();
         Vector3 colliderPoint = colliderOffset_ * transform.worldMatrix;
         auto nearestInfo = collisionManager->NearestCollider(colliderPoint, CollisionConfig::Stage);
@@ -140,7 +140,7 @@ void Player::MoveUpdate() {
         move.x += moveSpeed_;
     }
 
-    auto xinput = input->GetXInputState();
+    auto& xinput = input->GetXInputState();
     if (std::abs(xinput.Gamepad.sThumbLX) > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) {
         move.x = 0.0f;
         move.x = xinput.Gamepad.sThumbLX;
@@ -163,31 +163,32 @@ void Player::MoveUpdate() {
 }
 
 void Player::MoveLimit() {
-    jumpParamerets_.isJumped_ = true;
-    if (transform.translate.y <= -10.0f) {
-        jumpParamerets_.isJumped_ = false;
-        transform.translate = Vector3(0.0f, 2.0f, 0.0f);
+    auto input = Input::GetInstance();
+
+    if (input->IsKeyTrigger(DIK_R)) {
+        jumpParameters_.isJumped = false;
+        transform.translate = Vector3(0.0f, 0.0f, 0.0f);
         transform.rotate = Quaternion::identity;
+        jumpParameters_.fallSpeed = 0.0f;
     }
 }
 
 void Player::JumpUpdate() {
     auto input = Input::GetInstance();
-    const float gravity = 0.08f;
-
-    if (!jumpParamerets_.isJumped_ && input->IsKeyTrigger(DIK_SPACE)) {
-        jumpParamerets_.isJumped_ = true;
-        jumpParamerets_.fallSpeed_ = jumpParamerets_.jumpPower_;
+    auto& xInput = input->GetXInputState();
+    auto& preXInput = input->GetPreXInputState();
+    if (!jumpParameters_.isJumped &&
+        (input->IsKeyTrigger(DIK_SPACE) ||
+            xInput.Gamepad.wButtons & XINPUT_GAMEPAD_A && !(preXInput.Gamepad.wButtons & XINPUT_GAMEPAD_A))) {
+        jumpParameters_.isJumped = true;
+        jumpParameters_.fallSpeed = jumpParameters_.jumpPower;
     }
 
-    if (jumpParamerets_.isJumped_) {
-        jumpParamerets_.fallSpeed_ -= gravity;
-        Vector3 gravityDirection = transform.rotate.GetUp();
-        transform.translate += gravityDirection * jumpParamerets_.fallSpeed_;
-    }
-    else {
-        jumpParamerets_.fallSpeed_ = 0.0f;
-    }
+    jumpParameters_.fallSpeed -= jumpParameters_.gravity;
+    Vector3 gravityDirection = transform.rotate.GetUp();
+    transform.translate += gravityDirection * jumpParameters_.fallSpeed;
+
+    jumpParameters_.fallSpeed = std::max(jumpParameters_.fallSpeed, -jumpParameters_.fallSpeedLimits);
 }
 
 void Player::WallUpdate(Vector3 moveVec) {
@@ -219,8 +220,8 @@ void Player::OnCollision(const CollisionInfo& collisionInfo) {
         auto wallCollider = std::find(wallColliders_.begin(), wallColliders_.end(), collisionInfo.collider);
         if (wallCollider == wallColliders_.end()) {
 
-            jumpParamerets_.isJumped_ = false;
-            jumpParamerets_.fallSpeed_ = 0.0f;
+            jumpParameters_.isJumped = false;
+            jumpParameters_.fallSpeed = 0.0f;
 
             Vector3 up = transform.rotate.GetUp();
             Vector3 normal = collisionInfo.normal.Normalized();
@@ -240,23 +241,15 @@ void Player::OnCollision(const CollisionInfo& collisionInfo) {
 void Player::DrawImGui() {
     ImGui::Begin("test", nullptr, ImGuiWindowFlags_MenuBar);
     ImGui::DragFloat("MoveSpeed", &moveSpeed_, 0.01f);
-    if (ImGui::BeginMenuBar()) {
-        if (ImGui::BeginMenu("Player")) {
-            if (ImGui::TreeNode("Translate")) {
-                ImGui::DragFloat3("trans", &transform.translate.x, 0.1f);
-                ImGui::TreePop();
-            }
-            ImGui::Text("A");
-            ImGui::EndMenu();
-        }
-        if (ImGui::BeginMenu("Player2")) {
-            if (ImGui::TreeNode("Rotation")) {
-                ImGui::DragFloat3("rota", &transform.rotate.x, 0.1f);
-                ImGui::TreePop();
-            }
-            ImGui::EndMenu();
-        }
-        ImGui::EndMenuBar();
+    ImGui::DragFloat("JumpPower", &jumpParameters_.jumpPower, 0.01f);
+    ImGui::DragFloat("Gravity", &jumpParameters_.gravity, 0.01f);
+    ImGui::DragFloat("FallSpeedLimits", &jumpParameters_.fallSpeedLimits, 0.01f);
+    ImGui::DragFloat("FallSpeed", &jumpParameters_.fallSpeed, 0.01f, 0.0f, jumpParameters_.fallSpeedLimits);
+    if (ImGui::Button("Reset")) {
+        jumpParameters_.isJumped = false;
+        transform.translate = Vector3(0.0f, 0.0f, 0.0f);
+        transform.rotate = Quaternion::identity;
+        jumpParameters_.fallSpeed = 0.0f;
     }
     ImGui::End();
 }

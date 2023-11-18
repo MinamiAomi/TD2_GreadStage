@@ -38,11 +38,13 @@ private: // メンバ変数
 	float moveSpeed_ = 0.0f;
 
 	struct JumpParameters {
-		bool isJumped_ = false; /*true している false していない*/
-		float fallSpeed_ = 0.0f;
-		float jumpPower_ = 1.0f;
+		bool isJumped = false; /*true している false していない*/
+		float fallSpeed = 0.0f;
+		float jumpPower = 1.0f;
+		float gravity = 0.08f;
+		float fallSpeedLimits = 0.2f;
 	};
-	JumpParameters jumpParamerets_;
+	JumpParameters jumpParameters_;
 	
 	Vector3 dotUp_;
 
