@@ -16,6 +16,7 @@ public:
 	// 更新処理
 	void Update();
 	void PreCollisionUpdate();
+	void PostCollisionUpdate();
 
 public: // ゲッター
 	Transform GetTransform() { return transform; }
@@ -47,6 +48,7 @@ private: // メンバ変数
 
 	Vector3 moveDirection_;
 	std::vector<Collider*> wallColliders_;
+	bool isCollision_;
 
 private: // メンバ関数
 	// 座標更新

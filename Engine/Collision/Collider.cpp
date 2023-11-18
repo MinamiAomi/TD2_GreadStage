@@ -151,6 +151,18 @@ bool SphereCollider::RayCast(const Vector3& origin, const Vector3& diff, uint32_
     return true;
 }
 
+void SphereCollider::Nearest(const Vector3& point, uint32_t mask, NearestInfo& nearest) {
+    if (!CanCollision(mask)) { return; }
+
+    nearest.collider = this;
+    nearest.point = sphere_.center + (point - sphere_.center).Normalized() * sphere_.radius;
+
+}
+
+Vector3 SphereCollider::CalcSurfaceNormal(const Vector3& point) {
+    return (point - sphere_.center).Normalized();
+}
+
 void BoxCollider::UpdateAABB() {
     auto vertices = GetVertices(this->obb_);
     aabb_.max = aabb_.min = vertices[0];
@@ -314,3 +326,44 @@ bool BoxCollider::RayCast(const Vector3& origin, const Vector3& diff, uint32_t m
 
     return true;
 }
+
+void BoxCollider::Nearest(const Vector3& point, uint32_t mask, NearestInfo& nearest) {
+    if (!CanCollision(mask)) { return; }
+
+    Math::OBB& obb = this->obb_;
+    // obbのローカル空間で衝突判定を行う
+    Matrix4x4 obbWorldMatrix = Matrix4x4().SetXAxis(obb.orientations[0]).SetYAxis(obb.orientations[1]).SetZAxis(obb.orientations[2]);
+    Matrix4x4 obbWorldInverse = Matrix4x4::MakeAffineInverse(obbWorldMatrix, obb.center);
+    obbWorldMatrix.SetTranslate(obb.center);
+    Vector3 pointInOBBLocal = point * obbWorldInverse;
+    Vector3 halfSize = obb.size * 0.5f;
+
+    Vector3 nearestPoint = {
+          std::clamp(pointInOBBLocal.x, -halfSize.x, halfSize.x),
+          std::clamp(pointInOBBLocal.y, -halfSize.y, halfSize.y),
+          std::clamp(pointInOBBLocal.z, -halfSize.z, halfSize.z) };
+
+    nearest.collider = this;
+    nearest.point = nearestPoint * obbWorldMatrix;
+}
+
+Vector3 BoxCollider::CalcSurfaceNormal(const Vector3& point) {
+    Math::OBB& obb = this->obb_;
+    // obbのローカル空間で衝突判定を行う
+    Matrix4x4 obbRotate = Matrix4x4().SetXAxis(obb.orientations[0]).SetYAxis(obb.orientations[1]).SetZAxis(obb.orientations[2]);
+    Matrix4x4 obbInverse = Matrix4x4::MakeAffineInverse(obbRotate, obb.center);
+
+    Vector3 pointInOBBLocal = point * obbInverse;
+    pointInOBBLocal.x /= obb.size.x * 0.5f;
+    pointInOBBLocal.y /= obb.size.y * 0.5f;
+    pointInOBBLocal.z /= obb.size.z * 0.5f;
+    
+    Vector3 normal = Vector3::zero;
+    if (std::abs(pointInOBBLocal.x) > 0.9999f) { normal += obb.orientations[0] * pointInOBBLocal.x; }
+    if (std::abs(pointInOBBLocal.y) > 0.9999f) { normal += obb.orientations[1] * pointInOBBLocal.y; }
+    if (std::abs(pointInOBBLocal.z) > 0.9999f) { normal += obb.orientations[2] * pointInOBBLocal.z; }
+    normal = normal.Normalized();
+
+    return normal;
+}
+

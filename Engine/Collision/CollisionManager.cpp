@@ -56,6 +56,8 @@ bool CollisionManager::RayCast(const Vector3& origin, const Vector3& diff, uint3
     tmpNearest.nearest = 1.1f;
 
     for (auto collider : colliders_) {
+        if (!collider->isActive_) { continue; }
+        
         RayCastInfo info{};
         info.nearest = FLT_MAX;
         if (collider->RayCast(origin, diff, mask, info)) {
@@ -73,4 +75,32 @@ bool CollisionManager::RayCast(const Vector3& origin, const Vector3& diff, uint3
     }
 
     return true;
+}
+
+NearestInfo CollisionManager::NearestCollider(const Vector3& point, uint32_t mask) {
+
+    NearestInfo nearestInfo{};
+    nearestInfo.collider = nullptr;
+    float maxDistance = FLT_MAX;
+
+    for (auto collider : colliders_) {
+        if (!collider->isActive_) { continue; }
+
+        NearestInfo info{};
+        info.collider = nullptr;
+        collider->Nearest(point, mask, info);
+        if (info.collider == nullptr) { continue; }
+        
+        float distance = (info.point - point).Length();
+        if (distance < maxDistance) {
+            maxDistance = distance;
+            nearestInfo.collider = info.collider;
+            nearestInfo.point = info.point;
+        }
+    }
+
+    if (nearestInfo.collider) {
+        nearestInfo.normal = nearestInfo.collider->CalcSurfaceNormal(nearestInfo.point);
+    }
+    return nearestInfo;
 }

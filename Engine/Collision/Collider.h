@@ -22,6 +22,12 @@ struct RayCastInfo {
     float nearest;
 };
 
+struct NearestInfo {
+    Collider* collider;
+    Vector3 point;
+    Vector3 normal;
+};
+
 class Collider {
     friend class CollisionManager;
 public:
@@ -35,6 +41,8 @@ public:
     virtual bool IsCollision(SphereCollider* collider, CollisionInfo& collisionInfo) = 0;
     virtual bool IsCollision(BoxCollider* collider, CollisionInfo& collisionInfo) = 0;
     virtual bool RayCast(const Vector3& origin, const Vector3& diff, uint32_t mask, RayCastInfo& nearest) = 0;
+    virtual void Nearest(const Vector3& point, uint32_t mask, NearestInfo& nearest) = 0;
+    virtual Vector3 CalcSurfaceNormal(const Vector3& point) = 0;
 
     void SetGameObject(GameObject* gameObject) { gameObject_ = gameObject; }
     void SetCallback(Callback callback) { callback_ = callback; }
@@ -71,6 +79,8 @@ public:
     bool IsCollision(SphereCollider* collider, CollisionInfo& collisionInfo) override;
     bool IsCollision(BoxCollider* collider, CollisionInfo& collisionInfo) override;
     bool RayCast(const Vector3& origin, const Vector3& diff, uint32_t mask, RayCastInfo& nearest) override;
+    void Nearest(const Vector3& point, uint32_t mask, NearestInfo& nearest) override;
+    Vector3 CalcSurfaceNormal(const Vector3& point) override;
 
     void SetCenter(const Vector3& center) { sphere_.center = center; }
     void SetRadius(float radius) { sphere_.radius = radius; }
@@ -88,6 +98,8 @@ public:
     bool IsCollision(SphereCollider* other, CollisionInfo& collisionInfo) override;
     bool IsCollision(BoxCollider* other, CollisionInfo& collisionInfo) override;
     bool RayCast(const Vector3& origin, const Vector3& diff, uint32_t mask, RayCastInfo& nearest) override;
+    void Nearest(const Vector3& point, uint32_t mask, NearestInfo& nearest) override;
+    Vector3 CalcSurfaceNormal(const Vector3& point) override;
 
     void SetCenter(const Vector3& center) { obb_.center = center; }
     void SetOrientation(const Quaternion& orientation) {

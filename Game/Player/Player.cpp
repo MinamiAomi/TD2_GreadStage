@@ -12,7 +12,7 @@ void Player::Initialize() {
     SetName("Player");
 
     // 初期座標の設定
-    transform.translate = Vector3(0.0f, 2.0f, 0.0f);
+    transform.translate = Vector3(0.0f, 0.0f, 0.0f);
     //transform.rotate = Quaternion::MakeForYAxis(0.45f);
 
     // モデルの取得
@@ -36,7 +36,7 @@ void Player::Initialize() {
     collider_->SetCallback([this](const CollisionInfo& collisionInfo) { OnCollision(collisionInfo); });
 
     // パラメーター初期化
-    moveSpeed_ = 0.1f;
+    moveSpeed_ = 0.25f;
     jumpParamerets_.isJumped_ = false;
     jumpParamerets_.fallSpeed_ = 0.0f;
     jumpParamerets_.jumpPower_ = 1.0f;
@@ -83,6 +83,29 @@ void Player::PreCollisionUpdate() {
         if (collisionManager->RayCast(origin, direction, CollisionConfig::Stage, &rayCastInfo)) {
             wallColliders_.emplace_back(rayCastInfo.collider);
         }
+    }
+
+    isCollision_ = false;
+}
+
+void Player::PostCollisionUpdate() {
+    // 球コライダーが衝突していなかったら
+    if (!isCollision_) {
+        auto collisionManager = CollisionManager::GetInstance();
+        Vector3 colliderPoint = colliderOffset_ * transform.worldMatrix;
+        auto nearestInfo = collisionManager->NearestCollider(colliderPoint, CollisionConfig::Stage);
+        if (nearestInfo.collider) {
+            transform.translate = nearestInfo.point;
+
+            Vector3 up = transform.rotate.GetUp();
+            Vector3 normal = nearestInfo.normal.Normalized();
+            if (Dot(up, normal) < 0.9999f) {
+                Quaternion diff = Quaternion::MakeFromTwoVector(up, normal);
+                transform.rotate = diff * transform.rotate;
+            }
+        }
+
+        UpdateTransform();
     }
 }
 
@@ -177,6 +200,8 @@ void Player::OnCollision(const CollisionInfo& collisionInfo) {
         Vector3 pushVector = collisionInfo.normal * collisionInfo.depth;
         transform.translate += pushVector;
 
+        isCollision_ = true;
+
         // 衝突位置の法線
         // float dot = Dot(collisionInfo.normal, Vector3::up);
         // //// 地面と見なす角度
@@ -214,6 +239,7 @@ void Player::OnCollision(const CollisionInfo& collisionInfo) {
 
 void Player::DrawImGui() {
     ImGui::Begin("test", nullptr, ImGuiWindowFlags_MenuBar);
+    ImGui::DragFloat("MoveSpeed", &moveSpeed_, 0.01f);
     if (ImGui::BeginMenuBar()) {
         if (ImGui::BeginMenu("Player")) {
             if (ImGui::TreeNode("Translate")) {
