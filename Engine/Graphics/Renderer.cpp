@@ -21,8 +21,10 @@ void ModelRenderer::Initialize(const ColorBuffer& colorBuffer, const DepthBuffer
 void ModelRenderer::Render(CommandContext& commandContext, const Camera& camera) {
 
     struct SceneConstant {
-        Matrix4x4 viewProjectionMatrix;
+        Matrix4x4 viewMatrix;
+        Matrix4x4 projectionMatrix;
         Vector3 cameraPosition;
+        float ditheringRange;
     };
 
     struct InstanceConstant {
@@ -40,8 +42,10 @@ void ModelRenderer::Render(CommandContext& commandContext, const Camera& camera)
 
 
     SceneConstant scene{};
-    scene.viewProjectionMatrix = camera.GetViewProjectionMatrix();
+    scene.viewMatrix = camera.GetViewMatrix();
+    scene.projectionMatrix = camera.GetProjectionMatrix();
     scene.cameraPosition = camera.GetPosition();
+    scene.ditheringRange = ditheringRange_;
     commandContext.SetDynamicConstantBufferView(ModelRootIndex::Scene, sizeof(scene), &scene);
 
     for (auto& instance : instanceList) {

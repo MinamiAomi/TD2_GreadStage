@@ -22,6 +22,8 @@ public:
 
     void SetCamera(const std::shared_ptr<Camera>& camera) { camera_ = camera; }
 
+    ModelRenderer& GetModelRenderer() { return renderer_; }
+
 private:
     RenderManager() = default;
     RenderManager(const RenderManager&) = delete;

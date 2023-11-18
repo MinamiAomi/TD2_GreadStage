@@ -24,6 +24,7 @@ struct ModelRootIndex {
 
 class ModelRenderer {
 public:
+    void DitheringRange(float range) { ditheringRange_ = range; }
 
     void Initialize(const ColorBuffer& colorBuffer, const DepthBuffer& depthBuffer);
     void Render(CommandContext& commandContext, const Camera& camera);
@@ -34,4 +35,5 @@ private:
 
     RootSignature rootSignature_;
     PipelineState pipelineState_;
+    float ditheringRange_ = 0.0f;
 };

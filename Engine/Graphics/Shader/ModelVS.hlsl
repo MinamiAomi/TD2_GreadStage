@@ -1,6 +1,8 @@
 struct Scene {
-    float4x4 viewProjMatrix;
+    float4x4 viewMatrix;
+    float4x4 projectionMatrix;
     float3 cameraPosition;
+    float ditheringRange;
 };
 ConstantBuffer<Scene> scene_ : register(b0);
 
@@ -24,9 +26,12 @@ struct VSOutput {
 
 VSOutput main(VSInput input) {
     VSOutput output;
+    
     output.worldPosition = mul(float4(input.position.xyz, 1.0f), instance_.worldMatrix).xyz;
-    output.position = mul(float4(output.worldPosition, 1.0f), scene_.viewProjMatrix);
+    output.position = mul(float4(output.worldPosition, 1.0f), mul(scene_.viewMatrix, scene_.projectionMatrix));
     output.normal = mul(input.normal, (float3x3)instance_.worldMatrix);
     output.texcoord = input.texcoord;
+    
+    
     return output;
 }

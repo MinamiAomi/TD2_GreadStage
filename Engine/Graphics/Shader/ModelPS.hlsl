@@ -1,8 +1,10 @@
 #include "Lighting.hlsli"
 
 struct Scene {
-    float4x4 viewProjMatrix;
+    float4x4 viewMatrix;
+    float4x4 projectionMatrix;
     float3 cameraPosition;
+    float ditheringRange;
 };
 ConstantBuffer<Scene> scene_ : register(b0);
 
@@ -43,6 +45,13 @@ struct PSOutput {
     float4 color : SV_TARGET0;
 };
 
+static const float pattern[4][4] = {
+    { 0.00f, 0.53f, 0.13f, 0.66f },
+    { 0.80f, 0.26f, 0.93f, 0.40f },
+    { 0.20f, 0.73f, 0.06f, 0.60f },
+    { 1.00f, 0.46f, 0.86f, 0.33f },
+};
+
 PSOutput main(PSInput input) {
     // 位置
     float3 position = input.worldPosition;
@@ -50,6 +59,14 @@ PSOutput main(PSInput input) {
     float3 normal = normalize(input.normal);
     // ピクセルからカメラへのベクトル 
     float3 pixelToCamera = normalize(scene_.cameraPosition - position);
+    
+    int2 xy = (int2)fmod(input.position, 4.0f);
+    float dither = pattern[xy.y][xy.x];
+    
+    float rate = length(input.position.xy / float2(1280.0f, 720.0f) * 2.0f - 1.0f);
+    float alpha = (length(scene_.cameraPosition - position) - scene_.ditheringRange) / scene_.ditheringRange;
+    clip(rate + alpha - dither);
+    
     
     DirectionalLight directionalLight_;
     directionalLight_.direction = normalize(float3(1.0f, -1.0f, 0.0f));
@@ -70,7 +87,13 @@ PSOutput main(PSInput input) {
     PSOutput output;
     output.color.rgb = textureColor * shadeColor;
     output.color.a = 1.0f;
-   
+
+    //float b = length((input.position.xy / float2(1280.0f, 720.0f)) * 2.0f - 1.0f);
+    //output.color.rgb = b;
+    
+    //output.color.rg = input.position.xy / float2(1280.0f, 720.0f) * 2.0f -0.5f;
+    //output.color.b = 0.0f;
+    
    // output.color.rgb = float3(0.0f, 0.0f, 0.0f);
     
     // フレネル
