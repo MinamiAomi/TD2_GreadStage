@@ -38,6 +38,9 @@
     <ClCompile Include="Scene\SelectScene\SelectScene.cpp">
       <Filter>GameScene\SelectScene</Filter>
     </ClCompile>
+    <ClCompile Include="Stage\Goal\Goal.cpp">
+      <Filter>Stage\Goal</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="MasterGame">
@@ -79,6 +82,9 @@
     <Filter Include="GameScene\SelectScene">
       <UniqueIdentifier>{81abe8fe-36ab-4ca5-be4f-507f8ffbb921}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Stage\Goal">
+      <UniqueIdentifier>{34f7cdbb-0f5a-47e3-8665-d61f566690f7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MasterGame\MasterGame.h">
@@ -117,8 +123,9 @@
     <ClInclude Include="Scene\SelectScene\SelectScene.h">
       <Filter>GameScene\SelectScene</Filter>
     </ClInclude>
-    <ClInclude Include="Easing\Easing.h">
-      <Filter>Easing</Filter>
+    <ClInclude Include="Easing\Easing.h" />
+    <ClInclude Include="Stage\Goal\Goal.h">
+      <Filter>Stage\Goal</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
