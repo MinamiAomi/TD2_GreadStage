@@ -25,7 +25,7 @@ void Stage::Load(const std::filesystem::path& loadFile) {
 	std::string selectName = loadFile.string();
 	global->LoadFile(selectName);
 	global->LoadMessage(selectName);
-	int num = global->GetIntValue(selectName, "Confirmation : ");
+	int num = global->GetIntValue(selectName, "Confirmation");
 	boxes_.clear(); // 要素の全削除
 	for (int i = 0; i < num; i++) {
 		Vector3 trans = global->GetVector3Value(selectName, ("BoxNumber : " + std::to_string(i) + " : Translate").c_str());

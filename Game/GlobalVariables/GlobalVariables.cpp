@@ -257,26 +257,19 @@ void GlobalVariables::SaveFile(const std::string& groupName) {
 
 
 		if (std::holds_alternative<int32_t>(item)) {
-			
-			
 			root[groupName][itemName] = std::get<int32_t>(item);
 		} else if (std::holds_alternative<float>(item)) {
-
 			root[groupName][itemName] = std::get<float>(item);
 		} else if (std::holds_alternative<Vector2>(item)) {
-
 			Vector2 value = std::get<Vector2>(item);
-			root[groupName][itemName] = nlohmann::json::array({value.x, value.y});
+			root[groupName][itemName] = nlohmann::json::array({ value.x, value.y});
 		}else if (std::holds_alternative<Vector3>(item)) {
-
 			Vector3 value = std::get<Vector3>(item);
 			root[groupName][itemName] = nlohmann::json::array({ value.x, value.y, value.z });
 		}else if (std::holds_alternative<Quaternion>(item)) {
-
 			Quaternion value = std::get<Quaternion>(item);
-			root[groupName][itemName] = nlohmann::json::array({ value.x, value.y, value.z,value.w });
+			root[groupName][itemName] = nlohmann::json::array({ value.x, value.y, value.z, value.w });
 		}
-
 	}
 
 	std::filesystem::path dir(kDirectoryPath);
@@ -300,7 +293,7 @@ void GlobalVariables::SaveFile(const std::string& groupName) {
 		return;
 	}
 
-	ofs << std::setw(5) << root << std::endl;
+	ofs << std::setw(4) << root << std::endl;
 
 	ofs.close();
 }

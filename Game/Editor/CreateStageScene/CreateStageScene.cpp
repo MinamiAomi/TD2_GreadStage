@@ -49,11 +49,11 @@ void CreateStageScene::DrawImGui() {
 				if (ImGui::Button("Save")) {
 					if (!stage_->GetBoxes().empty()) {
 						global_->CreateGroup(itemName_);
-						global_->AddItem(itemName_, "Confirmation" + std::string(), static_cast<int>(stage_->GetBoxes().size()));
+						global_->SetValue(itemName_, "Confirmation" + std::string(), static_cast<int>(stage_->GetBoxes().size()));
 						for (int i = 0; i < stage_->GetBoxes().size(); i++) {
-							global_->AddItem(itemName_, ("BoxNumber : " + std::to_string(i) + " : Scale").c_str(), stage_->GetBoxes()[i]->transform.scale);
-							//global_->AddItem(groupName, ("BoxNumber : " + std::to_string(i + 1) + " : Rotate").c_str(), boxes_[i]->transform.rotate);
-							global_->AddItem(itemName_, ("BoxNumber : " + std::to_string(i) + " : Translate").c_str(), stage_->GetBoxes()[i]->transform.translate);
+							global_->SetValue(itemName_, ("BoxNumber : " + std::to_string(i) + " : Scale").c_str(), stage_->GetBoxes()[i]->transform.scale);
+							global_->SetValue(itemName_, ("BoxNumber : " + std::to_string(i) + " : Rotate").c_str(), stage_->GetBoxes()[i]->transform.rotate);
+                            global_->SetValue(itemName_, ("BoxNumber : " + std::to_string(i) + " : Translate").c_str(), stage_->GetBoxes()[i]->transform.translate);
 						}
 						global_->SaveFile(itemName_);
 						global_->SaveMessage(itemName_);
