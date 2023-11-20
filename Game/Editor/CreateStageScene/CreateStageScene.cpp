@@ -56,7 +56,6 @@ void CreateStageScene::DrawImGui() {
                             global_->SetValue(itemName_, ("BoxNumber : " + std::to_string(i) + " : Translate").c_str(), stage_->GetBoxes()[i]->transform.translate);
 						}
 						global_->SaveFile(itemName_);
-						global_->SaveMessage(itemName_);
 						bool flag = false;
 						for (auto& i : fileName_) {
 							if (i.c_str() == std::string() + itemName_) {
