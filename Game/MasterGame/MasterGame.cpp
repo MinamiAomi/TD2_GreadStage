@@ -27,6 +27,35 @@ void MasterGame::OnInitialize() {
 	toonModel->Create(ModelData::LoadObjFile("Resources/Model/box.obj"));
 	resourceManager->AddToonModel("Box", toonModel);
 
+	// プレイヤー
+	toonModel = std::make_shared<Model>();
+	toonModel->Create(ModelData::LoadObjFile("Resources/Model/Yamori/Body.obj"));
+	resourceManager->AddToonModel("YamoriBody", toonModel);
+
+	toonModel = std::make_shared<Model>();
+	toonModel->Create(ModelData::LoadObjFile("Resources/Model/Yamori/Head.obj"));
+	resourceManager->AddToonModel("YamoriHead", toonModel);
+
+	toonModel = std::make_shared<Model>();
+	toonModel->Create(ModelData::LoadObjFile("Resources/Model/Yamori/LeftHand.obj"));
+	resourceManager->AddToonModel("YamoriLeftHand", toonModel);
+	
+	toonModel = std::make_shared<Model>();
+	toonModel->Create(ModelData::LoadObjFile("Resources/Model/Yamori/RightHand.obj"));
+	resourceManager->AddToonModel("YamoriRightHand", toonModel);
+	
+	toonModel = std::make_shared<Model>();
+	toonModel->Create(ModelData::LoadObjFile("Resources/Model/Yamori/LeftFoot.obj"));
+	resourceManager->AddToonModel("PlayerLeftFoot", toonModel);
+	
+	toonModel = std::make_shared<Model>();
+	toonModel->Create(ModelData::LoadObjFile("Resources/Model/Yamori/RightFoot.obj"));
+	resourceManager->AddToonModel("PlayerRightFoot", toonModel);
+	
+	// 収集物
+	toonModel = std::make_shared<Model>();
+	toonModel->Create(ModelData::LoadObjFile("Resources/Model/Crystal/crystal.obj"));
+	resourceManager->AddToonModel("Crystal", toonModel);
 }
 
 void MasterGame::OnFinalize() {

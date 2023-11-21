@@ -12,6 +12,8 @@ struct Instance {
     float4x4 worldMatrix;
     float3 color;
     uint useLighting;
+    float3 rimLightColor;
+    uint useRimLight;
 };
 ConstantBuffer<Instance> instance_ : register(b1);
 
@@ -45,6 +47,7 @@ struct PSOutput {
     float4 color : SV_TARGET0;
 };
 
+// ディザリングパターン
 static const float pattern[4][4] = {
     { 0.00f, 0.53f, 0.13f, 0.66f },
     { 0.80f, 0.26f, 0.93f, 0.40f },
@@ -70,16 +73,16 @@ PSOutput main(PSInput input) {
     // ピクセルからカメラへのベクトル 
     float3 pixelToCamera = normalize(scene_.cameraPosition - position);
     
+    // ディザリング
     int2 xy = (int2)fmod(input.position, 4.0f);
-    float dither = pattern[xy.y][xy.x];
-    
+    float dither = pattern[xy.y][xy.x];    
     float rate = length(input.position.xy / float2(1280.0f, 720.0f) * 2.0f - 1.0f);
     float alpha = (length(scene_.cameraPosition - position) - scene_.ditheringRange) / scene_.ditheringRange;
     clip(rate + alpha - dither);
     
     
     DirectionalLight directionalLight_;
-    directionalLight_.direction = normalize(ViewDirection());
+    directionalLight_.direction = normalize(float3(1.0f, -1.0f, 1.0f));
     directionalLight_.intensity = 1.0f;
     directionalLight_.color = float3(1.0f, 1.0f, 1.0f);
     
@@ -93,7 +96,7 @@ PSOutput main(PSInput input) {
     // シェーディングによる色
     float3 shadeColor = (diffuse + specular + ambient) * directionalLight_.color * directionalLight_.intensity;
     // ライティングを使用しない場合テクスチャの色をそのまま使う
-    shadeColor = lerp(float3(1.0f, 1.0f, 1.0f), shadeColor, float(instance_.useLighting));
+    shadeColor = lerp(float3(1.0f, 1.0f, 1.0f), shadeColor, (float)instance_.useLighting);
        
     PSOutput output;
     output.color.rgb = textureColor * shadeColor;
@@ -107,9 +110,10 @@ PSOutput main(PSInput input) {
     
    // output.color.rgb = float3(0.0f, 0.0f, 0.0f);
     
-    // フレネル
-    //float m = saturate(1.0f - dot(normal, pixelToCamera));
-    //output.color.rgb += lerp(float3(0.0f, 0.0f, 0.0f), float3(0.5f,0.5f,0.5f), (m * m * m * m * m));
+    // リムライト
+    float m = saturate(1.0f - dot(normal, pixelToCamera));
+    m = m * m * m * m * m;
+    output.color.rgb = lerp(output.color.rgb, instance_.rimLightColor, lerp(0.0f, m, (float) instance_.useRimLight));
     
     //output.color.rgb = specular;
     

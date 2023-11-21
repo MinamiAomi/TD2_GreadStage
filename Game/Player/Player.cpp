@@ -19,6 +19,8 @@ void Player::Initialize() {
     model_ = std::make_unique<ModelInstance>();
     model_->SetModel(ResourceManager::GetInstance()->FindModel("Player"));
     model_->SetIsActive(true);
+    model_->SetUseRimLight(true);
+    model_->SetRimLightColor({ 1.0f,1.0f,1.0f });
 
     // 座標更新してからでなければローカルデータが消えてしまう
     modelTrans_.SetParent(&transform);

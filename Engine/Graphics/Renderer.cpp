@@ -31,6 +31,8 @@ void ModelRenderer::Render(CommandContext& commandContext, const Camera& camera)
         Matrix4x4 worldMatrix;
         Vector3 color;
         uint32_t useLighting{};
+        Vector3 rimLightColor;
+        uint32_t useRimLight{};
     };
 
     auto& instanceList = ModelInstance::GetInstanceList();
@@ -55,6 +57,8 @@ void ModelRenderer::Render(CommandContext& commandContext, const Camera& camera)
             data.worldMatrix = instance->worldMatrix_;
             data.color = instance->color_;
             data.useLighting = instance->useLighting_ ? 1 : 0;
+            data.rimLightColor = instance->rimLightColor_;
+            data.useRimLight = instance->useRimLight_ ? 1 : 0;
             commandContext.SetDynamicConstantBufferView(ModelRootIndex::Instance, sizeof(data), &data); 
 
             // オブジェクト描画
