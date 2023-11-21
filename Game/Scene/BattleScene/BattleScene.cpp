@@ -15,7 +15,7 @@ void BattleScene::OnInitialize() {
 	player_->Initialize();
 	camera_->Initialize();
 	stage_->Initialize();
-	//stage_->Load("MasterTestStage");
+	stage_->Load("MasterTestStage");
 
 	// セット
 	player_->SetCamera(camera_);
