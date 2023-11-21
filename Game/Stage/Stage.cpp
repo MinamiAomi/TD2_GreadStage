@@ -5,8 +5,6 @@
 void Stage::Initialize() {
 	goal_ = std::make_shared<Goal>();
 	goal_->Initialize();
-	player_ = std::make_shared<Player>();
-	player_->Initialize();
 }
 
 void Stage::Update() {
@@ -16,7 +14,7 @@ void Stage::Update() {
 	}
 	goal_->Update();
 
-	player_->transform.UpdateMatrix();
+	player_->SimpleUpdate();
 }
 
 void Stage::Add(const std::shared_ptr<Box>& box) {

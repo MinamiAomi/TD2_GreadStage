@@ -16,6 +16,11 @@ void CreateStageScene::OnInitialize() {
 
     stage_ = std::make_unique<Stage>();
     stage_->Initialize();
+
+    player_ = std::make_shared<Player>();
+    player_->Initialize();
+    stage_->SetPlayerPtr(player_);
+
 }
 
 void CreateStageScene::OnUpdate() {
@@ -105,7 +110,7 @@ void CreateStageScene::DrawImGui() {
         }
         if (ImGui::BeginMenu("OnlyOneObject")) {
             if (ImGui::TreeNode("Player")) {
-
+                ImGui::DragFloat3("playerTrans", &stage_->GetPlayer()->transform.translate.x, 0.1f);
                 ImGui::TreePop();
             }
             if (ImGui::TreeNode("Goal")) {

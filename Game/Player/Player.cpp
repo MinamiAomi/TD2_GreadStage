@@ -109,6 +109,14 @@ void Player::PostCollisionUpdate() {
     }
 }
 
+void Player::SimpleUpdate() {
+    // 座標更新
+    transform.UpdateMatrix();
+    modelTrans_.UpdateMatrix();
+    // モデル座標更新
+    model_->SetWorldMatrix(modelTrans_.worldMatrix);
+}
+
 void Player::UpdateTransform() {
     // 座標更新
     transform.UpdateMatrix();

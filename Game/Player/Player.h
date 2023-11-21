@@ -18,6 +18,9 @@ public:
 	void PreCollisionUpdate();
 	void PostCollisionUpdate();
 
+	// エディター用
+	void SimpleUpdate();
+
 public: // ゲッター
 	Transform GetTransform() { return transform; }
 
