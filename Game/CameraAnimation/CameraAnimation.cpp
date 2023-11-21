@@ -10,9 +10,9 @@ void CameraAnimation::Initialize() {
 	RenderManager::GetInstance()->SetCamera(camera_);
 
 	//	X軸回転、俯瞰視点
-	transform.rotate = Quaternion::MakeForXAxis(20.0f * Math::ToRadian);
-	transform.translate = Vector3(0.0f, 2.0f, -10.0f);
-	offset_ = transform.translate;
+	transform.translate = Vector3(0.0f, 10.0f, -10.0f);
+	transform.rotate = Quaternion::MakeLookRotation(-transform.translate);
+	offset_ = transform.translate + Vector3{0.0f, -8.0f, 0.0f};
 
 }
 
