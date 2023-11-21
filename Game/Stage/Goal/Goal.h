@@ -10,13 +10,16 @@
 class Goal : public GameObject {
 public:
 	Goal() = default;
-	~Goal() = default;
+	~Goal() override = default;
 
 	void Initialize();
 	void Update();
 
+	void DrawImGui();
+
 private:
 	std::unique_ptr<ModelInstance> model_;
 	std::unique_ptr<BoxCollider> collider_;
+	Vector3 rotate_;
 
 };

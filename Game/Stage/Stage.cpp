@@ -3,6 +3,8 @@
 #include "GlobalVariables/GlobalVariables.h"
 
 void Stage::Initialize() {
+	goal_ = std::make_shared<Goal>();
+	goal_->Initialize();
 }
 
 void Stage::Update() {
@@ -10,6 +12,7 @@ void Stage::Update() {
 	for (auto& i : boxes_) {
 		i->Update();
 	}
+	goal_->Update();
 }
 
 void Stage::Add(const std::shared_ptr<Box>& box) {
@@ -36,4 +39,6 @@ void Stage::Load(const std::filesystem::path& loadFile) {
 		box->transform.scale = scal;
 		box->Initialize();
 	}
+	goal_->transform.translate = global->GetVector3Value(selectName, "Goal : Translate");
+	goal_->transform.rotate = global->GetQuaternionValue(selectName, "Goal : Rotate");
 }

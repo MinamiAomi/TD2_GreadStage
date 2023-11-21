@@ -55,6 +55,8 @@ void CreateStageScene::DrawImGui() {
 							global_->SetValue(itemName_, ("BoxNumber : " + std::to_string(i) + " : Rotate").c_str(), stage_->GetBoxes()[i]->transform.rotate);
                             global_->SetValue(itemName_, ("BoxNumber : " + std::to_string(i) + " : Translate").c_str(), stage_->GetBoxes()[i]->transform.translate);
 						}
+                        global_->SetValue(itemName_, "Goal : Translate" + std::string(), stage_->GetGoal()->transform.translate);
+                        global_->SetValue(itemName_, "Goal : Rotate" + std::string(), stage_->GetGoal()->transform.rotate);
 						global_->SaveFile(itemName_);
 						bool flag = false;
 						for (auto& i : fileName_) {
@@ -85,6 +87,8 @@ void CreateStageScene::DrawImGui() {
             ImGui::EndMenu();
         }
         if (ImGui::BeginMenu("Boxes")) {
+            // 要素数確認
+            ImGui::Text("ElementCount = %d", stage_->GetBoxes().size());
             for (int i = 0; i < stage_->GetBoxes().size(); i++) {
                 if (ImGui::TreeNode(("BoxNumber : " + std::to_string(i + 1)).c_str())) {
                     stage_->GetBoxes()[i]->DrawImGui();
@@ -96,11 +100,19 @@ void CreateStageScene::DrawImGui() {
             }
             ImGui::EndMenu();
         }
-        if (ImGui::BeginMenu("Confirmation")) {
-            // 要素数確認
-            ImGui::Text("ElementCount = %d", stage_->GetBoxes().size());
+        if (ImGui::BeginMenu("OnlyOneObject")) {
+            if (ImGui::TreeNode("Player")) {
+
+                ImGui::TreePop();
+            }
+            if (ImGui::TreeNode("Goal")) {
+                stage_->GetGoal()->DrawImGui();
+                ImGui::TreePop();
+            }
+
             ImGui::EndMenu();
         }
+        
         ImGui::EndMenuBar();
     }
     ImGui::End();

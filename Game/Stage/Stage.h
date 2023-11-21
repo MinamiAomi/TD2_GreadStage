@@ -5,6 +5,7 @@
 #include <filesystem>
 
 #include "Box/Box.h"
+#include "Goal/Goal.h"
 
 class Stage {
 public:
@@ -16,7 +17,9 @@ public:
     void Load(const std::filesystem::path& loadFile);
 
     const std::vector<std::shared_ptr<Box>>& GetBoxes() const { return boxes_; }
+    const std::shared_ptr<Goal>& GetGoal() const { return goal_; }
 
 private:
     std::vector<std::shared_ptr<Box>> boxes_;
+    std::shared_ptr<Goal> goal_;
 };
