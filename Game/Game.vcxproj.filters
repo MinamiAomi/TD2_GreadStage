@@ -1,139 +1,110 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <ClCompile Include="Editor\Editor.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MasterGame\MasterGame.cpp">
       <Filter>MasterGame</Filter>
     </ClCompile>
-    <ClCompile Include="Player\Player.cpp">
-      <Filter>Player</Filter>
-    </ClCompile>
-    <ClCompile Include="CameraAnimation\CameraAnimation.cpp">
-      <Filter>CameraAnimation</Filter>
-    </ClCompile>
     <ClCompile Include="Stage\Stage.cpp">
       <Filter>Stage</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor\Editor.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor\CreateStageScene\CreateStageScene.cpp">
-      <Filter>Editor\CreateStageScene</Filter>
-    </ClCompile>
-    <ClCompile Include="Stage\Box\Box.cpp">
-      <Filter>Stage\Box</Filter>
-    </ClCompile>
-    <ClCompile Include="GlobalVariables\GlobalVariables.cpp">
-      <Filter>GlobalVariables</Filter>
-    </ClCompile>
-    <ClCompile Include="DebugCamera.cpp">
-      <Filter>Editor\DebugCamera</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\TitleScene\TitleScene.cpp">
-      <Filter>GameScene\TitleScene</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\BattleScene\BattleScene.cpp">
-      <Filter>GameScene\BattleScene</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\SelectScene\SelectScene.cpp">
-      <Filter>GameScene\SelectScene</Filter>
     </ClCompile>
     <ClCompile Include="Stage\Goal\Goal.cpp">
       <Filter>Stage\Goal</Filter>
     </ClCompile>
+    <ClCompile Include="Stage\Box\Box.cpp">
+      <Filter>Stage\Box</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\CreateStageScene\CreateStageScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\SelectScene\SelectScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\TitleScene\TitleScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\BattleScene\BattleScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugCamera.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraAnimation\CameraAnimation.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalVariables\GlobalVariables.cpp">
+      <Filter>GlobalVariables</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\Player.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="MasterGame">
-      <UniqueIdentifier>{3e79ea90-881f-47ff-b4d1-254fa34c854e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameScene">
-      <UniqueIdentifier>{904340f7-0133-46c4-bce9-d9daa94bc1dc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameScene\BattleScene">
-      <UniqueIdentifier>{e57c93a3-a3af-46ec-944b-474d5c6cd1eb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Player">
-      <UniqueIdentifier>{438f8d48-57ed-47a8-a438-1e01424c734d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CameraAnimation">
-      <UniqueIdentifier>{90dbfa81-bc7a-4de6-9da3-412d96b8fb5f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Stage">
-      <UniqueIdentifier>{98f80384-86a8-4dbf-ba26-a7b10a565ccb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Editor">
-      <UniqueIdentifier>{38273b24-06c3-42e6-b555-a8881cc8ab00}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Editor\CreateStageScene">
-      <UniqueIdentifier>{cc353fef-fe4a-4177-86dd-903cf5da80ae}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Stage\Box">
-      <UniqueIdentifier>{c6f2fbf2-7633-4d95-8361-1651a3847aa1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GlobalVariables">
-      <UniqueIdentifier>{fa641b57-32ad-4ffa-b6ee-c2bfde91b7f8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Editor\DebugCamera">
-      <UniqueIdentifier>{da84ee4d-5833-4279-9dba-e0d5fe86729f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameScene\TitleScene">
-      <UniqueIdentifier>{04e58183-6cad-4d5c-b95f-629ff93bdd19}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameScene\SelectScene">
-      <UniqueIdentifier>{81abe8fe-36ab-4ca5-be4f-507f8ffbb921}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Stage\Goal">
-      <UniqueIdentifier>{34f7cdbb-0f5a-47e3-8665-d61f566690f7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Easing">
-      <UniqueIdentifier>{7f997539-51d5-4e8f-820a-78c22987f0fd}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
+    <ClInclude Include="CollisionConfig.h" />
+    <ClInclude Include="Easing\Easing.h" />
+    <ClInclude Include="Editor\Editor.h" />
     <ClInclude Include="MasterGame\MasterGame.h">
       <Filter>MasterGame</Filter>
-    </ClInclude>
-    <ClInclude Include="Player\Player.h">
-      <Filter>Player</Filter>
-    </ClInclude>
-    <ClInclude Include="CameraAnimation\CameraAnimation.h">
-      <Filter>CameraAnimation</Filter>
     </ClInclude>
     <ClInclude Include="Stage\Stage.h">
       <Filter>Stage</Filter>
     </ClInclude>
-    <ClInclude Include="Editor\Editor.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor\CreateStageScene\CreateStageScene.h">
-      <Filter>Editor\CreateStageScene</Filter>
+    <ClInclude Include="Stage\Goal\Goal.h">
+      <Filter>Stage\Goal</Filter>
     </ClInclude>
     <ClInclude Include="Stage\Box\Box.h">
       <Filter>Stage\Box</Filter>
     </ClInclude>
+    <ClInclude Include="Editor\CreateStageScene\CreateStageScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\SelectScene\SelectScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\TitleScene\TitleScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\BattleScene\BattleScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugCamera.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraAnimation\CameraAnimation.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
     <ClInclude Include="GlobalVariables\GlobalVariables.h">
       <Filter>GlobalVariables</Filter>
     </ClInclude>
-    <ClInclude Include="DebugCamera.h">
-      <Filter>Editor\DebugCamera</Filter>
+    <ClInclude Include="Player\Player.h">
+      <Filter>Player</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\TitleScene\TitleScene.h">
-      <Filter>GameScene\TitleScene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\BattleScene\BattleScene.h">
-      <Filter>GameScene\BattleScene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\SelectScene\SelectScene.h">
-      <Filter>GameScene\SelectScene</Filter>
-    </ClInclude>
-    <ClInclude Include="Stage\Goal\Goal.h">
-      <Filter>Stage\Goal</Filter>
-    </ClInclude>
-    <ClInclude Include="Easing\Easing.h">
-      <Filter>Easing</Filter>
-    </ClInclude>
-    <ClInclude Include="CollisionConfig.h" />
-      <Filter>CollisionConfig</Filter>
-    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="MasterGame">
+      <UniqueIdentifier>{0d081a35-0480-42ca-85db-c83a24391216}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Stage">
+      <UniqueIdentifier>{333b5a7a-6bb6-4ac9-892c-df54e081c8e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Stage\Goal">
+      <UniqueIdentifier>{49b65d6f-ddb1-460f-b4aa-99c7611a94a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Stage\Box">
+      <UniqueIdentifier>{48c2cb23-ce64-4253-8228-177906f6dc69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{38210d1c-9469-47c9-b82b-757c4cac8e71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Camera">
+      <UniqueIdentifier>{4e3768a0-38cf-42fa-b4dd-5ee5b9dcfefa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GlobalVariables">
+      <UniqueIdentifier>{80410e89-08c6-40b1-b927-757e9ff3f27f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player">
+      <UniqueIdentifier>{23463c16-e358-4696-bd9c-ff43f7c48229}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
