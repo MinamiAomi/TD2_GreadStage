@@ -5,9 +5,6 @@
     <ClCompile Include="MasterGame\MasterGame.cpp">
       <Filter>MasterGame</Filter>
     </ClCompile>
-    <ClCompile Include="BattleScene\BattleScene.cpp">
-      <Filter>GameScene\BattleScene</Filter>
-    </ClCompile>
     <ClCompile Include="Player\Player.cpp">
       <Filter>Player</Filter>
     </ClCompile>
@@ -31,6 +28,18 @@
     </ClCompile>
     <ClCompile Include="DebugCamera.cpp">
       <Filter>Editor\DebugCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\TitleScene\TitleScene.cpp">
+      <Filter>GameScene\TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\BattleScene\BattleScene.cpp">
+      <Filter>GameScene\BattleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\SelectScene\SelectScene.cpp">
+      <Filter>GameScene\SelectScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage\Goal\Goal.cpp">
+      <Filter>Stage\Goal</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -67,6 +76,15 @@
     <Filter Include="Editor\DebugCamera">
       <UniqueIdentifier>{da84ee4d-5833-4279-9dba-e0d5fe86729f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameScene\TitleScene">
+      <UniqueIdentifier>{04e58183-6cad-4d5c-b95f-629ff93bdd19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameScene\SelectScene">
+      <UniqueIdentifier>{81abe8fe-36ab-4ca5-be4f-507f8ffbb921}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Stage\Goal">
+      <UniqueIdentifier>{34f7cdbb-0f5a-47e3-8665-d61f566690f7}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Easing">
       <UniqueIdentifier>{7f997539-51d5-4e8f-820a-78c22987f0fd}</UniqueIdentifier>
     </Filter>
@@ -74,9 +92,6 @@
   <ItemGroup>
     <ClInclude Include="MasterGame\MasterGame.h">
       <Filter>MasterGame</Filter>
-    </ClInclude>
-    <ClInclude Include="BattleScene\BattleScene.h">
-      <Filter>GameScene\BattleScene</Filter>
     </ClInclude>
     <ClInclude Include="Player\Player.h">
       <Filter>Player</Filter>
@@ -102,9 +117,23 @@
     <ClInclude Include="DebugCamera.h">
       <Filter>Editor\DebugCamera</Filter>
     </ClInclude>
+    <ClInclude Include="Scene\TitleScene\TitleScene.h">
+      <Filter>GameScene\TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\BattleScene\BattleScene.h">
+      <Filter>GameScene\BattleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\SelectScene\SelectScene.h">
+      <Filter>GameScene\SelectScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage\Goal\Goal.h">
+      <Filter>Stage\Goal</Filter>
+    </ClInclude>
     <ClInclude Include="Easing\Easing.h">
       <Filter>Easing</Filter>
     </ClInclude>
     <ClInclude Include="CollisionConfig.h" />
+      <Filter>CollisionConfig</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
