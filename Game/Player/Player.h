@@ -45,7 +45,7 @@ private: // メンバ変数
 		float fallSpeedLimits = 0.2f;
 	};
 	JumpParameters jumpParameters_;
-	
+
 	Vector3 dotUp_;
 
 	Vector3 moveDirection_;
