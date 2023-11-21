@@ -3,8 +3,10 @@
 #include "Scene/SceneManager.h"
 #include "Engine/Graphics/ResourceManager.h"
 #include "Engine/Graphics/Model.h"
+#include "Engine/Graphics/Sprite.h"
 
-#include "BattleScene/BattleScene.h"
+#include "Game/Scene/TitleScene/TitleScene.h"
+#include "Game/Scene/BattleScene/BattleScene.h"
 
 void MasterGame::OnInitialize() {
 	// シーンのシングルトンの取得

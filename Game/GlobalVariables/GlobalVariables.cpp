@@ -40,7 +40,6 @@ void GlobalVariables::Update() {
 
 			Item& item = itItem->second;
 
-
 			if (std::holds_alternative<int32_t>(item)) {
 				int32_t* ptr = std::get_if<int32_t>(&item);
 				ImGui::DragInt(itemName.c_str(), ptr, 1);
@@ -57,7 +56,6 @@ void GlobalVariables::Update() {
 			}
 		}
 
-
 		ImGui::Text("\n");
 
 		if (ImGui::Button("Save")) {
@@ -71,8 +69,6 @@ void GlobalVariables::Update() {
 
 		ImGui::EndMenu();
 	}
-
-
 
 	ImGui::EndMenuBar();
 	ImGui::End();
@@ -235,7 +231,6 @@ Quaternion GlobalVariables::GetQuaternionValue(const std::string& groupName, con
 
 void GlobalVariables::SaveFile(const std::string& groupName) {
 
-
 	std::map<std::string, Group>::iterator itGroup = datas_.find(groupName);
 
 	assert(itGroup != datas_.end());
@@ -243,10 +238,8 @@ void GlobalVariables::SaveFile(const std::string& groupName) {
 	nlohmann::json root;
 
 	root = nlohmann::json::object();
-	
-	
+		
 	root[groupName] = nlohmann::json::object();
-
 
 	for (std::map<std::string, Item>::iterator itItem = itGroup->second.begin();
 	     itItem != itGroup->second.end(); ++itItem) {
@@ -255,35 +248,26 @@ void GlobalVariables::SaveFile(const std::string& groupName) {
 
 		Item& item = itItem->second;
 
-
 		if (std::holds_alternative<int32_t>(item)) {
-			
-			
 			root[groupName][itemName] = std::get<int32_t>(item);
 		} else if (std::holds_alternative<float>(item)) {
-
 			root[groupName][itemName] = std::get<float>(item);
 		} else if (std::holds_alternative<Vector2>(item)) {
-
 			Vector2 value = std::get<Vector2>(item);
-			root[groupName][itemName] = nlohmann::json::array({value.x, value.y});
+			root[groupName][itemName] = nlohmann::json::array({ value.x, value.y});
 		}else if (std::holds_alternative<Vector3>(item)) {
-
 			Vector3 value = std::get<Vector3>(item);
 			root[groupName][itemName] = nlohmann::json::array({ value.x, value.y, value.z });
 		}else if (std::holds_alternative<Quaternion>(item)) {
-
 			Quaternion value = std::get<Quaternion>(item);
-			root[groupName][itemName] = nlohmann::json::array({ value.x, value.y, value.z,value.w });
+			root[groupName][itemName] = nlohmann::json::array({ value.x, value.y, value.z, value.w });
 		}
-
 	}
 
 	std::filesystem::path dir(kDirectoryPath);
 	if (!std::filesystem::exists(dir)) {
 		std::filesystem::create_directories(dir);
 	}
-
 
 	std::string filePath = kDirectoryPath + groupName + ".json";
 
@@ -292,9 +276,9 @@ void GlobalVariables::SaveFile(const std::string& groupName) {
 	ofs.open(filePath);
 
 	if (ofs.fail()) {
-		std::string message = "Failed open data file file for write";
 #ifdef _DEBUG
-		//MessageBoxA(nullptr, message.c_str(), "GlobalVariables", 0);
+		std::string message = "Failed open data file file for write";
+		MessageBoxA(nullptr, message.c_str(), "GlobalVariables", 0);
 #endif // _DEBUG
 		assert(0);
 		return;
@@ -303,6 +287,11 @@ void GlobalVariables::SaveFile(const std::string& groupName) {
 	ofs << std::setw(5) << root << std::endl;
 
 	ofs.close();
+	
+#ifdef _DEBUG
+	SaveMessage(groupName);
+#endif // _DEBUG
+
 }
 
 void GlobalVariables::LoadFiles() {
@@ -347,23 +336,19 @@ void GlobalVariables::LoadFile(const std::string& groupName) {
 		return;
 	}
 
-
 	nlohmann::json root;
 
 	ifs >> root;
 
 	ifs.close();
 
-
 	nlohmann::json::iterator itGroup = root.find(groupName);
 
 	assert(itGroup != root.end());
 
-
 	for (nlohmann::json::iterator itItem = itGroup->begin(); itItem != itGroup->end(); ++itItem) {
 		
 		const std::string& itemName = itItem.key();
-
 
 		if (itItem->is_number_integer()) {
 			
@@ -387,6 +372,9 @@ void GlobalVariables::LoadFile(const std::string& groupName) {
 			SetValue(groupName, itemName, value);
 		}
 	}
+#ifdef _DEBUG
+	LoadMessage(groupName);
+#endif // _DEBUG
 }
 
 void GlobalVariables::ChackFiles(std::vector<std::string>& fileName) {
