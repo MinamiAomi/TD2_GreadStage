@@ -90,7 +90,7 @@ void CreateStageScene::DrawImGui() {
             // 要素数確認
             ImGui::Text("ElementCount = %d", stage_->GetBoxes().size());
             for (int i = 0; i < stage_->GetBoxes().size(); i++) {
-                if (ImGui::TreeNode(("BoxNumber : " + std::to_string(i + 1)).c_str())) {
+                if (ImGui::TreeNode(("BoxNumber : " + std::to_string(i)).c_str())) {
                     stage_->GetBoxes()[i]->DrawImGui();
                     if (ImGui::Button("Delete")) {
                         stage_->Delete(i);
