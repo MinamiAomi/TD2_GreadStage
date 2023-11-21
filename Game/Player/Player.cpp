@@ -140,15 +140,15 @@ void Player::MoveUpdate() {
         move.x += moveSpeed_;
     }
 
-	auto xinput = input->GetXInputState();
-	if (std::abs(xinput.Gamepad.sThumbLX) > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) {
-		move.x = 0.0f;
-		move.x = xinput.Gamepad.sThumbLX;
-	}
-	if (std::abs(xinput.Gamepad.sThumbLY) > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) {
-		move.y = 0.0f;
-		move.y = xinput.Gamepad.sThumbLY;
-	}
+    auto& xinput = input->GetXInputState();
+    if (std::abs(xinput.Gamepad.sThumbLX) > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) {
+        move.x = 0.0f;
+        move.x = xinput.Gamepad.sThumbLX;
+    }
+    if (std::abs(xinput.Gamepad.sThumbLY) > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) {
+        move.z = 0.0f;
+        move.z = xinput.Gamepad.sThumbLY;
+    }
 
     // 移動処理
     if (move != Vector3::zero) {
