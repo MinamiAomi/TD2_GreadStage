@@ -57,7 +57,10 @@ void CreateStageScene::DrawImGui() {
 						}
                         global_->SetValue(itemName_, "Goal : Translate" + std::string(), stage_->GetGoal()->transform.translate);
                         global_->SetValue(itemName_, "Goal : Rotate" + std::string(), stage_->GetGoal()->transform.rotate);
-						global_->SaveFile(itemName_);
+						global_->SetValue(itemName_, "Player : Translate" + std::string(), stage_->GetPlayer()->transform.translate);
+                        global_->SetValue(itemName_, "Player : Rotate" + std::string(), stage_->GetPlayer()->transform.rotate);
+						
+                        global_->SaveFile(itemName_);
 						bool flag = false;
 						for (auto& i : fileName_) {
 							if (i.c_str() == std::string() + itemName_) {

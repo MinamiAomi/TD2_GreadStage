@@ -214,7 +214,10 @@ Vector3 GlobalVariables::GetVector3Value(const std::string& groupName, const std
 
 	const Group& group = datas_.at(groupName);
 
-	assert(group.find(key) != group.end());
+	//assert(group.find(key) != group.end());
+	if (group.find(key) == group.end()) {
+		return Vector3::zero;
+	}
 
 	return std::get<Vector3>(group.find(key)->second);
 }
@@ -224,7 +227,10 @@ Quaternion GlobalVariables::GetQuaternionValue(const std::string& groupName, con
 
 	const Group& group = datas_.at(groupName);
 
-	assert(group.find(key) != group.end());
+	//assert(group.find(key) != group.end());
+	if (group.find(key) == group.end()) {
+		return Quaternion::identity;
+	}
 
 	return std::get<Quaternion>(group.find(key)->second);
 }

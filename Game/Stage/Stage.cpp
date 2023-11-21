@@ -5,6 +5,8 @@
 void Stage::Initialize() {
 	goal_ = std::make_shared<Goal>();
 	goal_->Initialize();
+	player_ = std::make_shared<Player>();
+	player_->Initialize();
 }
 
 void Stage::Update() {
@@ -13,6 +15,8 @@ void Stage::Update() {
 		i->Update();
 	}
 	goal_->Update();
+
+	player_->transform.UpdateMatrix();
 }
 
 void Stage::Add(const std::shared_ptr<Box>& box) {
@@ -41,4 +45,7 @@ void Stage::Load(const std::filesystem::path& loadFile) {
 	}
 	goal_->transform.translate = global->GetVector3Value(selectName, "Goal : Translate");
 	goal_->transform.rotate = global->GetQuaternionValue(selectName, "Goal : Rotate");
+
+	player_->transform.translate = global->GetVector3Value(selectName, "Player : Translate");
+	player_->transform.rotate = global->GetQuaternionValue(selectName, "Player : Rotate");
 }

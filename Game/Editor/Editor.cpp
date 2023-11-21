@@ -20,6 +20,11 @@ void Editor::OnInitialize() {
 	toonModel->Create(ModelData::LoadObjFile("Resources/Model/box.obj"));
 	resourceManager->AddToonModel("Box", toonModel);
 
+	// プレイヤー
+	toonModel = std::make_shared<Model>();
+	toonModel->Create(ModelData::LoadObjFile("Resources/Model/player.obj"));
+	resourceManager->AddToonModel("Player", toonModel);
+
 }
 
 void Editor::OnFinalize() {
