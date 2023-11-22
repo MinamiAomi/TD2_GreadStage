@@ -37,11 +37,11 @@ void CameraAnimation::Update() {
 			radRot_.y += 1.0f;
 		}
 		if (input->IsKeyPressed(DIK_DOWNARROW)
-			|| xinput.Gamepad.sThumbRY < -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) {
+			|| xinput.Gamepad.sThumbRY > XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) {
 			radRot_.x -= 1.0f;
 		}
 		if (input->IsKeyPressed(DIK_UPARROW)
-			|| xinput.Gamepad.sThumbRY > XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) {
+			|| xinput.Gamepad.sThumbRY < -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) {
 			radRot_.x += 1.0f;
 		}
 		
