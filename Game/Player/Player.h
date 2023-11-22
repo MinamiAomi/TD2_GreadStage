@@ -43,9 +43,9 @@ private: // メンバ変数
 	struct JumpParameters {
 		bool isJumped = false; /*true している false していない*/
 		float fallSpeed = 0.0f;
-		float jumpPower = 1.0f;
-		float gravity = 0.08f;
-		float fallSpeedLimits = 0.2f;
+		float jumpPower = 0.2f;
+		float gravity = 0.04f;
+		float fallSpeedLimits = 0.4f;
 	};
 	JumpParameters jumpParameters_;
 
@@ -68,8 +68,6 @@ private: // メンバ関数
 	void WallUpdate(Vector3 moveVec);
 
 	void OnCollision(const CollisionInfo& collisionInfo);
-	void OnCollisionOverlap(const CollisionInfo& collisionInfo);
-
 
 	void DrawImGui();
 };

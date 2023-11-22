@@ -12,6 +12,8 @@ public:
 	void Initialize();
 	void Update();
 	void Restart();
+private:
+	void DrawImGui();
 
 public: // ゲッター
 	const std::shared_ptr<Camera>& GetCamera() { return camera_; }
@@ -22,6 +24,9 @@ public: //	セッター
 private: //	メンバ変数
 	std::shared_ptr<Camera> camera_;
 	Vector3 offset_;
+	Vector3 radRot_;
 	const Transform* target_ = nullptr;
+
+	Vector2 upDown = Vector2::zero;
 
 };

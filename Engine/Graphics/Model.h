@@ -45,6 +45,8 @@ public:
     void SetUseLighting(bool useLighting) { useLighting_ = useLighting; }
     void SetIsActive(bool isActive) { isActive_ = isActive; }
     void SetColor(const Vector3& color) { color_ = color; }
+    void SetUseRimLight(bool useRimLight) { useRimLight_ = useRimLight; }
+    void SetRimLightColor(const Vector3& color) { rimLightColor_ = color; }
 
     bool IsActive() const { return isActive_; }
 
@@ -59,6 +61,8 @@ private:
     std::shared_ptr<Model> model_;
     Matrix4x4 worldMatrix_;
     Vector3 color_ = Vector3::one;
+    Vector3 rimLightColor_ = Vector3::one;
     bool useLighting_ = true;
+    bool useRimLight_ = false;
     bool isActive_ = true;
 };

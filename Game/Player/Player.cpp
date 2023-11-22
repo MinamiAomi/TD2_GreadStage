@@ -12,13 +12,15 @@ void Player::Initialize() {
     SetName("Player");
 
     // 初期座標の設定
-    transform.translate = Vector3(0.0f, 0.0f, 0.0f);
+    transform.translate = Vector3(0.0f, 3.0f, 0.0f);
     //transform.rotate = Quaternion::MakeForYAxis(0.45f);
 
     // モデルの取得
     model_ = std::make_unique<ModelInstance>();
     model_->SetModel(ResourceManager::GetInstance()->FindModel("Player"));
     model_->SetIsActive(true);
+    model_->SetUseRimLight(true);
+    model_->SetRimLightColor({ 1.0f,1.0f,1.0f });
 
     // 座標更新してからでなければローカルデータが消えてしまう
     modelTrans_.SetParent(&transform);
@@ -172,10 +174,12 @@ void Player::MoveUpdate() {
 
 void Player::MoveLimit() {
     auto input = Input::GetInstance();
-
-    if (input->IsKeyTrigger(DIK_R)) {
+    auto& xInput = input->GetXInputState();
+    auto& preXInput = input->GetPreXInputState();
+    if (input->IsKeyTrigger(DIK_R) ||
+        xInput.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER && !(preXInput.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)) {
         jumpParameters_.isJumped = false;
-        transform.translate = Vector3(0.0f, 0.0f, 0.0f);
+        transform.translate = Vector3(0.0f, 3.0f, 0.0f);
         transform.rotate = Quaternion::identity;
         jumpParameters_.fallSpeed = 0.0f;
     }
@@ -224,18 +228,29 @@ void Player::OnCollision(const CollisionInfo& collisionInfo) {
         //if (floorCollider_ == collisionInfo.collider) {
             // Quaternionは後ろからかける
 
-        // 事前に飛ばしたレイに当たったコライダーは処理を通さない
-        auto wallCollider = std::find(wallColliders_.begin(), wallColliders_.end(), collisionInfo.collider);
-        if (wallCollider == wallColliders_.end()) {
-
-            jumpParameters_.isJumped = false;
-            jumpParameters_.fallSpeed = 0.0f;
-
+        if (jumpParameters_.isJumped) {
             Vector3 up = transform.rotate.GetUp();
             Vector3 normal = collisionInfo.normal.Normalized();
-            if (Dot(up, normal) < 0.9999f) {
-                Quaternion diff = Quaternion::MakeFromTwoVector(up, normal);
-                transform.rotate = diff * transform.rotate;
+
+            if (std::abs(Dot(up, normal)) > std::cos(45.0f * Math::ToRadian)) {
+                jumpParameters_.isJumped = false;
+                jumpParameters_.fallSpeed = 0.0f;
+            }
+        }
+        else {
+            // 事前に飛ばしたレイに当たったコライダーは処理を通さない
+            auto wallCollider = std::find(wallColliders_.begin(), wallColliders_.end(), collisionInfo.collider);
+            if (wallCollider == wallColliders_.end()) {
+
+                jumpParameters_.isJumped = false;
+                jumpParameters_.fallSpeed = 0.0f;
+
+                Vector3 up = transform.rotate.GetUp();
+                Vector3 normal = collisionInfo.normal.Normalized();
+                if (Dot(up, normal) < 0.9999f) {
+                    Quaternion diff = Quaternion::MakeFromTwoVector(up, normal);
+                    transform.rotate = diff * transform.rotate;
+                }
             }
         }
         //}
@@ -255,7 +270,7 @@ void Player::DrawImGui() {
     ImGui::DragFloat("FallSpeed", &jumpParameters_.fallSpeed, 0.01f, 0.0f, jumpParameters_.fallSpeedLimits);
     if (ImGui::Button("Reset")) {
         jumpParameters_.isJumped = false;
-        transform.translate = Vector3(0.0f, 0.0f, 0.0f);
+        transform.translate = Vector3(0.0f, 3.0f, 0.0f);
         transform.rotate = Quaternion::identity;
         jumpParameters_.fallSpeed = 0.0f;
     }

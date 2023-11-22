@@ -12,6 +12,8 @@ struct Instance {
     float4x4 worldMatrix;
     float3 color;
     uint useLighting;
+    float3 rimLightColor;
+    uint useRimLight;
 };
 ConstantBuffer<Instance> instance_ : register(b1);
 
@@ -45,12 +47,23 @@ struct PSOutput {
     float4 color : SV_TARGET0;
 };
 
+// ディザリングパターン
 static const float pattern[4][4] = {
     { 0.00f, 0.53f, 0.13f, 0.66f },
     { 0.80f, 0.26f, 0.93f, 0.40f },
     { 0.20f, 0.73f, 0.06f, 0.60f },
     { 1.00f, 0.46f, 0.86f, 0.33f },
 };
+
+float3 ViewDirection() {
+    float3x3 view = (float3x3)scene_.viewMatrix;
+    float3x3 viewInverse;
+    viewInverse._11_12_13 = view._11_21_31;
+    viewInverse._21_22_23 = view._12_22_32;
+    viewInverse._31_32_33 = view._13_23_33;
+    
+    return mul(float3(0.0f, 0.0f, -1.0f), viewInverse);
+}
 
 PSOutput main(PSInput input) {
     // 位置
@@ -60,19 +73,20 @@ PSOutput main(PSInput input) {
     // ピクセルからカメラへのベクトル 
     float3 pixelToCamera = normalize(scene_.cameraPosition - position);
     
+    // ディザリング
     int2 xy = (int2)fmod(input.position, 4.0f);
-    float dither = pattern[xy.y][xy.x];
-    
+    float dither = pattern[xy.y][xy.x];    
     float rate = length(input.position.xy / float2(1280.0f, 720.0f) * 2.0f - 1.0f);
     float alpha = (length(scene_.cameraPosition - position) - scene_.ditheringRange) / scene_.ditheringRange;
     clip(rate + alpha - dither);
     
     
     DirectionalLight directionalLight_;
-    directionalLight_.direction = normalize(float3(1.0f, -1.0f, 0.0f));
+    directionalLight_.direction = normalize(float3(1.0f, -1.0f, 1.0f));
     directionalLight_.intensity = 1.0f;
     directionalLight_.color = float3(1.0f, 1.0f, 1.0f);
     
+    float3 ambient = float3(0.1f, 0.1f, 0.1f);
     // テクスチャの色
     float3 textureColor = texture_.Sample(sampler_, input.texcoord).rgb * instance_.color;
     // 拡散反射
@@ -80,9 +94,9 @@ PSOutput main(PSInput input) {
     // 鏡面反射
     float3 specular = material_.specular * BlinnPhongReflection(normal, directionalLight_.direction, pixelToCamera, 10.0f);
     // シェーディングによる色
-    float3 shadeColor = (diffuse + specular) * directionalLight_.color * directionalLight_.intensity;
+    float3 shadeColor = (diffuse + specular + ambient) * directionalLight_.color * directionalLight_.intensity;
     // ライティングを使用しない場合テクスチャの色をそのまま使う
-    shadeColor = lerp(float3(1.0f, 1.0f, 1.0f), shadeColor, float(instance_.useLighting));
+    shadeColor = lerp(float3(1.0f, 1.0f, 1.0f), shadeColor, (float)instance_.useLighting);
        
     PSOutput output;
     output.color.rgb = textureColor * shadeColor;
@@ -96,9 +110,10 @@ PSOutput main(PSInput input) {
     
    // output.color.rgb = float3(0.0f, 0.0f, 0.0f);
     
-    // フレネル
-//    float m = saturate(1.0f - dot(normal, pixelToCamera));
-//    output.color.rgb = lerp(float3(1.0f, 0.0f, 0.0f), output.color.rgb, step((m * m * m * m * m), 0.4f));
+    // リムライト
+    float m = saturate(1.0f - dot(normal, pixelToCamera));
+    m = m * m * m * m * m;
+    output.color.rgb = lerp(output.color.rgb, instance_.rimLightColor, lerp(0.0f, m, (float) instance_.useRimLight));
     
     //output.color.rgb = specular;
     
