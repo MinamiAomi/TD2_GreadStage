@@ -6,6 +6,7 @@
 
 #include "Box/Box.h"
 #include "Goal/Goal.h"
+#include "Graphics/LightManager.h"
 
 class Stage {
 public:
@@ -22,4 +23,7 @@ public:
 private:
     std::vector<std::shared_ptr<Box>> boxes_;
     std::shared_ptr<Goal> goal_;
+
+
+    std::shared_ptr<DirectionalLight> light_;
 };

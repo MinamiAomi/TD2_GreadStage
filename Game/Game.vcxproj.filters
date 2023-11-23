@@ -39,6 +39,9 @@
     <ClCompile Include="Player\Player.cpp">
       <Filter>Player</Filter>
     </ClCompile>
+    <ClCompile Include="Player\PlayerModel.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionConfig.h" />
@@ -78,6 +81,9 @@
       <Filter>GlobalVariables</Filter>
     </ClInclude>
     <ClInclude Include="Player\Player.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\PlayerModel.h">
       <Filter>Player</Filter>
     </ClInclude>
   </ItemGroup>

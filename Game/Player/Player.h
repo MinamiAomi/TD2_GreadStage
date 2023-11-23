@@ -8,6 +8,7 @@
 #include "Math/Transform.h"
 #include "CameraAnimation/CameraAnimation.h"
 #include "Collision/Collider.h"
+#include "PlayerModel.h"
 
 class Player : public GameObject {
 public:
@@ -26,10 +27,10 @@ public: // セッター
 
 private: // メンバ変数
 	// モデル
-	std::unique_ptr<ModelInstance> model_;
 	std::shared_ptr<CameraAnimation> camera_;
 
 	Transform modelTrans_;
+	PlayerModel playerModel_;
 
 	std::unique_ptr<SphereCollider> collider_;
 	Collider* floorCollider_;

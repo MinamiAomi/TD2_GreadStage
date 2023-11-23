@@ -5,6 +5,9 @@
 void Stage::Initialize() {
 	goal_ = std::make_shared<Goal>();
 	goal_->Initialize();
+
+	light_ = DirectionalLight::Create();
+	light_->color = { 1.0f,1.0f,1.0f };
 }
 
 void Stage::Update() {

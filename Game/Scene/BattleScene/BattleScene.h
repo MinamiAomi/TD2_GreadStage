@@ -5,6 +5,7 @@
 #include "Game/Player/Player.h"
 #include "Game/CameraAnimation/CameraAnimation.h"
 #include "Game/Stage/Stage.h"
+#include "Graphics/LightManager.h"
 
 class BattleScene : public BaseScene {
 public:
