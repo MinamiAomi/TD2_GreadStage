@@ -9,7 +9,7 @@ void CollectionObject::Initialize() {
     model_ = std::make_unique<ModelInstance>();
     collider_ = std::make_unique<BoxCollider>();
 
-    model_->SetModel(ResourceManager::GetInstance()->FindModel("Crystal"));
+    model_->SetModel(ResourceManager::GetInstance()->FindModel("Star"));
     model_->SetIsActive(true);
     model_->SetColor(color_);
 

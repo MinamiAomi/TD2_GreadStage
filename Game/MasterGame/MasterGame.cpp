@@ -58,6 +58,11 @@ void MasterGame::OnInitialize() {
 	toonModel = std::make_shared<Model>();
 	toonModel->Create(ModelData::LoadObjFile("Resources/Model/Crystal/crystal.obj"));
 	resourceManager->AddToonModel("Crystal", toonModel);
+
+	toonModel = std::make_shared<Model>();
+	toonModel->Create(ModelData::LoadObjFile("Resources/Model/Star/star.obj"));
+	resourceManager->AddToonModel("Star", toonModel);
+
 }
 
 void MasterGame::OnFinalize() {
