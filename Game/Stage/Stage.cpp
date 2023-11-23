@@ -12,6 +12,12 @@ void Stage::Update() {
 	for (auto& i : boxes_) {
 		i->Update();
 	}
+	for (auto& i : items_) {
+		i->Update();
+	}
+	for (auto& i : collects_) {
+		i->Update();
+	}
 	goal_->Update();
 
 	player_->SimpleUpdate();
@@ -21,8 +27,24 @@ void Stage::Add(const std::shared_ptr<Box>& box) {
 	boxes_.emplace_back(box)->Initialize();
 }
 
-void Stage::Delete(const int& num) {
+void Stage::Add(const std::shared_ptr<RequiredItem>& item) {
+	items_.emplace_back(item)->Initialize();
+}
+
+void Stage::Add(const std::shared_ptr<CollectionObject>& collect) {
+	collects_.emplace_back(collect)->Initialize();
+}
+
+void Stage::DeleteBox(const int& num) {
 	boxes_.erase(boxes_.begin() + num);
+}
+
+void Stage::DeleteItem(const int& num) {
+	items_.erase(items_.begin() + num);
+}
+
+void Stage::DeleteCollect(const int& num) {
+	collects_.erase(collects_.begin() + num);
 }
 
 void Stage::Load(const std::filesystem::path& loadFile) {

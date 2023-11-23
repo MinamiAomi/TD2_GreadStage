@@ -39,6 +39,12 @@
     <ClCompile Include="Player\Player.cpp">
       <Filter>Player</Filter>
     </ClCompile>
+    <ClCompile Include="Stage\RequiredItem.cpp">
+      <Filter>Stage\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage\CollectionObject.cpp">
+      <Filter>Stage\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionConfig.h" />
@@ -80,6 +86,12 @@
     <ClInclude Include="Player\Player.h">
       <Filter>Player</Filter>
     </ClInclude>
+    <ClInclude Include="Stage\RequiredItem.h">
+      <Filter>Stage\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage\CollectionObject.h">
+      <Filter>Stage\Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="MasterGame">
@@ -105,6 +117,9 @@
     </Filter>
     <Filter Include="Player">
       <UniqueIdentifier>{23463c16-e358-4696-bd9c-ff43f7c48229}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Stage\Item">
+      <UniqueIdentifier>{9bfac6aa-3ccd-4694-b8ac-052d2551cc8f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -66,14 +66,6 @@ void CreateStageScene::DrawImGui() {
 	ImGui::Begin("Stage", nullptr, ImGuiWindowFlags_MenuBar);
 	if (ImGui::BeginMenuBar()) {
 		if (ImGui::BeginMenu("Initialize")) {
-			static Vector3 vec3 = Vector3::zero;
-			ImGui::DragFloat3("transform", &vec3.x, 0.1f);
-			if (ImGui::Button("Create")) {
-				auto box = std::make_shared<Box>();
-				box->transform.translate = vec3;
-				box->transform.scale = Vector3::one;
-				stage_->Add(box);
-			}
 			if (ImGui::TreeNode("FileSave")) {
 				ImGui::InputText("FileName", itemName_, sizeof(itemName_));
 				if (ImGui::Button("Save")) {
@@ -120,13 +112,53 @@ void CreateStageScene::DrawImGui() {
             ImGui::EndMenu();
         }
         if (ImGui::BeginMenu("Boxes")) {
+            if (ImGui::Button("Create")) {
+                auto box = std::make_shared<Box>();
+                stage_->Add(box);
+            }
             // 要素数確認
             ImGui::Text("ElementCount = %d", stage_->GetBoxes().size());
             for (int i = 0; i < stage_->GetBoxes().size(); i++) {
                 if (ImGui::TreeNode(("BoxNumber : " + std::to_string(i)).c_str())) {
                     stage_->GetBoxes()[i]->DrawImGui();
                     if (ImGui::Button("Delete")) {
-                        stage_->Delete(i);
+                        stage_->DeleteBox(i);
+                    }
+                    ImGui::TreePop();
+                }
+            }
+            ImGui::EndMenu();
+        }
+        if (ImGui::BeginMenu("RequiredItem")) {
+            if (ImGui::Button("Create")) {
+                auto item = std::make_shared<RequiredItem>();
+                stage_->Add(item);
+            }
+            // 要素数確認
+            ImGui::Text("ElementCount = %d", stage_->GetItems().size());
+            for (int i = 0; i < stage_->GetItems().size(); i++) {
+                if (ImGui::TreeNode(("ItemNumber : " + std::to_string(i)).c_str())) {
+                    stage_->GetItems()[i]->DrawImGui();
+                    if (ImGui::Button("Delete")) {
+                        stage_->DeleteItem(i);
+                    }
+                    ImGui::TreePop();
+                }
+            }
+            ImGui::EndMenu();
+        }
+        if (ImGui::BeginMenu("CollectionObject")) {
+            if (ImGui::Button("Create")) {
+                auto collect = std::make_shared<CollectionObject>();
+                stage_->Add(collect);
+            }
+            // 要素数確認
+            ImGui::Text("ElementCount = %d", stage_->GetCollects().size());
+            for (int i = 0; i < stage_->GetCollects().size(); i++) {
+                if (ImGui::TreeNode(("ItemNumber : " + std::to_string(i)).c_str())) {
+                    stage_->GetCollects()[i]->DrawImGui();
+                    if (ImGui::Button("Delete")) {
+                        stage_->DeleteCollect(i);
                     }
                     ImGui::TreePop();
                 }
