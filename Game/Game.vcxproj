@@ -19,7 +19,6 @@
     <ClCompile Include="CameraAnimation\CameraAnimation.cpp" />
     <ClCompile Include="DebugCamera.cpp" />
     <ClCompile Include="Editor\CreateStageScene\CreateStageScene.cpp" />
-    <ClCompile Include="Editor\Editor.cpp" />
     <ClCompile Include="GlobalVariables\GlobalVariables.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MasterGame\MasterGame.cpp" />
@@ -39,7 +38,6 @@
     <ClInclude Include="DebugCamera.h" />
     <ClInclude Include="Easing\Easing.h" />
     <ClInclude Include="Editor\CreateStageScene\CreateStageScene.h" />
-    <ClInclude Include="Editor\Editor.h" />
     <ClInclude Include="GlobalVariables\GlobalVariables.h" />
     <ClInclude Include="MasterGame\MasterGame.h" />
     <ClInclude Include="Player\Player.h" />
