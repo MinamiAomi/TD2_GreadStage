@@ -51,7 +51,8 @@ void Stage::Load(const std::filesystem::path& loadFile) {
     GlobalVariables* global = GlobalVariables::GetInstance();
 	std::string selectName = loadFile.string();
 	global->LoadFile(selectName);
-	int num = global->GetIntValue(selectName, "Confirmation");
+	
+	int num = global->GetIntValue(selectName, "BoxConfirmation");
 	boxes_.clear(); // 要素の全削除
 	for (int i = 0; i < num; i++) {
 		Vector3 trans = global->GetVector3Value(selectName, ("BoxNumber : " + std::to_string(i) + " : Translate").c_str());
@@ -63,6 +64,33 @@ void Stage::Load(const std::filesystem::path& loadFile) {
 		box->transform.scale = scal;
 		box->Initialize();
 	}
+	
+	num = global->GetIntValue(selectName, "ItemConfirmation");
+	items_.clear(); // 要素の全削除
+	for (int i = 0; i < num; i++) {
+		Vector3 trans = global->GetVector3Value(selectName, ("ItemNumber : " + std::to_string(i) + " : Translate").c_str());
+		Quaternion rot = global->GetQuaternionValue(selectName, ("ItemNumber : " + std::to_string(i) + " : Rotate").c_str());
+		Vector3 scal = global->GetVector3Value(selectName, ("ItemNumber : " + std::to_string(i) + " : Scale").c_str());
+		auto& item = items_.emplace_back(std::make_shared<RequiredItem>());
+		item->transform.translate = trans;
+		item->transform.rotate = rot;
+		item->transform.scale = scal;
+		item->Initialize();
+	}
+	
+	num = global->GetIntValue(selectName, "CollectConfirmation");
+	collects_.clear(); // 要素の全削除
+	for (int i = 0; i < num; i++) {
+		Vector3 trans = global->GetVector3Value(selectName, ("CollectNumber : " + std::to_string(i) + " : Translate").c_str());
+		Quaternion rot = global->GetQuaternionValue(selectName, ("CollectNumber : " + std::to_string(i) + " : Rotate").c_str());
+		Vector3 scal = global->GetVector3Value(selectName, ("CollectNumber : " + std::to_string(i) + " : Scale").c_str());
+		auto& collect = collects_.emplace_back(std::make_shared<CollectionObject>());
+		collect->transform.translate = trans;
+		collect->transform.rotate = rot;
+		collect->transform.scale = scal;
+		collect->Initialize();
+	}
+	
 	goal_->transform.translate = global->GetVector3Value(selectName, "Goal : Translate");
 	goal_->transform.rotate = global->GetQuaternionValue(selectName, "Goal : Rotate");
 

@@ -71,11 +71,23 @@ void CreateStageScene::DrawImGui() {
 				if (ImGui::Button("Save")) {
 					if (!stage_->GetBoxes().empty()) {
 						global_->CreateGroup(itemName_);
-						global_->SetValue(itemName_, "Confirmation" + std::string(), static_cast<int>(stage_->GetBoxes().size()));
+						global_->SetValue(itemName_, "BoxConfirmation" + std::string(), static_cast<int>(stage_->GetBoxes().size()));
 						for (int i = 0; i < stage_->GetBoxes().size(); i++) {
 							global_->SetValue(itemName_, ("BoxNumber : " + std::to_string(i) + " : Scale").c_str(), stage_->GetBoxes()[i]->transform.scale);
 							global_->SetValue(itemName_, ("BoxNumber : " + std::to_string(i) + " : Rotate").c_str(), stage_->GetBoxes()[i]->transform.rotate);
                             global_->SetValue(itemName_, ("BoxNumber : " + std::to_string(i) + " : Translate").c_str(), stage_->GetBoxes()[i]->transform.translate);
+						}
+                        global_->SetValue(itemName_, "ItemConfirmation" + std::string(), static_cast<int>(stage_->GetItems().size()));
+						for (int i = 0; i < stage_->GetItems().size(); i++) {
+							global_->SetValue(itemName_, ("ItemNumber : " + std::to_string(i) + " : Scale").c_str(), stage_->GetItems()[i]->transform.scale);
+							global_->SetValue(itemName_, ("ItemNumber : " + std::to_string(i) + " : Rotate").c_str(), stage_->GetItems()[i]->transform.rotate);
+                            global_->SetValue(itemName_, ("ItemNumber : " + std::to_string(i) + " : Translate").c_str(), stage_->GetItems()[i]->transform.translate);
+						}
+                        global_->SetValue(itemName_, "CollectConfirmation" + std::string(), static_cast<int>(stage_->GetCollects().size()));
+						for (int i = 0; i < stage_->GetCollects().size(); i++) {
+							global_->SetValue(itemName_, ("CollectNumber : " + std::to_string(i) + " : Scale").c_str(), stage_->GetCollects()[i]->transform.scale);
+                            global_->SetValue(itemName_, ("CollectNumber : " + std::to_string(i) + " : Rotate").c_str(), stage_->GetCollects()[i]->transform.rotate);
+                            global_->SetValue(itemName_, ("CollectNumber : " + std::to_string(i) + " : Translate").c_str(), stage_->GetCollects()[i]->transform.translate);
 						}
                         global_->SetValue(itemName_, "Goal : Translate" + std::string(), stage_->GetGoal()->transform.translate);
                         global_->SetValue(itemName_, "Goal : Rotate" + std::string(), stage_->GetGoal()->transform.rotate);
