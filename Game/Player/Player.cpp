@@ -15,17 +15,11 @@ void Player::Initialize() {
     transform.translate = Vector3(0.0f, 3.0f, 0.0f);
     //transform.rotate = Quaternion::MakeForYAxis(0.45f);
 
-    // モデルの取得
-    model_ = std::make_unique<ModelInstance>();
-    model_->SetModel(ResourceManager::GetInstance()->FindModel("Player"));
-    model_->SetIsActive(true);
-    model_->SetUseRimLight(true);
-    model_->SetRimLightColor({ 1.0f,1.0f,1.0f });
-
     // 座標更新してからでなければローカルデータが消えてしまう
     modelTrans_.SetParent(&transform);
     modelTrans_.translate = {};
     modelTrans_.UpdateMatrix();
+    playerModel_.Initialize(&modelTrans_);
 
     collider_ = std::make_unique<SphereCollider>();
     collider_->SetGameObject(this);
@@ -109,6 +103,18 @@ void Player::PostCollisionUpdate() {
 
         UpdateTransform();
     }
+
+
+    if (moveDirection_ != Vector3::zero) {
+
+        Vector3 lookDir = transform.rotate.Conjugate() * moveDirection_;
+        if (Cross(lookDir, Vector3::up) != Vector3::zero) {
+            modelTrans_.rotate = Quaternion::Slerp(0.1f, modelTrans_.rotate, Quaternion::MakeLookRotation(lookDir));
+        }
+    }
+
+    modelTrans_.UpdateMatrix();
+    playerModel_.Update();
 }
 
 void Player::UpdateTransform() {
@@ -118,9 +124,6 @@ void Player::UpdateTransform() {
 
     collider_->SetCenter(colliderOffset_ * transform.worldMatrix);
     //collider_->SetOrientation(rotate);
-
-    // モデル座標更新
-    model_->SetWorldMatrix(modelTrans_.worldMatrix);
 }
 
 void Player::MoveUpdate() {
@@ -130,10 +133,10 @@ void Player::MoveUpdate() {
 
     // キーボードでの移動
     if (input->IsKeyPressed(DIK_W)) {
-        move.z += moveSpeed_;
+        move.y += moveSpeed_;
     }
     if (input->IsKeyPressed(DIK_S)) {
-        move.z -= moveSpeed_;
+        move.y -= moveSpeed_;
     }
     if (input->IsKeyPressed(DIK_A)) {
         move.x -= moveSpeed_;
@@ -148,17 +151,29 @@ void Player::MoveUpdate() {
         move.x = xinput.Gamepad.sThumbLX;
     }
     if (std::abs(xinput.Gamepad.sThumbLY) > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) {
-        move.z = 0.0f;
-        move.z = xinput.Gamepad.sThumbLY;
+        move.y = 0.0f;
+        move.y = xinput.Gamepad.sThumbLY;
     }
 
     // 移動処理
     if (move != Vector3::zero) {
         move = move.Normalized();
 
-        move = camera_->GetCamera()->GetRotate() * move;
+        auto& camera = camera_->GetCamera();
+
+        auto viewProjInv = camera->GetViewProjectionMatrix().Inverse();
+        // ndcからワールド空間に変換
+        move = viewProjInv.ApplyTransformWDivide(move) - viewProjInv.ApplyTransformWDivide(Vector3::zero);
+
+        move = Quaternion::MakeFromTwoVector(-camera->GetForward(), transform.rotate.GetUp()) * move;
+
+        //move = camera_->GetCamera()->GetRotate() * move;
+        move = move.Normalized();
         move *= moveSpeed_;
         transform.translate += move;
+
+        //Vector3 forward = transform.rotate.GetForward();
+        //transform.rotate = transform.rotate * Quaternion::Slerp(0.1f, Quaternion::identity,Quaternion::MakeFromTwoVector(forward, move));
     }
 
     moveDirection_ = move;

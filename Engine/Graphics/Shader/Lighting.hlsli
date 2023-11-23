@@ -7,8 +7,8 @@ struct Surface {
 
 struct DirectionalLight {
     float3 direction;
-    float3 color;
     float intensity;
+    float3 color;
 };
 
 struct PointLight {

@@ -195,6 +195,7 @@
     <ClCompile Include="Graphics\InkRenderer.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Graphics\LightManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene\BaseScene.h">
@@ -406,6 +407,9 @@
     </ClInclude>
     <ClInclude Include="Math\Animation.h">
       <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\LightManager.h">
+      <Filter>Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
