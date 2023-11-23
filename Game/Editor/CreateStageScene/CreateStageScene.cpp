@@ -135,7 +135,10 @@ void CreateStageScene::DrawImGui() {
         }
         if (ImGui::BeginMenu("OnlyOneObject")) {
             if (ImGui::TreeNode("Player")) {
-                ImGui::DragFloat3("playerTrans", &stage_->GetPlayer()->transform.translate.x, 0.1f);
+                ImGui::DragFloat3("trans", &stage_->GetPlayer()->transform.translate.x, 0.1f);
+                static Vector3 pRot = Vector3::zero;
+                ImGui::DragFloat3("rotate", &pRot.x, 0.1f, -360.0f, 360.0f);
+                stage_->GetPlayer()->transform.rotate = Quaternion::MakeFromEulerAngle(pRot * Math::ToRadian);
                 ImGui::TreePop();
             }
             if (ImGui::TreeNode("Goal")) {
