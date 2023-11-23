@@ -2,9 +2,12 @@
 #include "Graphics/ImGuiManager.h"
 #include "Collision/CollisionManager.h"
 #include "GlobalVariables/GlobalVariables.h"
+#include "Input/Input.h"
 
 void CreateStageScene::OnInitialize() {
-    camera_ = std::make_shared<DebugCamera>();
+    debugCamera_ = std::make_shared<DebugCamera>();
+    debugCamera_->Initialize();
+    camera_ = std::make_shared<CameraAnimation>();
     camera_->Initialize();
     global_ = GlobalVariables::GetInstance();
     global_->ChackFiles(fileName_);
@@ -19,18 +22,40 @@ void CreateStageScene::OnInitialize() {
 
     player_ = std::make_shared<Player>();
     player_->Initialize();
+
+    // セット
     stage_->SetPlayerPtr(player_);
+    player_->SetCamera(camera_);
+    camera_->SetTarget(&player_->transform);
 
 }
 
 void CreateStageScene::OnUpdate() {
+    if (Input::GetInstance()->IsKeyTrigger(DIK_P)) {
+        playFlg_ = !playFlg_;
+    }
     DrawImGui();
 
     stage_->Update();
 
-    CollisionManager::GetInstance()->CheckCollision();
-    // カメラの更新
-    camera_->Update();
+    if (playFlg_) {
+        player_->Update();
+
+        player_->PreCollisionUpdate();
+        CollisionManager::GetInstance()->CheckCollision();
+        player_->PostCollisionUpdate();
+
+        // カメラの更新
+        camera_->SetCamera();
+        camera_->Update();
+    }
+    else {
+        debugCamera_->SetCamera();
+        debugCamera_->Update();
+    }
+
+    
+    
 }
 
 void CreateStageScene::OnFinalize() {

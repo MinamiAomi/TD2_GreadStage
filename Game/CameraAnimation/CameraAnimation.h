@@ -15,11 +15,13 @@ public:
 private:
 	void DrawImGui();
 
+
 public: // ゲッター
 	const std::shared_ptr<Camera>& GetCamera() { return camera_; }
 
 public: //	セッター
 	void SetTarget(const Transform* target) { target_ = target; }
+	void SetCamera();
 
 private: //	メンバ変数
 	std::shared_ptr<Camera> camera_;

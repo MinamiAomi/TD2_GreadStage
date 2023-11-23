@@ -5,6 +5,7 @@
 #include <string>
 #include "Game/Stage/Stage.h"
 #include "Game/DebugCamera.h"
+#include "Game/CameraAnimation/CameraAnimation.h"
 #include "Game/Player/Player.h"
 
 class GlobalVariables;
@@ -19,7 +20,8 @@ public:
 private: // メンバ変数
 	//std::vector<std::shared_ptr<Box>> boxes_;
 	std::unique_ptr<Stage> stage_;
-	std::shared_ptr<DebugCamera> camera_;
+	std::shared_ptr<DebugCamera> debugCamera_;
+	std::shared_ptr<CameraAnimation> camera_;
 	std::shared_ptr<Player> player_;
 
 	GlobalVariables* global_ = nullptr;
@@ -27,6 +29,8 @@ private: // メンバ変数
 	std::string loadSelectName_;
 	char itemName_[256]{};
 	int fileNumber_ = 0;
+
+	bool playFlg_ = false;
 
 private:
 	void DrawImGui();
