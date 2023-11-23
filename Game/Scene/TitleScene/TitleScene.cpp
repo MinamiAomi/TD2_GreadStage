@@ -17,25 +17,32 @@ void TitleScene::OnInitialize() {
 	stage_->Initialize();
 
 	// セット
+	stage_->SetPlayerPtr(player_);
 	player_->SetCamera(camera_);
 	camera_->SetTarget(&player_->transform);
+
+	stage_->Load("StageSelect");
 }
 
 void TitleScene::OnUpdate() {
-	auto input = Input::GetInstance();
-	if (input->IsKeyPressed(DIK_0)) {
+	
+	stage_->Update();
+	player_->Update();
+
+	player_->PreCollisionUpdate();
+	CollisionManager::GetInstance()->CheckCollision();
+	player_->PostCollisionUpdate();
+
+	// カメラの更新
+	camera_->Update();
+
+	if (player_->GetCleared()) {
 		// シーンのシングルトンの取得
 		SceneManager* sceneManager = SceneManager::GetInstance();
 		// シーンの設定
 		sceneManager->ChangeScene<BattleScene>();
 	}
-	
-	stage_->Update();
-	player_->Update();
 
-	CollisionManager::GetInstance()->CheckCollision();
-	// カメラの更新
-	camera_->Update();
 }
 
 void TitleScene::OnFinalize() {

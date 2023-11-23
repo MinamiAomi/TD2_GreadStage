@@ -4,6 +4,8 @@
 #include "Graphics/RenderManager.h"
 
 #include "Graphics/ImGuiManager.h"
+#include "Engine/Scene/SceneManager.h"
+#include "Game/Scene/TitleScene/TitleScene.h"
 
 void BattleScene::OnInitialize() {
 	// 生成
@@ -15,12 +17,13 @@ void BattleScene::OnInitialize() {
 	player_->Initialize();
 	camera_->Initialize();
 	stage_->Initialize();
-	stage_->Load("Stage3");
 
 	// セット
+	stage_->SetPlayerPtr(player_);
 	player_->SetCamera(camera_);
 	camera_->SetTarget(&player_->transform);
 
+	stage_->Load("Stage3");
 }
 
 void BattleScene::OnUpdate() {
@@ -42,6 +45,14 @@ void BattleScene::OnUpdate() {
 	ImGui::End();
 	//dither = playerToCameraDistance - 5.0f;
 	RenderManager::GetInstance()->GetModelRenderer().DitheringRange(dither);
+
+	if (player_->GetCleared()) {
+		// シーンのシングルトンの取得
+		SceneManager* sceneManager = SceneManager::GetInstance();
+		// シーンの設定
+		sceneManager->ChangeScene<TitleScene>();
+	}
+
 }
 
 void BattleScene::OnFinalize() {

@@ -13,8 +13,8 @@ void MasterGame::OnInitialize() {
 	// シーンのシングルトンの取得
 	SceneManager* sceneManager = SceneManager::GetInstance();
 	// シーンの設定
-	//sceneManager->ChangeScene<BattleScene>();
-	sceneManager->ChangeScene<CreateStageScene>();
+	sceneManager->ChangeScene<TitleScene>();
+	//sceneManager->ChangeScene<CreateStageScene>();
 
 	// リソースマネージャーのシングルトンの取得
 	ResourceManager* resourceManager = ResourceManager::GetInstance();

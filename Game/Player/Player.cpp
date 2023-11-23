@@ -44,6 +44,7 @@ void Player::Initialize() {
     jumpParameters_.jumpPower = 0.5f;
 
     floorCollider_ = nullptr;
+    isCleared_ = false;
 }
 
 void Player::Update() {
@@ -256,6 +257,9 @@ void Player::OnCollision(const CollisionInfo& collisionInfo) {
         //}
     }
 
+    if (collisionInfo.collider->GetName() == "Goal") {
+        isCleared_ = true;
+    }
 
     UpdateTransform();
 

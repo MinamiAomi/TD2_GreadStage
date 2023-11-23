@@ -23,6 +23,7 @@ public:
 
 public: // ゲッター
 	Transform GetTransform() { return transform; }
+	bool GetCleared() { return isCleared_; }
 
 public: // セッター
 	void SetCamera(const std::shared_ptr<CameraAnimation>& camera) { camera_ = camera; }
@@ -54,6 +55,8 @@ private: // メンバ変数
 	Vector3 moveDirection_;
 	std::vector<Collider*> wallColliders_;
 	bool isCollision_;
+
+	bool isCleared_ = false;
 
 private: // メンバ関数
 	// 座標更新
