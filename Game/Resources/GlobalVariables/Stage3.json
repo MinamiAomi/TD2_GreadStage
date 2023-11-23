@@ -97,7 +97,7 @@
                5.0,
                45.0
           ],
-          "CollectConfirmation": 2,
+          "CollectConfirmation": 3,
           "CollectNumber : 0 : Rotate": [
                0.0,
                0.0,
@@ -129,6 +129,22 @@
                0.0,
                5.5,
                6.0
+          ],
+          "CollectNumber : 2 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "CollectNumber : 2 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "CollectNumber : 2 : Translate": [
+               1.5,
+               3.0,
+               0.0
           ],
           "Goal : Rotate": [
                0.0,
