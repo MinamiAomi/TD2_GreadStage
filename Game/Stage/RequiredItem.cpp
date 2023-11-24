@@ -21,9 +21,14 @@ void RequiredItem::Initialize() {
     collider_->SetCollisionMask(~CollisionConfig::Stage);
     collider_->SetCallback([this](const CollisionInfo& collisionInfo) { OnCollision(collisionInfo); });
 
+    isAlive_ = true;
+    animationType_ = AnimationType::Normal;
+
 }
 
 void RequiredItem::Update() {
+    AnimationUpdate();
+
     // 当たり判定、描画を更新
     transform.UpdateMatrix();
     collider_->SetOrientation(transform.rotate);
@@ -34,9 +39,30 @@ void RequiredItem::Update() {
 
 void RequiredItem::OnCollision(const CollisionInfo& collisionInfo) {
     if (collisionInfo.collider->GetName() == "Player") {
-        isAlive_ = false;
+        animationType_ = AnimationType::Get;
     }
 }
+
+void RequiredItem::AnimationUpdate() {
+    switch (animationType_)
+    {
+    case AnimationType::Normal:
+        TypeNormalUpdate();
+        break;
+    case AnimationType::Get:
+        TypeGetUpdate();
+        break;
+    }
+}
+
+void RequiredItem::TypeNormalUpdate() {
+
+}
+
+void RequiredItem::TypeGetUpdate() {
+    isAlive_ = false;
+}
+
 void RequiredItem::DrawImGui() {
     ImGui::DragFloat3("scale", &transform.scale.x, 0.1f);
     ImGui::DragFloat3("rotate", &rotate_.x, 0.1f, -360.0f, 360.0f);

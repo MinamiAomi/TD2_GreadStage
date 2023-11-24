@@ -27,6 +27,17 @@ private:
     Vector3 rotate_;
     Vector3 color_ = Vector3(1.0f, 0.0f, 0.0f);
     bool isAlive_ = true;
+
+    enum class AnimationType {
+        Normal,
+        Get,
+    };
+    AnimationType animationType_ = AnimationType::Normal;
 private:
     void OnCollision(const CollisionInfo& collisionInfo);
+
+    void AnimationUpdate();
+    void TypeNormalUpdate();
+    void TypeGetUpdate();
+
 };

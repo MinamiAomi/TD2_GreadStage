@@ -23,9 +23,12 @@ void CollectionObject::Initialize() {
     collider_->SetCallback([this](const CollisionInfo& collisionInfo) { OnCollision(collisionInfo); });
 
     isAlive_ = true;
+    animationType_ = AnimationType::Normal;
 }
 
 void CollectionObject::Update() {
+    AnimationUpdate();
+
     // 当たり判定、描画を更新
     transform.UpdateMatrix();
     collider_->SetOrientation(transform.rotate);
@@ -36,8 +39,28 @@ void CollectionObject::Update() {
 
 void CollectionObject::OnCollision(const CollisionInfo& collisionInfo) {
     if (collisionInfo.collider->GetName() == "Player") {
-        isAlive_ = false;
+        animationType_ = AnimationType::Get;
     }
+}
+
+void CollectionObject::AnimationUpdate() {
+    switch (animationType_) {
+    case AnimationType::Normal:
+        TypeNormalUpdate();
+        break;
+    case AnimationType::Get:
+        TypeGetUpdate();
+        isAlive_ = false;
+        break;
+    }
+}
+
+void CollectionObject::TypeNormalUpdate() {
+
+}
+
+void CollectionObject::TypeGetUpdate() {
+
 }
 
 void CollectionObject::DrawImGui() {
