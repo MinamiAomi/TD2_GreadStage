@@ -20,6 +20,9 @@ void CollectionObject::Initialize() {
     collider_->SetCenter(transform.translate);
     collider_->SetCollisionAttribute(CollisionConfig::Stage);
     collider_->SetCollisionMask(~CollisionConfig::Stage);
+    collider_->SetCallback([this](const CollisionInfo& collisionInfo) { OnCollision(collisionInfo); });
+
+    isAlive_ = true;
 }
 
 void CollectionObject::Update() {
@@ -29,6 +32,12 @@ void CollectionObject::Update() {
     collider_->SetSize(transform.scale);
     collider_->SetCenter(transform.translate);
     model_->SetWorldMatrix(transform.worldMatrix);
+}
+
+void CollectionObject::OnCollision(const CollisionInfo& collisionInfo) {
+    if (collisionInfo.collider->GetName() == "Player") {
+        isAlive_ = false;
+    }
 }
 
 void CollectionObject::DrawImGui() {

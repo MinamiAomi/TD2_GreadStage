@@ -19,6 +19,8 @@ void RequiredItem::Initialize() {
     collider_->SetCenter(transform.translate);
     collider_->SetCollisionAttribute(CollisionConfig::Stage);
     collider_->SetCollisionMask(~CollisionConfig::Stage);
+    collider_->SetCallback([this](const CollisionInfo& collisionInfo) { OnCollision(collisionInfo); });
+
 }
 
 void RequiredItem::Update() {
@@ -30,6 +32,11 @@ void RequiredItem::Update() {
     model_->SetWorldMatrix(transform.worldMatrix);
 }
 
+void RequiredItem::OnCollision(const CollisionInfo& collisionInfo) {
+    if (collisionInfo.collider->GetName() == "Player") {
+        isAlive_ = false;
+    }
+}
 void RequiredItem::DrawImGui() {
     ImGui::DragFloat3("scale", &transform.scale.x, 0.1f);
     ImGui::DragFloat3("rotate", &rotate_.x, 0.1f, -360.0f, 360.0f);

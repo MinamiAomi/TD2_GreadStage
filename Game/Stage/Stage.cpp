@@ -18,6 +18,17 @@ void Stage::Update() {
 	for (auto& i : collects_) {
 		i->Update();
 	}
+
+	std::erase_if(items_, [](const std::shared_ptr<RequiredItem> item)
+		{
+			return !item->GetIsAlived();
+		});
+
+	std::erase_if(collects_, [](const std::shared_ptr<CollectionObject> collect)
+		{
+			return !collect->GetIsAlived();
+		});
+
 	goal_->Update();
 
 	player_->SimpleUpdate();
