@@ -24,6 +24,7 @@ public:
     void DeleteCollect(const int& num);
 
     void Load(const std::filesystem::path& loadFile);
+    void StageSelectload(const std::filesystem::path& loadFile);
 
     const std::vector<std::shared_ptr<Box>>& GetBoxes() const { return boxes_; }
     const std::vector<std::shared_ptr<RequiredItem>>& GetItems() const { return items_; }

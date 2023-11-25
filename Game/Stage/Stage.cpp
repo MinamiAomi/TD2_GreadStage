@@ -111,3 +111,22 @@ void Stage::Load(const std::filesystem::path& loadFile) {
 	player_->transform.translate = global->GetVector3Value(selectName, "Player : Translate");
 	player_->transform.rotate = global->GetQuaternionValue(selectName, "Player : Rotate");
 }
+
+void Stage::StageSelectload(const std::filesystem::path& loadFile) {
+	GlobalVariables* global = GlobalVariables::GetInstance();
+	std::string selectName = loadFile.string();
+	global->LoadFile(selectName);
+
+	int num = global->GetIntValue(selectName, "BoxConfirmation");
+	boxes_.clear(); // 要素の全削除
+	for (int i = 0; i < num; i++) {
+		Vector3 trans = global->GetVector3Value(selectName, ("BoxNumber : " + std::to_string(i) + " : Translate").c_str());
+		Quaternion rot = global->GetQuaternionValue(selectName, ("BoxNumber : " + std::to_string(i) + " : Rotate").c_str());
+		Vector3 scal = global->GetVector3Value(selectName, ("BoxNumber : " + std::to_string(i) + " : Scale").c_str());
+		auto& box = boxes_.emplace_back(std::make_shared<Box>());
+		box->transform.translate = trans;
+		box->transform.rotate = rot;
+		box->transform.scale = scal;
+		box->Initialize();
+	}
+}
