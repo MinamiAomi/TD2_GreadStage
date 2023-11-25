@@ -13,13 +13,13 @@ class Entrance : public GameObject {
 public:
     ~Entrance() {}
 
-    void Initialize();
+    void Initialize(const int& number);
     void Update();
 
 
     void DrawImGui();
 
-    static int stageNumber_;
+    int stageNumber_ = 0;
 
 private:
     std::unique_ptr<ModelInstance> model_;
@@ -39,5 +39,7 @@ private:
 
 private:
     void OnCollision(const CollisionInfo& collisionInfo);
+
+    void AnimationUpdate();
 
 };
