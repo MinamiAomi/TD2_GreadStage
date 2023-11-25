@@ -24,6 +24,9 @@ public:
 
     ModelRenderer& GetModelRenderer() { return renderer_; }
 
+    void UseGaussianBlur(bool useGaussianBlur) { useGaussianBlur_ = useGaussianBlur; }
+    GaussianBlur& GetGaussianBlur() { return gaussianBlur_; }
+
 private:
     RenderManager() = default;
     RenderManager(const RenderManager&) = delete;
@@ -37,9 +40,12 @@ private:
     DepthBuffer mainDepthBuffer_;
 
     ModelRenderer renderer_;
+    GaussianBlur gaussianBlur_;
     Bloom bloom_;
     PostEffect postEffect_;
     
     Timer timer_;
     std::shared_ptr<const Camera> camera_;
+    
+    bool useGaussianBlur_;
 };

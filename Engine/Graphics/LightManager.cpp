@@ -8,6 +8,7 @@ std::shared_ptr<DirectionalLight> DirectionalLight::Create() {
     };
 
     std::shared_ptr<DirectionalLight> p = std::make_shared<Helper>();
+
     return p;
 }
 

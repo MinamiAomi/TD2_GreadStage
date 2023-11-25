@@ -50,6 +50,9 @@
     <ClCompile Include="Player\PlayerModel.cpp">
       <Filter>Player</Filter>
     </ClCompile>
+    <ClCompile Include="Stage\StarrySky.cpp">
+      <Filter>Stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionConfig.h" />
@@ -101,6 +104,9 @@
     </ClInclude>
     <ClInclude Include="Player\PlayerModel.h">
       <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage\StarrySky.h">
+      <Filter>Stage</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

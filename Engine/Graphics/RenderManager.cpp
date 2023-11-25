@@ -34,6 +34,8 @@ void RenderManager::Initialize() {
 
     renderer_.Initialize(mainColorBuffer_, mainDepthBuffer_);
 
+    useGaussianBlur_ = true;
+    gaussianBlur_.Initialize(&mainColorBuffer_);
     postEffect_.Initialize(swapChainBuffer);
 
     timer_.Initialize();
@@ -69,13 +71,22 @@ void RenderManager::Render() {
         renderer_.Render(commandContext, *camera_);
     }
 
+    if (useGaussianBlur_) {
+        gaussianBlur_.Render(commandContext);
+    }
+
     auto& swapChainBuffer = swapChain_.GetColorBuffer();
     commandContext.TransitionResource(swapChainBuffer, D3D12_RESOURCE_STATE_RENDER_TARGET);
     commandContext.SetRenderTarget(swapChainBuffer.GetRTV());
     commandContext.ClearColor(swapChainBuffer);
     commandContext.SetViewportAndScissorRect(0, 0, swapChainBuffer.GetWidth(), swapChainBuffer.GetHeight());
 
-    postEffect_.Render(commandContext, mainColorBuffer_);
+    auto postEffectTargetTexture = &mainColorBuffer_;
+    if (useGaussianBlur_) {
+       postEffectTargetTexture =  &gaussianBlur_.GetResult();
+    }
+
+    postEffect_.Render(commandContext, *postEffectTargetTexture);
 
 #ifdef _DEBUG
     //ImGui::Begin("Profile");

@@ -27,6 +27,7 @@
     <ClCompile Include="Scene\BattleScene\BattleScene.cpp" />
     <ClCompile Include="Scene\SelectScene\SelectScene.cpp" />
     <ClCompile Include="Scene\TitleScene\TitleScene.cpp" />
+    <ClCompile Include="Stage\StarrySky.cpp" />
     <ClCompile Include="Stage\Box\Box.cpp" />
     <ClCompile Include="Stage\CollectionObject.cpp" />
     <ClCompile Include="Stage\Entrance.cpp" />
@@ -47,6 +48,7 @@
     <ClInclude Include="Scene\BattleScene\BattleScene.h" />
     <ClInclude Include="Scene\SelectScene\SelectScene.h" />
     <ClInclude Include="Scene\TitleScene\TitleScene.h" />
+    <ClInclude Include="Stage\StarrySky.h" />
     <ClInclude Include="Stage\Box\Box.h" />
     <ClInclude Include="Stage\CollectionObject.h" />
     <ClInclude Include="Stage\Entrance.h" />
