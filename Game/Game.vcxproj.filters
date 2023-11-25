@@ -44,6 +44,9 @@
     <ClCompile Include="Stage\CollectionObject.cpp">
       <Filter>Stage\Item</Filter>
     </ClCompile>
+    <ClCompile Include="Stage\Entrance.cpp">
+      <Filter>Stage\Entrance</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionConfig.h" />
@@ -90,6 +93,9 @@
     <ClInclude Include="Stage\CollectionObject.h">
       <Filter>Stage\Item</Filter>
     </ClInclude>
+    <ClInclude Include="Stage\Entrance.h">
+      <Filter>Stage\Entrance</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="MasterGame">
@@ -118,6 +124,9 @@
     </Filter>
     <Filter Include="Stage\Item">
       <UniqueIdentifier>{9bfac6aa-3ccd-4694-b8ac-052d2551cc8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Stage\Entrance">
+      <UniqueIdentifier>{afb7a39c-141f-42c1-ba26-64a6071525ab}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

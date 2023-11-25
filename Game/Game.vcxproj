@@ -28,6 +28,7 @@
     <ClCompile Include="Scene\TitleScene\TitleScene.cpp" />
     <ClCompile Include="Stage\Box\Box.cpp" />
     <ClCompile Include="Stage\CollectionObject.cpp" />
+    <ClCompile Include="Stage\Entrance.cpp" />
     <ClCompile Include="Stage\Goal\Goal.cpp" />
     <ClCompile Include="Stage\RequiredItem.cpp" />
     <ClCompile Include="Stage\Stage.cpp" />
@@ -46,6 +47,7 @@
     <ClInclude Include="Scene\TitleScene\TitleScene.h" />
     <ClInclude Include="Stage\Box\Box.h" />
     <ClInclude Include="Stage\CollectionObject.h" />
+    <ClInclude Include="Stage\Entrance.h" />
     <ClInclude Include="Stage\Goal\Goal.h" />
     <ClInclude Include="Stage\RequiredItem.h" />
     <ClInclude Include="Stage\Stage.h" />
