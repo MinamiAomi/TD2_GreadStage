@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Editor\Editor.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MasterGame\MasterGame.cpp">
       <Filter>MasterGame</Filter>
@@ -39,6 +38,15 @@
     <ClCompile Include="Player\Player.cpp">
       <Filter>Player</Filter>
     </ClCompile>
+    <ClCompile Include="Stage\RequiredItem.cpp">
+      <Filter>Stage\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage\CollectionObject.cpp">
+      <Filter>Stage\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage\Entrance.cpp">
+      <Filter>Stage\Entrance</Filter>
+    </ClCompile>
     <ClCompile Include="Player\PlayerModel.cpp">
       <Filter>Player</Filter>
     </ClCompile>
@@ -46,7 +54,6 @@
   <ItemGroup>
     <ClInclude Include="CollisionConfig.h" />
     <ClInclude Include="Easing\Easing.h" />
-    <ClInclude Include="Editor\Editor.h" />
     <ClInclude Include="MasterGame\MasterGame.h">
       <Filter>MasterGame</Filter>
     </ClInclude>
@@ -83,6 +90,15 @@
     <ClInclude Include="Player\Player.h">
       <Filter>Player</Filter>
     </ClInclude>
+    <ClInclude Include="Stage\RequiredItem.h">
+      <Filter>Stage\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage\CollectionObject.h">
+      <Filter>Stage\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage\Entrance.h">
+      <Filter>Stage\Entrance</Filter>
+    </ClInclude>
     <ClInclude Include="Player\PlayerModel.h">
       <Filter>Player</Filter>
     </ClInclude>
@@ -111,6 +127,12 @@
     </Filter>
     <Filter Include="Player">
       <UniqueIdentifier>{23463c16-e358-4696-bd9c-ff43f7c48229}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Stage\Item">
+      <UniqueIdentifier>{9bfac6aa-3ccd-4694-b8ac-052d2551cc8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Stage\Entrance">
+      <UniqueIdentifier>{afb7a39c-141f-42c1-ba26-64a6071525ab}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

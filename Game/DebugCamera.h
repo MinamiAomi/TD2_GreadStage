@@ -8,6 +8,8 @@ public:
 	void Initialize();
 	void Update();
 
+	void SetCamera();
+
 public: // ゲッター
 	const std::shared_ptr<Transform>& GetTransform() { return transform_; }
 	const std::shared_ptr<Camera>& GetCamera() { return camera_; }

@@ -7,12 +7,14 @@
 
 #include "Game/Scene/TitleScene/TitleScene.h"
 #include "Game/Scene/BattleScene/BattleScene.h"
+#include "Editor/CreateStageScene/CreateStageScene.h"
 
 void MasterGame::OnInitialize() {
 	// シーンのシングルトンの取得
 	SceneManager* sceneManager = SceneManager::GetInstance();
 	// シーンの設定
-	sceneManager->ChangeScene<BattleScene>();
+	//sceneManager->ChangeScene<TitleScene>();
+	sceneManager->ChangeScene<CreateStageScene>();
 
 	// リソースマネージャーのシングルトンの取得
 	ResourceManager* resourceManager = ResourceManager::GetInstance();
@@ -60,6 +62,11 @@ void MasterGame::OnInitialize() {
 	toonModel = std::make_shared<Model>();
 	toonModel->Create(ModelData::LoadObjFile("Resources/Model/Crystal/crystal.obj"));
 	resourceManager->AddToonModel("Crystal", toonModel);
+
+	toonModel = std::make_shared<Model>();
+	toonModel->Create(ModelData::LoadObjFile("Resources/Model/Star/star.obj"));
+	resourceManager->AddToonModel("Star", toonModel);
+
 }
 
 void MasterGame::OnFinalize() {

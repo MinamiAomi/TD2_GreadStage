@@ -181,7 +181,10 @@ int32_t GlobalVariables::GetIntValue(const std::string& groupName, const std::st
 
 	const Group& group = datas_.at(groupName);
 
-	assert(group.find(key) != group.end());
+	//assert(group.find(key) != group.end());
+	if(group.find(key) == group.end()) {
+		return 0;
+	}
 
 	return std::get<int32_t>(group.find(key)->second);
 }
@@ -192,7 +195,10 @@ float GlobalVariables::GetFloatValue(const std::string& groupName, const std::st
 
 	const Group& group = datas_.at(groupName);
 
-	assert(group.find(key) != group.end());
+	//assert(group.find(key) != group.end());
+	if (group.find(key) == group.end()) {
+		return 0.0f;
+	}
 
 	return std::get<float>(group.find(key)->second);
 }
@@ -203,7 +209,10 @@ Vector2 GlobalVariables::GetVector2Value(const std::string& groupName, const std
 
 	const Group& group = datas_.at(groupName);
 
-	assert(group.find(key) != group.end());
+	//assert(group.find(key) != group.end());
+	if (group.find(key) == group.end()) {
+		return Vector2::zero;
+	}
 
 	return std::get<Vector2>(group.find(key)->second);
 }
@@ -214,7 +223,10 @@ Vector3 GlobalVariables::GetVector3Value(const std::string& groupName, const std
 
 	const Group& group = datas_.at(groupName);
 
-	assert(group.find(key) != group.end());
+	//assert(group.find(key) != group.end());
+	if (group.find(key) == group.end()) {
+		return Vector3::zero;
+	}
 
 	return std::get<Vector3>(group.find(key)->second);
 }
@@ -224,7 +236,10 @@ Quaternion GlobalVariables::GetQuaternionValue(const std::string& groupName, con
 
 	const Group& group = datas_.at(groupName);
 
-	assert(group.find(key) != group.end());
+	//assert(group.find(key) != group.end());
+	if (group.find(key) == group.end()) {
+		return Quaternion::identity;
+	}
 
 	return std::get<Quaternion>(group.find(key)->second);
 }

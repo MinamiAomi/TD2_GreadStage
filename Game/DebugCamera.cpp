@@ -45,3 +45,7 @@ void DebugCamera::Update() {
 	camera_->SetRotate(transform_->rotate);
 	camera_->UpdateMatrices();
 }
+
+void DebugCamera::SetCamera() {
+	RenderManager::GetInstance()->SetCamera(camera_);
+}

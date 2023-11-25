@@ -38,6 +38,7 @@ void Player::Initialize() {
     jumpParameters_.jumpPower = 0.5f;
 
     floorCollider_ = nullptr;
+    isCleared_ = false;
 }
 
 void Player::Update() {
@@ -115,6 +116,14 @@ void Player::PostCollisionUpdate() {
 
     modelTrans_.UpdateMatrix();
     playerModel_.Update();
+}
+
+void Player::SimpleUpdate() {
+    // 座標更新
+    transform.UpdateMatrix();
+    modelTrans_.UpdateMatrix();
+    // モデル座標更新
+    model_->SetWorldMatrix(modelTrans_.worldMatrix);
 }
 
 void Player::UpdateTransform() {
@@ -263,6 +272,9 @@ void Player::OnCollision(const CollisionInfo& collisionInfo) {
         //}
     }
 
+    if (collisionInfo.collider->GetName() == "Goal") {
+        isCleared_ = true;
+    }
 
     UpdateTransform();
 

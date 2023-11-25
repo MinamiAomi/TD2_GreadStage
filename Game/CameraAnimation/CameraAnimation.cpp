@@ -82,3 +82,7 @@ void CameraAnimation::DrawImGui() {
 	ImGui::End();
 #endif // _DEBUG
 }
+
+void CameraAnimation::SetCamera() {
+	RenderManager::GetInstance()->SetCamera(camera_);
+}
