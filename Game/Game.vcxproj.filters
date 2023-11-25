@@ -47,6 +47,9 @@
     <ClCompile Include="Stage\Entrance.cpp">
       <Filter>Stage\Entrance</Filter>
     </ClCompile>
+    <ClCompile Include="Player\PlayerModel.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionConfig.h" />
@@ -95,6 +98,9 @@
     </ClInclude>
     <ClInclude Include="Stage\Entrance.h">
       <Filter>Stage\Entrance</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\PlayerModel.h">
+      <Filter>Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

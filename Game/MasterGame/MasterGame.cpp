@@ -31,29 +31,33 @@ void MasterGame::OnInitialize() {
 
 	// プレイヤー
 	toonModel = std::make_shared<Model>();
-	toonModel->Create(ModelData::LoadObjFile("Resources/Model/Yamori/Body.obj"));
-	resourceManager->AddToonModel("YamoriBody", toonModel);
+	toonModel->Create(ModelData::LoadObjFile("Resources/Model/frog/Body.obj"));
+	resourceManager->AddToonModel("FrogBody", toonModel);
 
 	toonModel = std::make_shared<Model>();
-	toonModel->Create(ModelData::LoadObjFile("Resources/Model/Yamori/Head.obj"));
-	resourceManager->AddToonModel("YamoriHead", toonModel);
+	toonModel->Create(ModelData::LoadObjFile("Resources/Model/frog/Head.obj"));
+	resourceManager->AddToonModel("FrogHead", toonModel);
 
 	toonModel = std::make_shared<Model>();
-	toonModel->Create(ModelData::LoadObjFile("Resources/Model/Yamori/LeftHand.obj"));
-	resourceManager->AddToonModel("YamoriLeftHand", toonModel);
+	toonModel->Create(ModelData::LoadObjFile("Resources/Model/frog/leftarm.obj"));
+	resourceManager->AddToonModel("FrogLeftArm", toonModel);
 	
 	toonModel = std::make_shared<Model>();
-	toonModel->Create(ModelData::LoadObjFile("Resources/Model/Yamori/RightHand.obj"));
-	resourceManager->AddToonModel("YamoriRightHand", toonModel);
+	toonModel->Create(ModelData::LoadObjFile("Resources/Model/frog/rightarm.obj"));
+	resourceManager->AddToonModel("FrogRightArm", toonModel);
 	
 	toonModel = std::make_shared<Model>();
-	toonModel->Create(ModelData::LoadObjFile("Resources/Model/Yamori/LeftFoot.obj"));
-	resourceManager->AddToonModel("PlayerLeftFoot", toonModel);
+	toonModel->Create(ModelData::LoadObjFile("Resources/Model/frog/leftfoot.obj"));
+	resourceManager->AddToonModel("FrogLeftFoot", toonModel);
 	
 	toonModel = std::make_shared<Model>();
-	toonModel->Create(ModelData::LoadObjFile("Resources/Model/Yamori/RightFoot.obj"));
-	resourceManager->AddToonModel("PlayerRightFoot", toonModel);
+	toonModel->Create(ModelData::LoadObjFile("Resources/Model/frog/rightfoot.obj"));
+	resourceManager->AddToonModel("FrogRightFoot", toonModel);
 	
+	toonModel = std::make_shared<Model>();
+	toonModel->Create(ModelData::LoadObjFile("Resources/Model/frog/bag.obj"));
+	resourceManager->AddToonModel("FrogBag", toonModel);
+
 	// 収集物
 	toonModel = std::make_shared<Model>();
 	toonModel->Create(ModelData::LoadObjFile("Resources/Model/Crystal/crystal.obj"));

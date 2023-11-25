@@ -9,6 +9,7 @@
 #include "Model.h"
 #include "Core/SamplerManager.h"
 #include "DefaultTextures.h"
+#include "LightManager.h"
 
 const wchar_t kModelVertexShadedr[] = L"Engine/Graphics/Shader/ModelVS.hlsl";
 const wchar_t kModelPixelShadedr[] = L"Engine/Graphics/Shader/ModelPS.hlsl";
@@ -25,6 +26,7 @@ void ModelRenderer::Render(CommandContext& commandContext, const Camera& camera)
         Matrix4x4 projectionMatrix;
         Vector3 cameraPosition;
         float ditheringRange;
+        uint32_t numDirectionalLights;
     };
 
     struct InstanceConstant {
@@ -35,12 +37,38 @@ void ModelRenderer::Render(CommandContext& commandContext, const Camera& camera)
         uint32_t useRimLight{};
     };
 
-    auto& instanceList = ModelInstance::GetInstanceList();
+    struct DirectionalLightData {
+        Vector3 direction;
+        float intensity;
+        Vector3 color;
+    };
 
+
+    auto& instanceList = ModelInstance::GetInstanceList();
+    auto& directionalLights = DirectionalLight::GetInstanceList();
 
     // 描画
     commandContext.SetRootSignature(rootSignature_);
     commandContext.SetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+    std::vector<DirectionalLightData> directionalLightDatas;
+    for (auto& directionalLight : directionalLights) {
+        if (directionalLight->isActive) {
+            DirectionalLightData d{
+                .direction = directionalLight->direction,
+                .intensity = directionalLight->intensity,
+                .color = directionalLight->color
+            };
+            directionalLightDatas.emplace_back(d);
+        }
+        // 最大16まで
+        if (directionalLightDatas.size() > 16) {
+            break;
+        }
+    }
+    if (!directionalLightDatas.empty()) {
+        commandContext.SetDynamicShaderResourceView(ModelRootIndex::DirectionalLight, sizeof(DirectionalLightData) * directionalLightDatas.size(), directionalLightDatas.data());
+    }
 
 
     SceneConstant scene{};
@@ -48,7 +76,10 @@ void ModelRenderer::Render(CommandContext& commandContext, const Camera& camera)
     scene.projectionMatrix = camera.GetProjectionMatrix();
     scene.cameraPosition = camera.GetPosition();
     scene.ditheringRange = ditheringRange_;
+    scene.numDirectionalLights = uint32_t(directionalLightDatas.size());
     commandContext.SetDynamicConstantBufferView(ModelRootIndex::Scene, sizeof(scene), &scene);
+
+
 
     for (auto& instance : instanceList) {
         if (instance->IsActive() && instance->model_) {
@@ -103,7 +134,7 @@ void ModelRenderer::InitializeRootSignature() {
     rootParameters[ModelRootIndex::Material].InitAsConstantBufferView(2);
     rootParameters[ModelRootIndex::Texture].InitAsDescriptorTable(1, &srvRange);
     rootParameters[ModelRootIndex::Sampler].InitAsDescriptorTable(1, &samplerRange);
-    rootParameters[ModelRootIndex::DirectionalLight].InitAsConstantBufferView(3);
+    rootParameters[ModelRootIndex::DirectionalLight].InitAsShaderResourceView(1);
 
     D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};
     rootSignatureDesc.NumParameters = _countof(rootParameters);

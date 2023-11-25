@@ -9,6 +9,7 @@
 #include "Player/Player.h"
 #include "RequiredItem.h"
 #include "CollectionObject.h"
+#include "Graphics/LightManager.h"
 
 class Stage {
 public:
@@ -37,5 +38,5 @@ private:
     std::vector<std::shared_ptr<CollectionObject>> collects_;
     std::shared_ptr<Goal> goal_;
     std::shared_ptr<Player> player_;
-
+    std::shared_ptr<DirectionalLight> light_;
 };
