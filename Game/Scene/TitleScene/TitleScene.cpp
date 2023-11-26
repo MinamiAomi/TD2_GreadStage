@@ -4,6 +4,7 @@
 #include "Collision/CollisionManager.h"
 #include "Input/Input.h"
 #include "Scene/BattleScene/BattleScene.h"
+#include "Transition/Transition.h"
 
 void TitleScene::OnInitialize() {
 	// 生成
@@ -36,7 +37,8 @@ void TitleScene::OnUpdate() {
 	// カメラの更新
 	camera_->Update();
 
-	if (player_->GetCleared()) {
+	auto trans = Transition::GetInstance();
+	if (trans->Update()) {
 		// シーンのシングルトンの取得
 		SceneManager* sceneManager = SceneManager::GetInstance();
 		// シーンの設定

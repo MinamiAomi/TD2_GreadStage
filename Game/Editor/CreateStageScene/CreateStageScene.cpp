@@ -89,6 +89,12 @@ void CreateStageScene::DrawImGui() {
                             global_->SetValue(itemName_, ("CollectNumber : " + std::to_string(i) + " : Rotate").c_str(), stage_->GetCollects()[i]->transform.rotate);
                             global_->SetValue(itemName_, ("CollectNumber : " + std::to_string(i) + " : Translate").c_str(), stage_->GetCollects()[i]->transform.translate);
 						}
+                        global_->SetValue(itemName_, "StageConfirmation" + std::string(), static_cast<int>(stage_->GetEntrance().size()));
+						for (int i = 0; i < stage_->GetEntrance().size(); i++) {
+							global_->SetValue(itemName_, ("StageNumber : " + std::to_string(i) + " : Scale").c_str(), stage_->GetEntrance()[i]->transform.scale);
+                            global_->SetValue(itemName_, ("StageNumber : " + std::to_string(i) + " : Rotate").c_str(), stage_->GetEntrance()[i]->transform.rotate);
+                            global_->SetValue(itemName_, ("StageNumber : " + std::to_string(i) + " : Translate").c_str(), stage_->GetEntrance()[i]->transform.translate);
+						}
                         global_->SetValue(itemName_, "Goal : Translate" + std::string(), stage_->GetGoal()->transform.translate);
                         global_->SetValue(itemName_, "Goal : Rotate" + std::string(), stage_->GetGoal()->transform.rotate);
 						global_->SetValue(itemName_, "Player : Translate" + std::string(), stage_->GetPlayer()->transform.translate);
@@ -190,6 +196,24 @@ void CreateStageScene::DrawImGui() {
                 ImGui::TreePop();
             }
 
+            ImGui::EndMenu();
+        }
+        if (ImGui::BeginMenu("StageSelect")) {
+            if (ImGui::Button("Create")) {
+                auto item = std::make_shared<Entrance>();
+                stage_->Add(item);
+            }
+            // 要素数確認
+            ImGui::Text("ElementCount = %d", stage_->GetEntrance().size());
+            for (int i = 0; i < stage_->GetEntrance().size(); i++) {
+                if (ImGui::TreeNode(("StageNumber : " + std::to_string(i)).c_str())) {
+                    stage_->GetEntrance()[i]->DrawImGui();
+                    if (ImGui::Button("Delete")) {
+                        stage_->DeleteEntrance(i);
+                    }
+                    ImGui::TreePop();
+                }
+            }
             ImGui::EndMenu();
         }
         
