@@ -6,6 +6,7 @@
 #include "Graphics/ImGuiManager.h"
 #include "Engine/Scene/SceneManager.h"
 #include "Game/Scene/TitleScene/TitleScene.h"
+#include "Transition/Transition.h"
 
 void BattleScene::OnInitialize() {
 	// 生成
@@ -23,7 +24,9 @@ void BattleScene::OnInitialize() {
 	player_->SetCamera(camera_);
 	camera_->SetTarget(&player_->transform);
 
-	stage_->Load("Stage3");
+	//stage_->Load("Stage3");
+	auto i = Transition::GetInstance();
+	stage_->Load(i->GetStageId());
 }
 
 void BattleScene::OnUpdate() {

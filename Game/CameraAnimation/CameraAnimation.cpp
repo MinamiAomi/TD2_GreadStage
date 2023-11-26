@@ -61,12 +61,7 @@ void CameraAnimation::Update() {
 		transform.translate = target_->translate + (transform.rotate * offset_);
 	}
 	
-
-	transform.UpdateMatrix();
-	camera_->SetPosition(transform.translate);
-	camera_->SetRotate(transform.rotate);
-	camera_->UpdateMatrices();
-
+	TransUpdate();
 }
 
 void CameraAnimation::Restart() {
@@ -81,6 +76,13 @@ void CameraAnimation::DrawImGui() {
 	ImGui::DragFloat2("Limit Down:Up", &upDown.x, 0.01f);
 	ImGui::End();
 #endif // _DEBUG
+}
+
+void CameraAnimation::TransUpdate() {
+	transform.UpdateMatrix();
+	camera_->SetPosition(transform.translate);
+	camera_->SetRotate(transform.rotate);
+	camera_->UpdateMatrices();
 }
 
 void CameraAnimation::SetCamera() {

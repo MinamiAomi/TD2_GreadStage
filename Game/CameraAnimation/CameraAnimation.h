@@ -14,6 +14,7 @@ public:
 	void Restart();
 private:
 	void DrawImGui();
+	void TransUpdate();
 
 
 public: // ゲッター

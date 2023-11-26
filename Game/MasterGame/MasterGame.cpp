@@ -8,6 +8,7 @@
 #include "Game/Scene/TitleScene/TitleScene.h"
 #include "Game/Scene/BattleScene/BattleScene.h"
 #include "Editor/CreateStageScene/CreateStageScene.h"
+#include "Transition/Transition.h"
 
 void MasterGame::OnInitialize() {
 	// シーンのシングルトンの取得
@@ -28,6 +29,11 @@ void MasterGame::OnInitialize() {
 	toonModel = std::make_shared<Model>();
 	toonModel->Create(ModelData::LoadObjFile("Resources/Model/box.obj"));
 	resourceManager->AddToonModel("Box", toonModel);
+
+	// タイトル用板ポリゴン
+	toonModel = std::make_shared<Model>();
+	toonModel->Create(ModelData::LoadObjFile("Resources/Model/TitleText/titleText.obj"));
+	resourceManager->AddToonModel("TitleText", toonModel);
 
 	// プレイヤー
 	toonModel = std::make_shared<Model>();
@@ -67,9 +73,18 @@ void MasterGame::OnInitialize() {
 	toonModel->Create(ModelData::LoadObjFile("Resources/Model/Star/star.obj"));
 	resourceManager->AddToonModel("Star", toonModel);
 
-	toonModel = std::make_shared<Model>();
+	// モデルの追加
+	std::shared_ptr<Texture> sprite = std::make_shared<Texture>();
+	sprite->Load("Resources/Texture/block.png");
+	resourceManager->AddTexture("Block", sprite);
+
+  toonModel = std::make_shared<Model>();
 	toonModel->Create(ModelData::LoadObjFile("Resources/Model/GoalWell/GoalWell.obj"));
 	resourceManager->AddToonModel("GoalWell", toonModel);
+  
+	// トランジション用初期化
+	auto trans = Transition::GetInstance();
+	trans->Initialize();
 }
 
 void MasterGame::OnFinalize() {

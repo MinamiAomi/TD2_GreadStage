@@ -2,32 +2,25 @@
 #include "Collision/GameObject.h"
 
 #include <memory>
-
 #include "Math/Transform.h"
 #include "Graphics/Model.h"
 #include "Collision/Collider.h"
-#include "Math/Color.h"
 
-// ステージセレクト用の入口
-class Entrance : public GameObject {
+class TitleText : public GameObject {
 public:
-    ~Entrance() {}
+	TitleText() = default;
+	~TitleText() = default;
 
-    void Initialize(const int& number);
-    void Update();
-
+    void Initialize();
+	void Update();
 
     void DrawImGui();
 
-    int stageNumber_ = 0;
-
 private:
     std::unique_ptr<ModelInstance> model_;
-    std::unique_ptr<BoxCollider> collider_;
 
     // 回転保管用
     Vector3 rotate_;
-    Vector3 color_ = Vector3(1.0f, 1.0f, 0.0f);
 
     bool isAlive_ = true;
 
@@ -38,8 +31,8 @@ private:
     AnimationType animationType_ = AnimationType::Normal;
 
 private:
-    void OnCollision(const CollisionInfo& collisionInfo);
 
     void AnimationUpdate();
 
 };
+

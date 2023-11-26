@@ -50,6 +50,12 @@
     <ClCompile Include="Player\PlayerModel.cpp">
       <Filter>Player</Filter>
     </ClCompile>
+    <ClCompile Include="Transition\Transition.cpp">
+      <Filter>Transition</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage\TitleText.cpp">
+      <Filter>Stage\TitleText</Filter>
+    </ClCompile>
     <ClCompile Include="Stage\StarrySky.cpp">
       <Filter>Stage</Filter>
     </ClCompile>
@@ -105,6 +111,12 @@
     <ClInclude Include="Player\PlayerModel.h">
       <Filter>Player</Filter>
     </ClInclude>
+    <ClInclude Include="Transition\Transition.h">
+      <Filter>Transition</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage\TitleText.h">
+      <Filter>Stage\TitleText</Filter>
+    </ClInclude>
     <ClInclude Include="Stage\StarrySky.h">
       <Filter>Stage</Filter>
     </ClInclude>
@@ -139,6 +151,12 @@
     </Filter>
     <Filter Include="Stage\Entrance">
       <UniqueIdentifier>{afb7a39c-141f-42c1-ba26-64a6071525ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Transition">
+      <UniqueIdentifier>{eaa7f58d-a466-4ab1-9f0b-7d64f7fbff69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Stage\TitleText">
+      <UniqueIdentifier>{4afa9616-5d97-4c98-aba7-62fe596f0641}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
