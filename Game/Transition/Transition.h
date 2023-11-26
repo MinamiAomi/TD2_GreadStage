@@ -24,7 +24,7 @@ private:
 	~Transition() = default;
 
 private:
-	int number = 0;
+	int number = 1;
 	bool isTransition_ = false;
 	const std::string Directory = "Stage";
 	std::unique_ptr<Sprite> texture_;
