@@ -8,6 +8,7 @@
 #include "Game/Scene/TitleScene/TitleScene.h"
 #include "Game/Scene/BattleScene/BattleScene.h"
 #include "Editor/CreateStageScene/CreateStageScene.h"
+#include "Transition/Transition.h"
 
 void MasterGame::OnInitialize() {
 	// シーンのシングルトンの取得
@@ -66,6 +67,15 @@ void MasterGame::OnInitialize() {
 	toonModel = std::make_shared<Model>();
 	toonModel->Create(ModelData::LoadObjFile("Resources/Model/Star/star.obj"));
 	resourceManager->AddToonModel("Star", toonModel);
+
+	// モデルの追加
+	std::shared_ptr<Texture> sprite = std::make_shared<Texture>();
+	sprite->Load("Resources/Texture/block.png");
+	resourceManager->AddTexture("Block", sprite);
+
+	// トランジション用初期化
+	auto trans = Transition::GetInstance();
+	trans->Initialize();
 
 }
 

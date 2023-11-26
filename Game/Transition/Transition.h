@@ -1,9 +1,14 @@
 #pragma once
 #include <string>
+#include <memory>
+
+#include "Graphics/Sprite.h"
 
 class Transition {
 public:
 	static Transition* GetInstance();
+
+	void Initialize();
 
 	bool Update();
 
@@ -22,4 +27,6 @@ private:
 	int number = 0;
 	bool isTransition_ = false;
 	const std::string Directory = "Stage";
+	std::unique_ptr<Sprite> texture_;
+
 };
