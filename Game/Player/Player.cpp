@@ -123,7 +123,7 @@ void Player::SimpleUpdate() {
     transform.UpdateMatrix();
     modelTrans_.UpdateMatrix();
     // モデル座標更新
-   // model_->SetWorldMatrix(modelTrans_.worldMatrix);
+    playerModel_.Update();
 }
 
 void Player::UpdateTransform() {
