@@ -420,7 +420,6 @@ namespace Helper {
         if (FAILED(hr)) {
             MessageBoxW(nullptr, str, L"HRESUT FAILED", S_OK);
             OutputDebugStringW(std::format(L"\n/////HRESULT FAILED/////\n{} = {}\n/////HRESULT FAILED/////\n\n", str, hr).c_str());
-            std::exit(EXIT_FAILURE);
         }
     }
 

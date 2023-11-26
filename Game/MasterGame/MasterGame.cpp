@@ -15,7 +15,7 @@ void MasterGame::OnInitialize() {
 	SceneManager* sceneManager = SceneManager::GetInstance();
 	// シーンの設定
 	//sceneManager->ChangeScene<TitleScene>();
-	sceneManager->ChangeScene<CreateStageScene>();
+	sceneManager->ChangeScene<BattleScene>();
 
 	// リソースマネージャーのシングルトンの取得
 	ResourceManager* resourceManager = ResourceManager::GetInstance();
@@ -78,10 +78,13 @@ void MasterGame::OnInitialize() {
 	sprite->Load("Resources/Texture/block.png");
 	resourceManager->AddTexture("Block", sprite);
 
+  toonModel = std::make_shared<Model>();
+	toonModel->Create(ModelData::LoadObjFile("Resources/Model/GoalWell/GoalWell.obj"));
+	resourceManager->AddToonModel("GoalWell", toonModel);
+  
 	// トランジション用初期化
 	auto trans = Transition::GetInstance();
 	trans->Initialize();
-
 }
 
 void MasterGame::OnFinalize() {

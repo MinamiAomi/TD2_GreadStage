@@ -195,7 +195,9 @@
     <ClCompile Include="Graphics\InkRenderer.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Graphics\LightManager.cpp" />
+    <ClCompile Include="Graphics\LightManager.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene\BaseScene.h">

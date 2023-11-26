@@ -21,6 +21,8 @@ PSOutput main(PSInput input) {
     output.color = float4(0.0f, 0.0f, 0.0f, 0.0f);
     
     output.color += param_.weight[0].x * src_.Sample(sampler_, input.texcoord[0].xy);
+
+
     output.color += param_.weight[0].y * src_.Sample(sampler_, input.texcoord[1].xy);
     output.color += param_.weight[0].z * src_.Sample(sampler_, input.texcoord[2].xy);
     output.color += param_.weight[0].w * src_.Sample(sampler_, input.texcoord[3].xy);
@@ -29,7 +31,6 @@ PSOutput main(PSInput input) {
     output.color += param_.weight[1].z * src_.Sample(sampler_, input.texcoord[6].xy);
     output.color += param_.weight[1].w * src_.Sample(sampler_, input.texcoord[7].xy);
     
-    output.color += param_.weight[0].x * src_.Sample(sampler_, input.texcoord[0].zw);
     output.color += param_.weight[0].y * src_.Sample(sampler_, input.texcoord[1].zw);
     output.color += param_.weight[0].z * src_.Sample(sampler_, input.texcoord[2].zw);
     output.color += param_.weight[0].w * src_.Sample(sampler_, input.texcoord[3].zw);

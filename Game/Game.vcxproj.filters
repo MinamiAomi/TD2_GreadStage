@@ -56,6 +56,9 @@
     <ClCompile Include="Stage\TitleText.cpp">
       <Filter>Stage\TitleText</Filter>
     </ClCompile>
+    <ClCompile Include="Stage\StarrySky.cpp">
+      <Filter>Stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionConfig.h" />
@@ -113,6 +116,9 @@
     </ClInclude>
     <ClInclude Include="Stage\TitleText.h">
       <Filter>Stage\TitleText</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage\StarrySky.h">
+      <Filter>Stage</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

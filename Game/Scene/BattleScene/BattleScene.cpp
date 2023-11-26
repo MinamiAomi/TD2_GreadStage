@@ -44,10 +44,18 @@ void BattleScene::OnUpdate() {
 
 	ImGui::Begin("test");
 	static float dither = 0.0f;
+	static float blur = 0.0f;
+	static bool useBlur = false;
 	ImGui::DragFloat("Dither", &dither, 0.01f);
+	ImGui::DragFloat("Blur", &blur, 0.01f, 0.0f,1.0f);
+	ImGui::Checkbox("Use GaussianBlur", &useBlur);
+		
+	
 	ImGui::End();
 	//dither = playerToCameraDistance - 5.0f;
 	RenderManager::GetInstance()->GetModelRenderer().DitheringRange(dither);
+	RenderManager::GetInstance()->GetGaussianBlur().UpdateWeightTable(blur);
+	RenderManager::GetInstance()->UseGaussianBlur(useBlur);
 
 	if (player_->GetCleared()) {
 		// シーンのシングルトンの取得
