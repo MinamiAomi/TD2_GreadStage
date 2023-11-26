@@ -11,11 +11,13 @@ void TitleScene::OnInitialize() {
 	player_ = std::make_shared<Player>();
 	camera_ = std::make_shared<CameraAnimation>();
 	stage_ = std::make_shared<Stage>();
+	titleText_ = std::make_shared<TitleText>();
 
 	// 初期化
 	player_->Initialize();
 	camera_->Initialize();
 	stage_->Initialize();
+	titleText_->Initialize();
 
 	// セット
 	stage_->SetPlayerPtr(player_);
@@ -27,7 +29,10 @@ void TitleScene::OnInitialize() {
 
 void TitleScene::OnUpdate() {
 	
+	titleText_->DrawImGui();
+
 	stage_->Update();
+	titleText_->Update();
 	player_->Update();
 
 	player_->PreCollisionUpdate();

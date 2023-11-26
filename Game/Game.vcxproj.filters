@@ -53,6 +53,9 @@
     <ClCompile Include="Transition\Transition.cpp">
       <Filter>Transition</Filter>
     </ClCompile>
+    <ClCompile Include="Stage\TitleText.cpp">
+      <Filter>Stage\TitleText</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionConfig.h" />
@@ -108,6 +111,9 @@
     <ClInclude Include="Transition\Transition.h">
       <Filter>Transition</Filter>
     </ClInclude>
+    <ClInclude Include="Stage\TitleText.h">
+      <Filter>Stage\TitleText</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="MasterGame">
@@ -142,6 +148,9 @@
     </Filter>
     <Filter Include="Transition">
       <UniqueIdentifier>{eaa7f58d-a466-4ab1-9f0b-7d64f7fbff69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Stage\TitleText">
+      <UniqueIdentifier>{4afa9616-5d97-4c98-aba7-62fe596f0641}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

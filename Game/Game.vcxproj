@@ -33,6 +33,7 @@
     <ClCompile Include="Stage\Goal\Goal.cpp" />
     <ClCompile Include="Stage\RequiredItem.cpp" />
     <ClCompile Include="Stage\Stage.cpp" />
+    <ClCompile Include="Stage\TitleText.cpp" />
     <ClCompile Include="Transition\Transition.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -54,6 +55,7 @@
     <ClInclude Include="Stage\Goal\Goal.h" />
     <ClInclude Include="Stage\RequiredItem.h" />
     <ClInclude Include="Stage\Stage.h" />
+    <ClInclude Include="Stage\TitleText.h" />
     <ClInclude Include="Transition\Transition.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -30,6 +30,11 @@ void MasterGame::OnInitialize() {
 	toonModel->Create(ModelData::LoadObjFile("Resources/Model/box.obj"));
 	resourceManager->AddToonModel("Box", toonModel);
 
+	// タイトル用板ポリゴン
+	toonModel = std::make_shared<Model>();
+	toonModel->Create(ModelData::LoadObjFile("Resources/Model/TitleText/titleText.obj"));
+	resourceManager->AddToonModel("TitleText", toonModel);
+
 	// プレイヤー
 	toonModel = std::make_shared<Model>();
 	toonModel->Create(ModelData::LoadObjFile("Resources/Model/frog/Body.obj"));
