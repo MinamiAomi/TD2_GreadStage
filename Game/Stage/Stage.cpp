@@ -137,7 +137,9 @@ void Stage::Load(const std::filesystem::path& loadFile) {
 	goal_->transform.rotate = global->GetQuaternionValue(selectName, "Goal : Rotate");
 
 	player_->transform.translate = global->GetVector3Value(selectName, "Player : Translate");
+	player_->SetRespawnPos(player_->transform.translate);
 	player_->transform.rotate = global->GetQuaternionValue(selectName, "Player : Rotate");
+	player_->SetRespawnRot(player_->transform.rotate);
 }
 
 void Stage::StageSelectload(const std::filesystem::path& loadFile) {

@@ -289,8 +289,8 @@ void Player::DrawImGui() {
     ImGui::DragFloat("FallSpeed", &jumpParameters_.fallSpeed, 0.01f, 0.0f, jumpParameters_.fallSpeedLimits);
     if (ImGui::Button("Reset")) {
         jumpParameters_.isJumped = false;
-        transform.translate = Vector3(0.0f, 3.0f, 0.0f);
-        transform.rotate = Quaternion::identity;
+        transform.translate = respawnPos_;
+        transform.rotate = respawnRot_;
         jumpParameters_.fallSpeed = 0.0f;
     }
     ImGui::End();
