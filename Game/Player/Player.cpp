@@ -276,13 +276,6 @@ void Player::OnCollision(const CollisionInfo& collisionInfo) {
         isCleared_ = true;
     }
 
-    for (uint8_t num = 1u; num <= 8u; num++) {
-        if (collisionInfo.collider->GetName() == "Entrance" + std::to_string(num)) {
-            isCleared_ = true;
-        }
-    }
-    
-
     UpdateTransform();
 
 }

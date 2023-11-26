@@ -1,5 +1,6 @@
 {
      "Stage2": {
+          "BoxConfirmation": 3,
           "BoxNumber : 0 : Rotate": [
                0.0,
                0.0,
@@ -13,7 +14,7 @@
           ],
           "BoxNumber : 0 : Translate": [
                0.0,
-               0.0,
+               -2.5,
                0.0
           ],
           "BoxNumber : 1 : Rotate": [
@@ -24,13 +25,13 @@
           ],
           "BoxNumber : 1 : Scale": [
                5.0,
-               10.0,
+               5.0,
                5.0
           ],
           "BoxNumber : 1 : Translate": [
                0.0,
-               0.0,
-               0.0
+               -5.0,
+               5.0
           ],
           "BoxNumber : 2 : Rotate": [
                0.0,
@@ -39,16 +40,32 @@
                1.0
           ],
           "BoxNumber : 2 : Scale": [
+               5.0,
+               5.0,
+               5.0
+          ],
+          "BoxNumber : 2 : Translate": [
+               0.0,
+               -7.5,
+               10.0
+          ],
+          "CollectConfirmation": 1,
+          "CollectNumber : 0 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "CollectNumber : 0 : Scale": [
                1.0,
                1.0,
                1.0
           ],
-          "BoxNumber : 2 : Translate": [
+          "CollectNumber : 0 : Translate": [
                0.0,
-               0.0,
-               0.0
+               -1.5,
+               5.0
           ],
-          "Confirmation": 3,
           "Goal : Rotate": [
                0.0,
                0.0,
@@ -57,8 +74,53 @@
           ],
           "Goal : Translate": [
                0.0,
+               -4.0,
+               11.0
+          ],
+          "ItemConfirmation": 2,
+          "ItemNumber : 0 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "ItemNumber : 0 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "ItemNumber : 0 : Translate": [
+               0.0,
+               -2.0,
+               3.5
+          ],
+          "ItemNumber : 1 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "ItemNumber : 1 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "ItemNumber : 1 : Translate": [
+               0.0,
+               -2.0,
+               7.0
+          ],
+          "Player : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "Player : Translate": [
+               0.0,
                0.0,
                0.0
-          ]
+          ],
+          "StageConfirmation": 0
      }
 }
