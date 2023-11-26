@@ -57,12 +57,18 @@ void BattleScene::OnUpdate() {
 	RenderManager::GetInstance()->GetGaussianBlur().UpdateWeightTable(blur);
 	RenderManager::GetInstance()->UseGaussianBlur(useBlur);
 
+
 	if (player_->GetCleared()) {
+		Transition::GetInstance()->SetComeToStage();
+	}
+	auto trans = Transition::GetInstance();
+	if (trans->Update()) {
 		// シーンのシングルトンの取得
 		SceneManager* sceneManager = SceneManager::GetInstance();
 		// シーンの設定
 		sceneManager->ChangeScene<TitleScene>();
 	}
+
 
 }
 
