@@ -2,6 +2,7 @@
 
 #include "Scene/SceneManager.h"
 #include "Engine/Graphics/ResourceManager.h"
+#include "Graphics/RenderManager.h"
 #include "Engine/Graphics/Model.h"
 #include "Engine/Graphics/Sprite.h"
 
@@ -73,18 +74,22 @@ void MasterGame::OnInitialize() {
 	toonModel->Create(ModelData::LoadObjFile("Resources/Model/Star/star.obj"));
 	resourceManager->AddToonModel("Star", toonModel);
 
+	toonModel = std::make_shared<Model>();
+	toonModel->Create(ModelData::LoadObjFile("Resources/Model/GoalWell/GoalWell.obj"));
+	resourceManager->AddToonModel("GoalWell", toonModel);
+  
 	// モデルの追加
 	std::shared_ptr<Texture> sprite = std::make_shared<Texture>();
 	sprite->Load("Resources/Texture/block.png");
 	resourceManager->AddTexture("Block", sprite);
 
-  toonModel = std::make_shared<Model>();
-	toonModel->Create(ModelData::LoadObjFile("Resources/Model/GoalWell/GoalWell.obj"));
-	resourceManager->AddToonModel("GoalWell", toonModel);
-  
 	// トランジション用初期化
 	auto trans = Transition::GetInstance();
 	trans->Initialize();
+
+	// ガウシアンブラーのオフ
+	RenderManager::GetInstance()->UseGaussianBlur(false);
+	
 }
 
 void MasterGame::OnFinalize() {
