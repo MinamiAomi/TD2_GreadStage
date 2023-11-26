@@ -10,6 +10,7 @@
 #include "Renderer.h"
 #include "PostEffect.h"
 #include "Timer.h"
+#include "SpriteRenderer.h"
 
 class RenderManager {
 public:
@@ -40,6 +41,7 @@ private:
     DepthBuffer mainDepthBuffer_;
 
     ModelRenderer renderer_;
+    SpriteRenderer spriteRenderer_;
     GaussianBlur gaussianBlur_;
     Bloom bloom_;
     PostEffect postEffect_;

@@ -36,6 +36,7 @@ void RenderManager::Initialize() {
 
     useGaussianBlur_ = true;
     gaussianBlur_.Initialize(&mainColorBuffer_);
+    spriteRenderer_.Initialize(swapChainBuffer);
     postEffect_.Initialize(swapChainBuffer);
 
     timer_.Initialize();
@@ -87,6 +88,7 @@ void RenderManager::Render() {
     }
 
     postEffect_.Render(commandContext, *postEffectTargetTexture);
+    spriteRenderer_.Render(commandContext, 0.0f, 0.0f, (float)swapChainBuffer.GetWidth(), (float)swapChainBuffer.GetHeight());
 
 #ifdef _DEBUG
     //ImGui::Begin("Profile");
