@@ -8,7 +8,7 @@ void RequiredItem::Initialize() {
     model_ = std::make_unique<ModelInstance>();
     collider_ = std::make_unique<BoxCollider>();
 
-    model_->SetModel(ResourceManager::GetInstance()->FindModel("Box"));
+    model_->SetModel(ResourceManager::GetInstance()->FindModel("Moon"));
     model_->SetIsActive(true);
     model_->SetColor(color_);
 

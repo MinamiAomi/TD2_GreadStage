@@ -9,7 +9,7 @@ void Goal::Initialize() {
 
     transform.scale = Vector3(1.0f, 2.0f, 1.0f);
 
-    model_->SetModel(ResourceManager::GetInstance()->FindModel("Box"));
+    model_->SetModel(ResourceManager::GetInstance()->FindModel("GoalWell"));
     model_->SetIsActive(true);
 
     collider_->SetName("Goal");
@@ -17,7 +17,7 @@ void Goal::Initialize() {
     collider_->SetOrientation(transform.rotate);
     collider_->SetSize(transform.scale);
     collider_->SetCenter(transform.translate);
-    model_->SetColor(Vector3::unitY);
+    model_->SetColor(Vector3::one);
 }
 
 void Goal::Update() {

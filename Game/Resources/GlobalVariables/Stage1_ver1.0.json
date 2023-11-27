@@ -1,5 +1,5 @@
 {
-     "Stage1": {
+     "Stage1_ver1.0": {
           "BoxConfirmation": 1,
           "BoxNumber : 0 : Rotate": [
                0.0,
@@ -258,7 +258,6 @@
                -12.0,
                8.5
           ],
-          "Confirmation": 1,
           "Goal : Rotate": [
                0.0,
                0.0,
