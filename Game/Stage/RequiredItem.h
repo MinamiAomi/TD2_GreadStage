@@ -25,7 +25,7 @@ private:
 
     // 回転保管用
     Vector3 rotate_;
-    Vector3 color_ = Vector3(1.0f, 0.0f, 0.0f);
+    Vector3 color_ = Vector3::one;
     bool isAlive_ = true;
 
     enum class AnimationType {

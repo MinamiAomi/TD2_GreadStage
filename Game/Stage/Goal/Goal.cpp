@@ -17,7 +17,7 @@ void Goal::Initialize() {
     collider_->SetOrientation(transform.rotate);
     collider_->SetSize(transform.scale);
     collider_->SetCenter(transform.translate);
-    model_->SetColor(Vector3::unitY);
+    model_->SetColor(Vector3::one);
 }
 
 void Goal::Update() {
