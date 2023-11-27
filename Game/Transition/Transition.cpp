@@ -14,7 +14,7 @@ void Transition::Initialize() {
 	texture_->SetTexture(ResourceManager::GetInstance()->FindTexture("Block"));
 	texture_->SetIsActive(true);
 	texture_->SetDrawOrder(1);
-	texture_->SetScale(Vector2(10.0f, 10.0f));
+	texture_->SetScale(Vector2(0.0f, 0.0f));
 	texture_->SetPosition(Vector2(640.0f, 360.0f));
 	texture_->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
 }
