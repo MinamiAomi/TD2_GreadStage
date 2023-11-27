@@ -413,6 +413,9 @@
     <ClInclude Include="Graphics\LightManager.h">
       <Filter>Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Graphics\Renderable.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\Shader\Lighting.hlsli">
@@ -461,6 +464,15 @@
       <Filter>Graphics\Shader</Filter>
     </None>
     <None Include="Graphics\Shader\SpritePS.hlsl">
+      <Filter>Graphics\Shader</Filter>
+    </None>
+    <None Include="Graphics\Shader\Random.hlsli">
+      <Filter>Graphics\Shader</Filter>
+    </None>
+    <None Include="Graphics\Shader\StarrySkyVS.hlsl">
+      <Filter>Graphics\Shader</Filter>
+    </None>
+    <None Include="Graphics\Shader\StarrySkyPS.hlsl">
       <Filter>Graphics\Shader</Filter>
     </None>
   </ItemGroup>

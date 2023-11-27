@@ -20,6 +20,7 @@ void Player::Initialize() {
     modelTrans_.translate = {};
     modelTrans_.UpdateMatrix();
     playerModel_.Initialize(&modelTrans_);
+    //modelTrans_.scale = {1.0f,0.5f,1.0f};
 
     collider_ = std::make_unique<SphereCollider>();
     collider_->SetGameObject(this);
@@ -195,7 +196,7 @@ void Player::MoveLimit() {
     if (input->IsKeyTrigger(DIK_R) ||
         xInput.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER && !(preXInput.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)) {
         jumpParameters_.isJumped = false;
-        transform.translate = Vector3(0.0f, 3.0f, 0.0f);
+        transform.translate = Vector3(0.0f, 4.0f, 0.0f);
         transform.rotate = Quaternion::identity;
         jumpParameters_.fallSpeed = 0.0f;
     }

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "Math/Camera.h"
 #include "Core/Graphics.h"
 #include "Core/SwapChain.h"
@@ -11,6 +13,7 @@
 #include "PostEffect.h"
 #include "Timer.h"
 #include "SpriteRenderer.h"
+#include "Renderable.h"
 
 class RenderManager {
 public:
@@ -23,10 +26,14 @@ public:
 
     void SetCamera(const std::shared_ptr<Camera>& camera) { camera_ = camera; }
 
+    ColorBuffer& GetMainColorBuffer() { return mainColorBuffer_; }
+    DepthBuffer& GetMainDepthBuffer() { return mainDepthBuffer_; }
     ModelRenderer& GetModelRenderer() { return renderer_; }
 
     void UseGaussianBlur(bool useGaussianBlur) { useGaussianBlur_ = useGaussianBlur; }
     GaussianBlur& GetGaussianBlur() { return gaussianBlur_; }
+
+    void AddCustomRenderer(const std::shared_ptr<Renderable>& renderer);
 
 private:
     RenderManager() = default;
@@ -49,5 +56,6 @@ private:
     Timer timer_;
     std::shared_ptr<const Camera> camera_;
     
+    std::vector<std::weak_ptr<Renderable>> customRenderers_;
     bool useGaussianBlur_;
 };

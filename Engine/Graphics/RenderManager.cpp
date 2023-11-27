@@ -58,6 +58,7 @@ void RenderManager::Finalize() {
 void RenderManager::Render() {
     auto& commandContext = commandContexts_[swapChain_.GetBufferIndex()];
 
+    std::erase_if(customRenderers_, [](auto& p) {return p.expired(); });
 
     commandContext.Reset();
 
@@ -72,10 +73,18 @@ void RenderManager::Render() {
         renderer_.Render(commandContext, *camera_);
     }
 
+
+    for (auto& p : customRenderers_) {
+        auto ptr = p.lock();
+        if (ptr) {
+            ptr->OnRender(commandContext);
+        }
+    }
+
     if (useGaussianBlur_) {
         gaussianBlur_.Render(commandContext);
     }
-
+   
     auto& swapChainBuffer = swapChain_.GetColorBuffer();
     commandContext.TransitionResource(swapChainBuffer, D3D12_RESOURCE_STATE_RENDER_TARGET);
     commandContext.SetRenderTarget(swapChainBuffer.GetRTV());
@@ -112,4 +121,8 @@ void RenderManager::Render() {
     timer_.KeepFrameRate(60);
 
     imguiManager->NewFrame();
+}
+
+void RenderManager::AddCustomRenderer(const std::shared_ptr<Renderable>& renderer) {
+    customRenderers_.emplace_back(renderer);
 }
