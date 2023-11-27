@@ -36,6 +36,7 @@ void RenderManager::Initialize() {
 
     useGaussianBlur_ = true;
     gaussianBlur_.Initialize(&mainColorBuffer_);
+    bloom_.Initialize(&mainColorBuffer_);
     spriteRenderer_.Initialize(swapChainBuffer);
     postEffect_.Initialize(swapChainBuffer);
 
@@ -85,6 +86,8 @@ void RenderManager::Render() {
         gaussianBlur_.Render(commandContext);
     }
    
+    bloom_.Render(commandContext);
+
     auto& swapChainBuffer = swapChain_.GetColorBuffer();
     commandContext.TransitionResource(swapChainBuffer, D3D12_RESOURCE_STATE_RENDER_TARGET);
     commandContext.SetRenderTarget(swapChainBuffer.GetRTV());
@@ -95,7 +98,7 @@ void RenderManager::Render() {
     if (useGaussianBlur_) {
        postEffectTargetTexture =  &gaussianBlur_.GetResult();
     }
-
+    
     postEffect_.Render(commandContext, *postEffectTargetTexture);
     spriteRenderer_.Render(commandContext, 0.0f, 0.0f, (float)swapChainBuffer.GetWidth(), (float)swapChainBuffer.GetHeight());
 

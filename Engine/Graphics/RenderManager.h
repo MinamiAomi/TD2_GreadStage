@@ -34,6 +34,8 @@ public:
     void UseGaussianBlur(bool useGaussianBlur) { useGaussianBlur_ = useGaussianBlur; }
     GaussianBlur& GetGaussianBlur() { return gaussianBlur_; }
 
+    Bloom& GetBloom() { return bloom_; }
+
     void AddCustomRenderer(const std::shared_ptr<Renderable>& renderer);
 
 private:

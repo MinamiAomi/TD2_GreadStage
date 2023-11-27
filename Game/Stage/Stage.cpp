@@ -49,8 +49,15 @@ void Stage::Update() {
 	player_->SimpleUpdate();
 
 	static float volume = 0.0f;
+	static float knee = 0.0f;
+	static float threshold = 0.0f;
 	ImGui::DragFloat("volume", &volume, 0.01f, 0.0f, 1.0f);
+	ImGui::DragFloat("knee", &knee, 0.01f, 0.0f, 1.0f);
+	ImGui::DragFloat("threshold", &threshold, 0.01f, 0.0f, 1.0f);
 	starrySky_->SetVolume(volume);
+	RenderManager::GetInstance()->GetBloom().SetKnee(knee);
+	RenderManager::GetInstance()->GetBloom().SetThreshold(threshold);
+
 }
 
 void Stage::Add(const std::shared_ptr<Box>& box) {
