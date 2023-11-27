@@ -75,6 +75,10 @@ void MasterGame::OnInitialize() {
 	resourceManager->AddToonModel("Star", toonModel);
 
 	toonModel = std::make_shared<Model>();
+	toonModel->Create(ModelData::LoadObjFile("Resources/Model/moon/moon.obj"));
+	resourceManager->AddToonModel("Moon", toonModel);
+  
+	toonModel = std::make_shared<Model>();
 	toonModel->Create(ModelData::LoadObjFile("Resources/Model/GoalWell/GoalWell.obj"));
 	resourceManager->AddToonModel("GoalWell", toonModel);
   
