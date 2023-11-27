@@ -28,8 +28,8 @@ public:
     void OnRender(CommandContext& commandContext);
 
 private:
-    uint32_t numHorizontalGrids_ = 16;
-    uint32_t numVerticalGrids_ = 16;
+    uint32_t numHorizontalGrids_ = 32;
+    uint32_t numVerticalGrids_ = 32;
     uint32_t animationCycle_ = 120;
     float minScale_ = 1.0f;
     float maxScale_ = 5.0f;

@@ -2,6 +2,9 @@
 
 #include "GlobalVariables/GlobalVariables.h"
 #include <cassert>
+#include "Graphics/RenderManager.h"
+
+#include "Graphics/ImGuiManager.h"
 
 void Stage::Initialize() {
 	goal_ = std::make_shared<Goal>();
@@ -9,6 +12,11 @@ void Stage::Initialize() {
 
 	light_ = DirectionalLight::Create();
 	light_->color = { 1.0f,1.0f,1.0f };
+
+	starrySky_ = std::make_shared<StarrySky>();
+	starrySky_->Initialize();
+	RenderManager::GetInstance()->AddCustomRenderer(starrySky_);
+	starrySky_->SetCamera(RenderManager::GetInstance()->GetCamera());
 }
 
 void Stage::Update() {
@@ -39,6 +47,10 @@ void Stage::Update() {
 	goal_->Update();
 
 	player_->SimpleUpdate();
+
+	static float volume = 0.0f;
+	ImGui::DragFloat("volume", &volume, 0.01f, 0.0f, 1.0f);
+	starrySky_->SetVolume(volume);
 }
 
 void Stage::Add(const std::shared_ptr<Box>& box) {

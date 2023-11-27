@@ -28,5 +28,5 @@ float3 RGBToHSV(in float3 rgb) {
 float3 HSVToRGB(in float3 hsv) {
     float4 k = float4(1.0f, 2.0f / 3.0f, 1.0f / 3.0f, 3.0f);
     float3 p = abs(frac(hsv.xxx + k.xyz) * 6.0f - k.www);
-    return float3(0.0f, 0.0f, 0.0f);
+    return hsv.z * lerp(k.xxx, saturate(p - k.xxx), hsv.y);
 }

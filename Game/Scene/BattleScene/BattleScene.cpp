@@ -49,7 +49,7 @@ void BattleScene::OnUpdate() {
 	ImGui::DragFloat("Dither", &dither, 0.01f);
 	ImGui::DragFloat("Blur", &blur, 0.01f, 0.0f,1.0f);
 	ImGui::Checkbox("Use GaussianBlur", &useBlur);
-		
+	
 	
 	ImGui::End();
 	//dither = playerToCameraDistance - 5.0f;

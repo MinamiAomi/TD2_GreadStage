@@ -25,6 +25,7 @@ public:
     void Render();
 
     void SetCamera(const std::shared_ptr<Camera>& camera) { camera_ = camera; }
+    std::shared_ptr<const Camera> GetCamera() { return camera_; }
 
     ColorBuffer& GetMainColorBuffer() { return mainColorBuffer_; }
     DepthBuffer& GetMainDepthBuffer() { return mainDepthBuffer_; }

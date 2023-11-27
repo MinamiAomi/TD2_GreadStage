@@ -58,18 +58,18 @@ void StarrySky::Initialize() {
     psDesc.SampleDesc.Count = 1;
     pipelineState_.Create(L"StarrySky PipelineState", psDesc);
 
-
     StarVertex vertices[] = {
-        { { -0.5f, -0.5f, 0.0f }, { 0.0f, 1.0f }},
-        { { -0.5f,  0.5f, 0.0f }, { 0.0f, 0.0f }},
-        { {  0.5f,  0.5f, 0.0f }, { 1.0f, 0.0f }},
+        { {  0.5f, -0.5f, 0.0f }, { 0.0f, 1.0f }},
+        { {  0.5f,  0.5f, 0.0f }, { 0.0f, 0.0f }},
+        { { -0.5f,  0.5f, 0.0f }, { 1.0f, 0.0f }},
 
-        { { -0.5f, -0.5f, 0.0f }, { 0.0f, 1.0f }},
-        { {  0.5f,  0.5f, 0.0f }, { 1.0f, 0.0f }},
-        { {  0.5f, -0.5f, 0.0f }, { 1.0f, 1.0f }},
+        { {  0.5f, -0.5f, 0.0f }, { 0.0f, 1.0f }},
+        { { -0.5f,  0.5f, 0.0f }, { 1.0f, 0.0f }},
+        { { -0.5f, -0.5f, 0.0f }, { 1.0f, 1.0f }},
     };
 
     vertexBuffer_.Create(L"StarrySky VertexBuffer", _countof(vertices), sizeof(vertices[0]));
+    vertexBuffer_.Copy(vertices, sizeof(vertices));
 
     Regenerate();
 }
@@ -103,7 +103,7 @@ void StarrySky::Regenerate() {
 
             star.seed = seeds[index] * reciSize;
 
-            Vector2 sphericalAngles = Vector2::Scale(deltaAngles, Vector2(x, y));
+            Vector2 sphericalAngles = Vector2::Scale(deltaAngles, Vector2((float)x, (float)y));
             sphericalAngles.x += Math::Lerp(randGen_.NextFloatUnit(), 0.0f, deltaAngles.x);
             sphericalAngles.y += Math::Lerp(randGen_.NextFloatUnit(), 0.0f, deltaAngles.y);
             Vector3 position = SphereSurface(sphericalAngles.x, sphericalAngles.y) * distance_;
@@ -114,6 +114,7 @@ void StarrySky::Regenerate() {
             }
             star.worldMatrix = Matrix4x4::identity;
             star.worldMatrix *= Matrix4x4::MakeScaling(Vector3(Math::Lerp(randGen_.NextFloatUnit(), minScale_, maxScale_)));
+            star.worldMatrix *= Matrix4x4::MakeRotationZ(star.seed * Math::TwoPi);
             star.worldMatrix *= Matrix4x4::MakeLookRotation(-position, up);
             star.worldMatrix *= Matrix4x4::MakeTranslation(position);
         }
@@ -152,12 +153,12 @@ void StarrySky::OnRender(CommandContext& commandContext) {
 
     D3D12_VERTEX_BUFFER_VIEW vbv{};
     vbv.BufferLocation = vertexBuffer_.GetGPUVirtualAddress();
-    vbv.SizeInBytes = vertexBuffer_.GetBufferSize();
+    vbv.SizeInBytes = UINT(vertexBuffer_.GetBufferSize());
     vbv.StrideInBytes = UINT(sizeof(StarVertex));
     commandContext.SetVertexBuffer(0, vbv);
 
 
-    size_t drawCount = volume_ * stars_.size();
+    UINT drawCount = UINT(volume_ * stars_.size());
     commandContext.DrawInstanced(6, drawCount);
 }
 

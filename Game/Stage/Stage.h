@@ -11,6 +11,7 @@
 #include "CollectionObject.h"
 #include "Entrance.h"
 #include "Graphics/LightManager.h"
+#include "StarrySky.h"
 
 class Stage {
 public:
@@ -46,6 +47,7 @@ private:
     std::shared_ptr<Goal> goal_;
     std::shared_ptr<Player> player_;
     std::shared_ptr<DirectionalLight> light_;
+    std::shared_ptr<StarrySky> starrySky_;
 
     const unsigned int kStageCount_ = 8u;
 
