@@ -28,6 +28,8 @@ public: // ゲッター
 
 public: // セッター
 	void SetCamera(const std::shared_ptr<CameraAnimation>& camera) { camera_ = camera; }
+	void SetRespawnPos(const Vector3& position) { respawnPos_ = position; }
+	void SetRespawnRot(const Quaternion& rotation) { respawnRot_ = rotation; }
 
 private: // メンバ変数
 	// モデル
@@ -58,6 +60,9 @@ private: // メンバ変数
 	bool isCollision_;
 
 	bool isCleared_ = false;
+
+	Vector3 respawnPos_;
+	Quaternion respawnRot_;
 
 private: // メンバ関数
 	// 座標更新

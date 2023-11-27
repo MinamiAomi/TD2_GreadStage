@@ -5,6 +5,7 @@
 #include "Graphics/RenderManager.h"
 #include "Engine/Graphics/Model.h"
 #include "Engine/Graphics/Sprite.h"
+#include "Graphics/RenderManager.h"
 
 #include "Game/Scene/TitleScene/TitleScene.h"
 #include "Game/Scene/BattleScene/BattleScene.h"
@@ -82,7 +83,7 @@ void MasterGame::OnInitialize() {
 	toonModel->Create(ModelData::LoadObjFile("Resources/Model/GoalWell/GoalWell.obj"));
 	resourceManager->AddToonModel("GoalWell", toonModel);
   
-	// モデルの追加
+  
 	std::shared_ptr<Texture> sprite = std::make_shared<Texture>();
 	sprite->Load("Resources/Texture/block.png");
 	resourceManager->AddTexture("Block", sprite);
@@ -90,10 +91,10 @@ void MasterGame::OnInitialize() {
 	// トランジション用初期化
 	auto trans = Transition::GetInstance();
 	trans->Initialize();
-
 	// ガウシアンブラーのオフ
 	RenderManager::GetInstance()->UseGaussianBlur(false);
-	
+
+
 }
 
 void MasterGame::OnFinalize() {

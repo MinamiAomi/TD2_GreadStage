@@ -49,7 +49,7 @@ void BattleScene::OnUpdate() {
 	ImGui::DragFloat("Dither", &dither, 0.01f);
 	ImGui::DragFloat("Blur", &blur, 0.01f, 0.0f,1.0f);
 	ImGui::Checkbox("Use GaussianBlur", &useBlur);
-		
+	
 	
 	ImGui::End();
 	//dither = playerToCameraDistance - 5.0f;
@@ -57,12 +57,18 @@ void BattleScene::OnUpdate() {
 	RenderManager::GetInstance()->GetGaussianBlur().UpdateWeightTable(blur);
 	RenderManager::GetInstance()->UseGaussianBlur(useBlur);
 
+
 	if (player_->GetCleared()) {
+		Transition::GetInstance()->SetComeToStage();
+	}
+	auto trans = Transition::GetInstance();
+	if (trans->Update()) {
 		// シーンのシングルトンの取得
 		SceneManager* sceneManager = SceneManager::GetInstance();
 		// シーンの設定
 		sceneManager->ChangeScene<TitleScene>();
 	}
+
 
 }
 
