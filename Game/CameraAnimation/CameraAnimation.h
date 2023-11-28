@@ -45,6 +45,7 @@ private: //	メンバ変数
     Vector3 destinationTargetPosition_;
     Vector3 lastTargetPosition_;
 
+    Vector2 preAngles_;
 
     Vector2 upDown = Vector2::zero;
 

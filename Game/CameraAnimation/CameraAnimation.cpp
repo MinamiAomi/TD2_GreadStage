@@ -37,10 +37,11 @@ void CameraAnimation::Update() {
     if (Input::GetInstance()->IsKeyTrigger(DIK_K)) {
         flag = !flag;
         if (flag) {
-            angles_ = Vector2::zero;
-            destinationTargetPosition_ = Vector3(0.0f, 10.0f, -50.0f);
+            angles_ = preAngles_;
+            lastTargetPosition_ = Vector3(0.0f, 10.0f, -50.0f);
         }
         else {
+            preAngles_ = angles_;
             angles_.y = Math::Pi;
             angles_.x = 0.0f;
             destinationTranslate_ = Vector3(0.0f, 10.0f, -50.0f);
@@ -68,21 +69,27 @@ void CameraAnimation::Update() {
         destinationRotate_ = target_->rotate * localRotate;
     }
 
-    transform.rotate = Quaternion::Slerp(1.0f - followDelay_, transform.rotate, destinationRotate_);
-    lastTargetPosition_ = Vector3::Lerp(1.0f - followDelay_, lastTargetPosition_, destinationTargetPosition_);
+    if (flag) {
+        transform.rotate = Quaternion::Slerp(1.0f - followDelay_, transform.rotate, destinationRotate_);
+        lastTargetPosition_ = Vector3::Lerp(1.0f - followDelay_, lastTargetPosition_, destinationTargetPosition_);
 
-    Vector3 origin = lastTargetPosition_;
-    Vector3 diff = -transform.rotate.GetForward() * distance_;
-    RayCastInfo info{};
-    bool rayCastResult = CollisionManager::GetInstance()->RayCast(origin, diff, CollisionConfig::Stage, &info);
-    if (!rayCastResult) {
-        info.nearest = 1.0f;
+        Vector3 origin = lastTargetPosition_;
+        Vector3 diff = -transform.rotate.GetForward() * distance_;
+        RayCastInfo info{};
+        bool rayCastResult = CollisionManager::GetInstance()->RayCast(origin, diff, CollisionConfig::Stage, &info);
+        if (!rayCastResult) {
+            info.nearest = 1.0f;
+        }
+        transform.translate = lastTargetPosition_ + diff * info.nearest;
+
+        if (rayCastResult) {
+            auto nearestInfo = CollisionManager::GetInstance()->NearestCollider(transform.translate, CollisionConfig::Stage);
+            transform.translate += nearestInfo.normal * 0.5f;
+        }
     }
-    transform.translate = lastTargetPosition_ + diff * info.nearest;
-
-    if (rayCastResult) {
-        auto nearestInfo = CollisionManager::GetInstance()->NearestCollider(transform.translate, CollisionConfig::Stage);
-        transform.translate += nearestInfo.normal * 0.5f;
+    else {
+        transform.rotate = Quaternion::Slerp(1.0f - followDelay_, transform.rotate, destinationRotate_);
+        transform.translate = Vector3::Lerp(1.0f - followDelay_, transform.translate, destinationTranslate_);
     }
 
     TransUpdate();
