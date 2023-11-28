@@ -18,10 +18,16 @@ void CameraAnimation::Initialize() {
     angles_.y = Math::Pi;
     
     //	X軸回転、俯瞰視点
-    //transform.translate = Vector3(0.0f, 10.0f, -12.5f);
-    transform.translate = Vector3(0.0f, 10.0f, -50.0f);
-    //transform.rotate = Quaternion::MakeLookRotation(-transform.translate);
-    transform.rotate = Quaternion::MakeForYAxis(angles_.y);
+    transform.translate = Vector3(0.0f, 10.0f, -12.5f);
+    transform.rotate = Quaternion::MakeLookRotation(-transform.translate);
+    
+    if (nowTitle_) {
+        transform.translate = Vector3(0.0f, 10.0f, -50.0f);
+        transform.rotate = Quaternion::MakeForYAxis(angles_.y);
+        isLeaved_ = true;
+        preIsLeaved_ = true;
+        isTitleMove_ = false;
+    }
 
     destinationTranslate_ = transform.translate;
     destinationRotate_ = transform.rotate;
@@ -32,35 +38,8 @@ void CameraAnimation::Initialize() {
 }
 
 void CameraAnimation::Update() {
-    static bool flag = false;
-    if (isLeaved_ != preIsLeaved_) {
-        flag = true;
-    }
-    preIsLeaved_ = isLeaved_;
-    if (flag) {
-        isTitleMove_ = !isTitleMove_;
-        if (isTitleMove_) {
-            angles_ = preAngles_;
-            lastTargetPosition_ = Vector3(0.0f, 10.0f, -50.0f);
-        }
-        else {
-            preAngles_ = angles_;
-            angles_.y = Math::Pi;
-            angles_.x = 0.0f;
-            destinationTranslate_ = Vector3(0.0f, 10.0f, -50.0f);
-            destinationRotate_ = Quaternion::MakeForYAxis(angles_.y);
-        }
-        flag = false;
-    }
-
-    DrawImGui();
-    if (isTitleMove_) {
-        NormalUpdate();
-    }
-    else {
-        transform.rotate = Quaternion::Slerp(1.0f - followDelay_, transform.rotate, destinationRotate_);
-        transform.translate = Vector3::Lerp(1.0f - followDelay_, transform.translate, destinationTranslate_);
-    }
+    
+    nowTitle_ ? TitleUpdate() : NormalUpdate();
 
     TransUpdate();
 }
@@ -146,6 +125,38 @@ void CameraAnimation::NormalUpdate() {
     if (rayCastResult) {
         auto nearestInfo = CollisionManager::GetInstance()->NearestCollider(transform.translate, CollisionConfig::Stage);
         transform.translate += nearestInfo.normal * 0.5f;
+    }
+}
+
+void CameraAnimation::TitleUpdate() {
+    static bool flag = false;
+    if (isLeaved_ != preIsLeaved_) {
+        flag = true;
+    }
+    preIsLeaved_ = isLeaved_;
+    if (flag) {
+        isTitleMove_ = !isTitleMove_;
+        if (isTitleMove_) {
+            angles_ = preAngles_;
+            lastTargetPosition_ = Vector3(0.0f, 10.0f, -50.0f);
+        }
+        else {
+            preAngles_ = angles_;
+            angles_.y = Math::Pi;
+            angles_.x = 0.0f;
+            destinationTranslate_ = Vector3(0.0f, 10.0f, -50.0f);
+            destinationRotate_ = Quaternion::MakeForYAxis(angles_.y);
+        }
+        flag = false;
+    }
+
+    DrawImGui();
+    if (isTitleMove_) {
+        NormalUpdate();
+    }
+    else {
+        transform.rotate = Quaternion::Slerp(1.0f - followDelay_, transform.rotate, destinationRotate_);
+        transform.translate = Vector3::Lerp(1.0f - followDelay_, transform.translate, destinationTranslate_);
     }
 }
 

@@ -16,6 +16,8 @@ void TitleScene::OnInitialize() {
 	stage_ = std::make_shared<Stage>();
 	titleText_ = std::make_shared<TitleText>();
 
+	camera_->SetTitleScene(true);
+
 	// 初期化
 	player_->Initialize();
 	camera_->Initialize();

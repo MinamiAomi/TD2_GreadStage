@@ -7,6 +7,7 @@
 #include "Engine/Scene/SceneManager.h"
 #include "Game/Scene/TitleScene/TitleScene.h"
 #include "Transition/Transition.h"
+#include "Engine/Input/Input.h"
 
 void BattleScene::OnInitialize() {
 	// 生成
@@ -30,6 +31,24 @@ void BattleScene::OnInitialize() {
 }
 
 void BattleScene::OnUpdate() {
+	auto input = Input::GetInstance();
+	auto& xInput = input->GetXInputState();
+	auto& preXInput = input->GetPreXInputState();
+
+	// ポーズ : Back(左のなんか)
+	if (xInput.Gamepad.wButtons & XINPUT_GAMEPAD_BACK && !(preXInput.Gamepad.wButtons & XINPUT_GAMEPAD_BACK)) {
+		isPaused_ = !isPaused_;
+	}
+
+	isPaused_ ? PauseUpdate() : NormalUpdate();
+
+}
+
+void BattleScene::OnFinalize() {
+
+}
+
+void BattleScene::NormalUpdate() {
 	stage_->Update();
 	player_->Update();
 
@@ -49,11 +68,11 @@ void BattleScene::OnUpdate() {
 	static float blur = 0.0f;
 	static bool useBlur = false;
 	ImGui::DragFloat("Dither", &dither, 0.01f);
-	ImGui::DragFloat("Blur", &blur, 0.01f, 0.0f,1.0f);
+	ImGui::DragFloat("Blur", &blur, 0.01f, 0.0f, 1.0f);
 	ImGui::Checkbox("Use GaussianBlur", &useBlur);
-	
+
 	ImGui::End();
-	
+
 	//dither = playerToCameraDistance - 5.0f;
 	RenderManager::GetInstance()->GetModelRenderer().DitheringRange(dither);
 	RenderManager::GetInstance()->GetGaussianBlur().UpdateWeightTable(blur);
@@ -71,10 +90,8 @@ void BattleScene::OnUpdate() {
 		// シーンの設定
 		sceneManager->ChangeScene<TitleScene>();
 	}
-
-
 }
 
-void BattleScene::OnFinalize() {
+void BattleScene::PauseUpdate() {
 
 }
