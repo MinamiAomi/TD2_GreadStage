@@ -34,7 +34,7 @@ void MasterGame::OnInitialize() {
 
 	// タイトル用板ポリゴン
 	toonModel = std::make_shared<Model>();
-	toonModel->Create(ModelData::LoadObjFile("Resources/Model/TitleText/titleText.obj"));
+	toonModel->Create(ModelData::LoadObjFile("Resources/Model/title/title.obj"));
 	resourceManager->AddToonModel("TitleText", toonModel);
 
 	// プレイヤー

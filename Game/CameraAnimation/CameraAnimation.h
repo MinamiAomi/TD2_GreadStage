@@ -16,6 +16,7 @@ private:
     void TransUpdate();
     void UpdateInput();
 
+    void NormalUpdate();
 
 public: // ゲッター
     const std::shared_ptr<Camera>& GetCamera() { return camera_; }
@@ -23,6 +24,7 @@ public: // ゲッター
 public: //	セッター
     void SetTarget(const Transform* target) { target_ = target; }
     void SetCamera();
+    void SetTitleMove(const bool& flag) { isLeaved_ = flag; }
 
 private: //	メンバ変数
     std::shared_ptr<Camera> camera_;
@@ -45,6 +47,11 @@ private: //	メンバ変数
     Vector3 destinationTargetPosition_;
     Vector3 lastTargetPosition_;
 
+    Vector2 preAngles_;
+
+    bool isLeaved_ = true;
+    bool preIsLeaved_ = true;
+    bool isTitleMove_ = false;
 
     Vector2 upDown = Vector2::zero;
 
