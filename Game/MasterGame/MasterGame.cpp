@@ -110,7 +110,7 @@ void MasterGame::OnInitialize() {
 	resourceManager->AddTexture("Controller", sprite);
 
 	sprite = std::make_shared<Texture>();
-	sprite->Load("Resources/Texture/Pause/pose_backGround.png");
+	sprite->Load("Resources/Texture/Pause/risou.png");
 	resourceManager->AddTexture("BackGround", sprite);
 
 

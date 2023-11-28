@@ -20,7 +20,7 @@ private:
 		float rotate_;
 		Vector2 position_;
 		uint8_t order_;
-		uint32_t color_;
+		Vector4 color_;
 		bool isActive_;
 	};
 	TextureParam stageSelectParam_;
