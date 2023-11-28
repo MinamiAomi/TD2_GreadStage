@@ -29,8 +29,8 @@ void StarrySky::Initialize() {
     psDesc.pRootSignature = rootSignature_;
 
     auto shaderManager = ShaderManager::GetInstance();
-    auto vs = shaderManager->Compile(L"Engine/Graphics/Shader/StarrySkyVS.hlsl", ShaderManager::kVertex);
-    auto ps = shaderManager->Compile(L"Engine/Graphics/Shader/StarrySkyPS.hlsl", ShaderManager::kPixel);
+    auto vs = shaderManager->Compile(L"StarrySkyVS.hlsl", ShaderManager::kVertex);
+    auto ps = shaderManager->Compile(L"StarrySkyPS.hlsl", ShaderManager::kPixel);
     psDesc.VS = CD3DX12_SHADER_BYTECODE(vs->GetBufferPointer(), vs->GetBufferSize());
     psDesc.PS = CD3DX12_SHADER_BYTECODE(ps->GetBufferPointer(), ps->GetBufferSize());
 
@@ -91,7 +91,6 @@ void StarrySky::Regenerate() {
     auto SphereSurface = [](float theta, float phi) {
         float ct = std::cos(theta), st = std::sin(theta);
         float cp = std::cos(phi), sp = std::sin(phi);
-        st;
         Vector3 point = { ct * cp, st, ct * sp };
         return point;
     };

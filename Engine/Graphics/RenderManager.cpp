@@ -14,7 +14,9 @@ void RenderManager::Initialize() {
     graphics_ = Graphics::GetInstance();
     graphics_->Initialize();
 
-    ShaderManager::GetInstance()->Initialize();
+    auto shaderManager = ShaderManager::GetInstance();
+    shaderManager->Initialize();
+    shaderManager->SetDirectory(std::filesystem::current_path() / SHADER_DIRECTORY);
 
     auto window = GameWindow::GetInstance();
     swapChain_.Create(window->GetHWND());

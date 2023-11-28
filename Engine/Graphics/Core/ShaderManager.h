@@ -6,6 +6,7 @@
 
 #include <string>
 #include <vector>
+#include <filesystem>
 
 class ShaderManager {
 public:
@@ -23,7 +24,8 @@ public:
     };
 
     void Initialize();
-    Microsoft::WRL::ComPtr<IDxcBlob> Compile(const std::wstring& path, Type type);
+    void SetDirectory(const std::filesystem::path& directory) { directory_ = directory; }
+    Microsoft::WRL::ComPtr<IDxcBlob> Compile(const std::filesystem::path& path, Type type);
 
 private:
     ShaderManager() = default;
@@ -37,4 +39,6 @@ private:
     Microsoft::WRL::ComPtr<IDxcIncludeHandler> includeHandler_;
 
     std::vector<std::wstring> loadedShaderList_;
+
+    std::filesystem::path directory_;
 };

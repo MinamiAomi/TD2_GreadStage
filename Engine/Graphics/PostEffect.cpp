@@ -4,8 +4,8 @@
 #include "Core/ShaderManager.h"
 #include "Core/CommandContext.h"
 
-const wchar_t kPostEffectVertexShadedr[] = L"Engine/Graphics/Shader/ScreenQuadVS.hlsl";
-const wchar_t kPostEffectPixelShadedr[] = L"Engine/Graphics/Shader/PostEffectPS.hlsl";
+const wchar_t kPostEffectVertexShadedr[] = L"ScreenQuadVS.hlsl";
+const wchar_t kPostEffectPixelShadedr[] = L"PostEffectPS.hlsl";
 
 void PostEffect::Initialize(const ColorBuffer& target) {
     CD3DX12_DESCRIPTOR_RANGE srvRange[1]{};

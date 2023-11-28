@@ -61,9 +61,9 @@ void Stage::Update() {
 #ifdef _DEBUG
 
 
-    static float volume = 0.0f;
-    static float knee = 0.0f;
-    static float threshold = 0.0f;
+    static float volume = 0.5f;
+    static float knee = 0.3f;
+    static float threshold = 1.0f;
     ImGui::DragFloat("volume", &volume, 0.01f, 0.0f, 1.0f);
     ImGui::DragFloat("knee", &knee, 0.01f, 0.0f, 1.0f);
     ImGui::DragFloat("threshold", &threshold, 0.01f, 0.0f, 1.0f);

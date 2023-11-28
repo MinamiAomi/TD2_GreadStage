@@ -292,8 +292,8 @@ void GlobalVariables::SaveFile(const std::string& groupName) {
 
 	if (ofs.fail()) {
 #ifdef _DEBUG
-		std::string message = "Failed open data file file for write";
-		MessageBoxA(nullptr, message.c_str(), "GlobalVariables", 0);
+		//std::string message = "Failed open data file file for write";
+		//MessageBoxA(nullptr, message.c_str(), "GlobalVariables", 0);
 #endif // _DEBUG
 		assert(0);
 		return;
@@ -388,14 +388,14 @@ void GlobalVariables::LoadFile(const std::string& groupName) {
 		}
 	}
 #ifdef _DEBUG
-	LoadMessage(groupName);
+	//LoadMessage(groupName);
 #endif // _DEBUG
 }
 
 void GlobalVariables::ChackFiles(std::vector<std::string>& fileName) {
 	if (!std::filesystem::exists(kDirectoryPath)) {
-		std::string message = "Failed open data file for write.";
-		MessageBoxA(nullptr, message.c_str(), "Element", 0);
+		//std::string message = "Failed open data file for write.";
+		//MessageBoxA(nullptr, message.c_str(), "Element", 0);
 		assert(0);
 		return;
 	}

@@ -35,9 +35,8 @@ void ShaderManager::Initialize() {
     ASSERT_IF_FAILED(utils_->CreateDefaultIncludeHandler(includeHandler_.GetAddressOf()));
 }
 
-Microsoft::WRL::ComPtr<IDxcBlob> ShaderManager::Compile(const std::wstring& path, Type type) {
-    auto parent = std::filesystem::current_path();
-    auto fullpath = parent / path;
+Microsoft::WRL::ComPtr<IDxcBlob> ShaderManager::Compile(const std::filesystem::path& path, Type type) {
+    auto fullpath = directory_ / path;
     return Compile(fullpath, profiles[type]);
 }
 

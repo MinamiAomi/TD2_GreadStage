@@ -11,8 +11,8 @@
 #include "DefaultTextures.h"
 #include "LightManager.h"
 
-const wchar_t kModelVertexShadedr[] = L"Engine/Graphics/Shader/ModelVS.hlsl";
-const wchar_t kModelPixelShadedr[] = L"Engine/Graphics/Shader/ModelPS.hlsl";
+const wchar_t kModelVertexShadedr[] = L"ModelVS.hlsl";
+const wchar_t kModelPixelShadedr[] = L"ModelPS.hlsl";
 
 void ModelRenderer::Initialize(const ColorBuffer& colorBuffer, const DepthBuffer& depthBuffer) {
     InitializeRootSignature();

@@ -15,6 +15,12 @@
 #include "SpriteRenderer.h"
 #include "Renderable.h"
 
+#ifdef DEBUG
+#define SHADER_DIRECTORY "Engine/Graphics/Shader"
+#else
+#define SHADER_DIRECTORY "Resources/Shader"
+#endif // DEBUG
+
 class RenderManager {
 public:
 
