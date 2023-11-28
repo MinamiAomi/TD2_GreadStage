@@ -83,6 +83,10 @@ void MasterGame::OnInitialize() {
 	toonModel->Create(ModelData::LoadObjFile("Resources/Model/GoalWell/GoalWell.obj"));
 	resourceManager->AddToonModel("GoalWell", toonModel);
   
+	toonModel = std::make_shared<Model>();
+	toonModel->Create(ModelData::LoadObjFile("Resources/Model/StartWell/startWell.obj"));
+	resourceManager->AddToonModel("StartWell", toonModel);
+  
   
 	std::shared_ptr<Texture> sprite = std::make_shared<Texture>();
 	sprite->Load("Resources/Texture/block.png");

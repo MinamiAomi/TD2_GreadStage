@@ -63,6 +63,7 @@ void CreateStageScene::OnFinalize() {
 }
 
 void CreateStageScene::DrawImGui() {
+#ifdef _DEBUG
 	ImGui::Begin("Stage", nullptr, ImGuiWindowFlags_MenuBar);
 	if (ImGui::BeginMenuBar()) {
 		if (ImGui::BeginMenu("Initialize")) {
@@ -97,6 +98,7 @@ void CreateStageScene::DrawImGui() {
 						}
                         global_->SetValue(itemName_, "Goal : Translate" + std::string(), stage_->GetGoal()->transform.translate);
                         global_->SetValue(itemName_, "Goal : Rotate" + std::string(), stage_->GetGoal()->transform.rotate);
+                        global_->SetValue(itemName_, "Goal : Scale" + std::string(), stage_->GetGoal()->transform.scale);
 						global_->SetValue(itemName_, "Player : Translate" + std::string(), stage_->GetPlayer()->transform.translate);
                         global_->SetValue(itemName_, "Player : Rotate" + std::string(), stage_->GetPlayer()->transform.rotate);
 						
@@ -220,4 +222,5 @@ void CreateStageScene::DrawImGui() {
         ImGui::EndMenuBar();
     }
     ImGui::End();
+#endif // DEBUG
 }

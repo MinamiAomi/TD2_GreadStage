@@ -11,7 +11,7 @@ void Entrance::Initialize(const int& number) {
     model_ = std::make_unique<ModelInstance>();
     collider_ = std::make_unique<BoxCollider>();
 
-    model_->SetModel(ResourceManager::GetInstance()->FindModel("Box"));
+    model_->SetModel(ResourceManager::GetInstance()->FindModel("StartWell"));
     model_->SetIsActive(true);
     model_->SetColor(color_);
 
@@ -42,7 +42,11 @@ void Entrance::Update() {
 
 void Entrance::OnCollision(const CollisionInfo& collisionInfo) {
     if (collisionInfo.collider->GetName() == "Player") {
-        if (Input::GetInstance()->IsKeyTrigger(DIK_M)) {
+        auto input = Input::GetInstance();
+        auto& xInput = input->GetXInputState();
+        auto& preXInput = input->GetPreXInputState();
+        if (input->IsKeyTrigger(DIK_M)
+            || (xInput.Gamepad.wButtons & XINPUT_GAMEPAD_A && preXInput.Gamepad.wButtons & XINPUT_GAMEPAD_A)) {
             Transition::GetInstance()->SetComeToStage(stageNumber_);
         }
     }

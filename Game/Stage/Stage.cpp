@@ -48,6 +48,9 @@ void Stage::Update() {
 
 	player_->SimpleUpdate();
 
+#ifdef _DEBUG
+
+
 	static float volume = 0.0f;
 	static float knee = 0.0f;
 	static float threshold = 0.0f;
@@ -57,6 +60,8 @@ void Stage::Update() {
 	starrySky_->SetVolume(volume);
 	RenderManager::GetInstance()->GetBloom().SetKnee(knee);
 	RenderManager::GetInstance()->GetBloom().SetThreshold(threshold);
+
+#endif // DEBUG
 
 	starrySky_->Update();
 
@@ -156,6 +161,7 @@ void Stage::Load(const std::filesystem::path& loadFile) {
 	
 	goal_->transform.translate = global->GetVector3Value(selectName, "Goal : Translate");
 	goal_->transform.rotate = global->GetQuaternionValue(selectName, "Goal : Rotate");
+	goal_->transform.scale = global->GetVector3Value(selectName, "Goal : Scale");
 
 	player_->transform.translate = global->GetVector3Value(selectName, "Player : Translate");
 	player_->SetRespawnPos(player_->transform.translate);

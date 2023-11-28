@@ -32,6 +32,8 @@ void Box::Update() {
 }
 
 void Box::DrawImGui() {
+#ifdef _DEBUG
+
     ImGui::DragFloat3("scale", &transform.scale.x, 0.1f);
     ImGui::DragFloat3("rotate", &rotate_.x, 0.1f, -360.0f, 360.0f);
     transform.rotate = Quaternion::MakeFromEulerAngle(rotate_ * Math::ToRadian);
@@ -39,4 +41,5 @@ void Box::DrawImGui() {
     if (ImGui::ColorEdit3("color", &color_.x)) {
         model_->SetColor(color_);
     }
+#endif // _DEBUG
 }

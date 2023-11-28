@@ -41,6 +41,8 @@ void BattleScene::OnUpdate() {
 
 	//float playerToCameraDistance = (player_->transform.worldMatrix.GetTranslate() - camera_->transform.worldMatrix.GetTranslate()).Length();
 	//RenderManager::GetInstance()->GetModelRenderer().DitheringRange(playerToCameraDistance - 1.0f);
+#ifdef _DEBUG
+
 
 	ImGui::Begin("test");
 	static float dither = 0.0f;
@@ -50,13 +52,14 @@ void BattleScene::OnUpdate() {
 	ImGui::DragFloat("Blur", &blur, 0.01f, 0.0f,1.0f);
 	ImGui::Checkbox("Use GaussianBlur", &useBlur);
 	
-	
 	ImGui::End();
+	
 	//dither = playerToCameraDistance - 5.0f;
 	RenderManager::GetInstance()->GetModelRenderer().DitheringRange(dither);
 	RenderManager::GetInstance()->GetGaussianBlur().UpdateWeightTable(blur);
 	RenderManager::GetInstance()->UseGaussianBlur(useBlur);
 
+#endif // _DEBUG
 
 	if (player_->GetCleared()) {
 		Transition::GetInstance()->SetComeToStage();

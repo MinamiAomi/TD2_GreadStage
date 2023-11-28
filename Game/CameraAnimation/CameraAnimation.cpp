@@ -15,8 +15,8 @@ void CameraAnimation::Initialize() {
 	transform.translate = Vector3(0.0f, 10.0f, -12.5f);
 	transform.rotate = Quaternion::MakeLookRotation(-transform.translate);
 	offset_ = transform.translate + Vector3{0.0f, -8.0f, 0.0f};
-	upDown.x = -10.0f;
-	upDown.y = 20.0f;
+	upDown.x = -70.0f;
+	upDown.y = 70.0f;
 }
 
 void CameraAnimation::Update() {
@@ -28,21 +28,23 @@ void CameraAnimation::Update() {
 		//transform_->translate.x = target_->worldMatrix.GetTranslate().x;
 		auto input = Input::GetInstance();
 		auto& xinput = input->GetXInputState();
+		const float kSpeed = 2.5f;
+
 		if (input->IsKeyPressed(DIK_LEFTARROW)
 			|| xinput.Gamepad.sThumbRX < -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) {
-			radRot_.y -= 1.0f;
+			radRot_.y -= kSpeed;
 		}
 		if (input->IsKeyPressed(DIK_RIGHTARROW)
 			|| xinput.Gamepad.sThumbRX > XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) {
-			radRot_.y += 1.0f;
+			radRot_.y += kSpeed;
 		}
 		if (input->IsKeyPressed(DIK_UPARROW)
 			|| xinput.Gamepad.sThumbRY > XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) {
-			radRot_.x -= 1.0f;
+			radRot_.x -= kSpeed;
 		}
 		if (input->IsKeyPressed(DIK_DOWNARROW)
 			|| xinput.Gamepad.sThumbRY < -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) {
-			radRot_.x += 1.0f;
+			radRot_.x += kSpeed;
 		}
 		
 		
