@@ -11,13 +11,14 @@ public:
     void Initialize();
     void Update();
     void Restart();
+    // title用更新
+    void TitleUpdate();
 private:
     void DrawImGui();
     void TransUpdate();
     void UpdateInput();
 
     void NormalUpdate();
-    void TitleUpdate();
 
 public: // ゲッター
     const std::shared_ptr<Camera>& GetCamera() { return camera_; }
@@ -26,7 +27,6 @@ public: //	セッター
     void SetTarget(const Transform* target) { target_ = target; }
     void SetCamera();
     void SetTitleMove(const bool& flag) { isLeaved_ = flag; }
-    void SetTitleScene(const bool& flag) { nowTitle_ = flag; }
 
 private: //	メンバ変数
     std::shared_ptr<Camera> camera_;
@@ -55,8 +55,9 @@ private: //	メンバ変数
     bool preIsLeaved_ = true;
     bool isTitleMove_ = false;
 
-    bool nowTitle_ = false;
-
     Vector2 upDown = Vector2::zero;
+
+public:
+    static bool nowTitle_;
 
 };

@@ -7,7 +7,7 @@
 #include "Transition/Transition.h"
 #include <algorithm>
 
-decltype(TitleScene::leavingTime_) TitleScene::leavingTime_;
+decltype(TitleScene::leavingTime_) TitleScene::leavingTime_ = 300u;
 
 void TitleScene::OnInitialize() {
 	// 生成
@@ -15,8 +15,6 @@ void TitleScene::OnInitialize() {
 	camera_ = std::make_shared<CameraAnimation>();
 	stage_ = std::make_shared<Stage>();
 	titleText_ = std::make_shared<TitleText>();
-
-	camera_->SetTitleScene(true);
 
 	// 初期化
 	player_->Initialize();
@@ -31,7 +29,6 @@ void TitleScene::OnInitialize() {
 
 	stage_->Load("StageSelect");
 
-	leavingTime_ = 300u;
 }
 
 void TitleScene::OnUpdate() {
@@ -59,7 +56,7 @@ void TitleScene::OnUpdate() {
 	}
 
 	// カメラの更新
-	camera_->Update();
+	camera_->TitleUpdate();
 
 	auto trans = Transition::GetInstance();
 	if (trans->Update()) {

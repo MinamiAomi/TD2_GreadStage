@@ -8,27 +8,29 @@
 #include "CollisionConfig.h"
 #include "Input/Input.h"
 
+
+decltype(CameraAnimation::nowTitle_) CameraAnimation::nowTitle_ = true;
+
 void CameraAnimation::Initialize() {
     SetName("Camera");
     // 生成
     camera_ = std::make_shared<Camera>();
     RenderManager::GetInstance()->SetCamera(camera_);
 
-    angles_.x = 0.0f;
-    angles_.y = Math::Pi;
-    
     //	X軸回転、俯瞰視点
     transform.translate = Vector3(0.0f, 10.0f, -12.5f);
     transform.rotate = Quaternion::MakeLookRotation(-transform.translate);
     
     if (nowTitle_) {
+        angles_.x = 0.0f;
+        angles_.y = Math::Pi;
         transform.translate = Vector3(0.0f, 10.0f, -50.0f);
         transform.rotate = Quaternion::MakeForYAxis(angles_.y);
         isLeaved_ = true;
         preIsLeaved_ = true;
         isTitleMove_ = false;
+        nowTitle_ = false;
     }
-
     destinationTranslate_ = transform.translate;
     destinationRotate_ = transform.rotate;
 
@@ -39,7 +41,7 @@ void CameraAnimation::Initialize() {
 
 void CameraAnimation::Update() {
     
-    nowTitle_ ? TitleUpdate() : NormalUpdate();
+    NormalUpdate();
 
     TransUpdate();
 }
@@ -129,6 +131,7 @@ void CameraAnimation::NormalUpdate() {
 }
 
 void CameraAnimation::TitleUpdate() {
+    
     static bool flag = false;
     if (isLeaved_ != preIsLeaved_) {
         flag = true;
@@ -158,6 +161,8 @@ void CameraAnimation::TitleUpdate() {
         transform.rotate = Quaternion::Slerp(1.0f - followDelay_, transform.rotate, destinationRotate_);
         transform.translate = Vector3::Lerp(1.0f - followDelay_, transform.translate, destinationTranslate_);
     }
+
+    TransUpdate();
 }
 
 void CameraAnimation::SetCamera() {
