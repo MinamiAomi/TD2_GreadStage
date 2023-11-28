@@ -47,6 +47,7 @@ public:
     void SetColor(const Vector3& color) { color_ = color; }
     void SetUseRimLight(bool useRimLight) { useRimLight_ = useRimLight; }
     void SetRimLightColor(const Vector3& color) { rimLightColor_ = color; }
+    void SetreceiveShadow(bool receiveShadow) { receiveShadow_ = receiveShadow; }
 
     bool IsActive() const { return isActive_; }
 
@@ -64,5 +65,6 @@ private:
     Vector3 rimLightColor_ = Vector3::one;
     bool useLighting_ = true;
     bool useRimLight_ = false;
+    bool receiveShadow_ = false;
     bool isActive_ = true;
 };
