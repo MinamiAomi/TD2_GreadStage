@@ -27,7 +27,7 @@ private:
 
     // 回転保管用
     Vector3 rotate_;
-    Vector3 color_ = Vector3(1.0f, 1.0f, 0.0f);
+    Vector3 color_ = Vector3(1.0f, 1.0f, 1.0f);
 
     bool isAlive_ = true;
 
