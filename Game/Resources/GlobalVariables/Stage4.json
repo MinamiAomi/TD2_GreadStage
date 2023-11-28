@@ -1,0 +1,110 @@
+{
+     "Stage4_ver1.0": {
+          "BoxConfirmation": 5,
+          "BoxNumber : 0 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "BoxNumber : 0 : Scale": [
+               5.0,
+               3.299999952316284,
+               5.0
+          ],
+          "BoxNumber : 0 : Translate": [
+               0.0,
+               0.5,
+               0.0
+          ],
+          "BoxNumber : 1 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "BoxNumber : 1 : Scale": [
+               15.0,
+               5.0,
+               20.0
+          ],
+          "BoxNumber : 1 : Translate": [
+               0.0,
+               -14.0,
+               0.0
+          ],
+          "BoxNumber : 2 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "BoxNumber : 2 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "BoxNumber : 2 : Translate": [
+               0.0,
+               0.0,
+               0.0
+          ],
+          "BoxNumber : 3 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "BoxNumber : 3 : Scale": [
+               10.0,
+               5.0,
+               12.5
+          ],
+          "BoxNumber : 3 : Translate": [
+               0.0,
+               6.0,
+               17.0
+          ],
+          "BoxNumber : 4 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "BoxNumber : 4 : Scale": [
+               15.0,
+               3.5,
+               8.0
+          ],
+          "BoxNumber : 4 : Translate": [
+               0.0,
+               -11.300000190734863,
+               14.0
+          ],
+          "CollectConfirmation": 0,
+          "Goal : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "Goal : Translate": [
+               0.0,
+               2.5,
+               17.0
+          ],
+          "ItemConfirmation": 0,
+          "Player : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "Player : Translate": [
+               0.0,
+               2.1500000953674316,
+               0.0
+          ],
+          "StageConfirmation": 0
+     }
+}
