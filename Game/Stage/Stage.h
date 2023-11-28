@@ -40,16 +40,15 @@ public:
     void SetPlayerPtr(std::shared_ptr<Player> player) { player_ = player; }
 
 private:
+    static const unsigned int kStageCount_ = 8u;
+    static const uint32_t kNumLights = 4;
+
     std::vector<std::shared_ptr<Box>> boxes_;
     std::vector<std::shared_ptr<RequiredItem>> items_;
     std::vector<std::shared_ptr<CollectionObject>> collects_;
     std::vector<std::shared_ptr<Entrance>> entrances_;
     std::shared_ptr<Goal> goal_;
     std::shared_ptr<Player> player_;
-    std::shared_ptr<DirectionalLight> light_;
     std::shared_ptr<StarrySky> starrySky_;
-
-    const unsigned int kStageCount_ = 8u;
-
-
+    std::vector<std::shared_ptr<DirectionalLight>> lights_;
 };

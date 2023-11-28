@@ -7,7 +7,7 @@ void TitleText::Initialize() {
     model_ = std::make_unique<ModelInstance>();
 
     model_->SetModel(ResourceManager::GetInstance()->FindModel(GetName()));
-    model_->SetIsActive(true);
+    model_->SetIsActive(false);
     model_->SetUseRimLight(false);
     model_->SetColor(Vector3::one);
 
