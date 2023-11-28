@@ -159,6 +159,7 @@
     <ClCompile Include="Graphics\Model.cpp" />
     <ClCompile Include="Graphics\Renderer.cpp" />
     <ClCompile Include="Input\Input.cpp" />
+    <ClCompile Include="Math\Animation.cpp" />
     <ClCompile Include="Math\Camera.cpp" />
     <ClCompile Include="Math\Color.cpp" />
     <ClCompile Include="Math\Geometry.cpp" />

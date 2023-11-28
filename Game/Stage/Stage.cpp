@@ -58,6 +58,8 @@ void Stage::Update() {
 	RenderManager::GetInstance()->GetBloom().SetKnee(knee);
 	RenderManager::GetInstance()->GetBloom().SetThreshold(threshold);
 
+	starrySky_->Update();
+
 }
 
 void Stage::Add(const std::shared_ptr<Box>& box) {

@@ -30,7 +30,7 @@ public:
 private:
     uint32_t numHorizontalGrids_ = 32;
     uint32_t numVerticalGrids_ = 32;
-    uint32_t animationCycle_ = 120;
+    uint32_t animationCycle_ = 300;
     float minScale_ = 1.0f;
     float maxScale_ = 5.0f;
     float distance_ = 200.0f;

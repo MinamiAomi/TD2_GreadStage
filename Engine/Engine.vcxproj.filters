@@ -198,6 +198,9 @@
     <ClCompile Include="Graphics\LightManager.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Math\Animation.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene\BaseScene.h">

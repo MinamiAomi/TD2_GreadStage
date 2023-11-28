@@ -31,8 +31,11 @@ VSOutput main(VSInput input) {
     
     VSOutput output;
 
-    float3 worldPosition = mul(float4(input.position, 1.0f), instances_[input.instanceID].worldMatrix).xyz + common_.cameraPosition;
-    output.position = mul(float4(worldPosition, 1.0f), common_.viewProjectionMatrix);
+    float t = frac(common_.time + Random(Random(instances_[input.instanceID].seed)));
+    t = 1.0f - (abs(t - 0.5f) * 2.0f);
+    float3 position = input.position * lerp(0.5f, 2.0f, t);
+    position = mul(float4(position, 1.0f), instances_[input.instanceID].worldMatrix).xyz + common_.cameraPosition;
+    output.position = mul(float4(position, 1.0f), common_.viewProjectionMatrix);
     output.texcoord = input.texcoord;
     output.instanceID = input.instanceID; 
     

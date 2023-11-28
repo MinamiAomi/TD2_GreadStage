@@ -46,7 +46,7 @@ void StarrySky::Initialize() {
     psDesc.BlendState = Helper::BlendDisable;
     psDesc.DepthStencilState = Helper::DepthStateReadWrite;
     psDesc.RasterizerState = Helper::RasterizerNoCull;
-    
+
     auto& colorBuffer = RenderManager::GetInstance()->GetMainColorBuffer();
     auto& depthBuffer = RenderManager::GetInstance()->GetMainDepthBuffer();
     // 前面カリング
@@ -75,6 +75,8 @@ void StarrySky::Initialize() {
 }
 
 void StarrySky::Update() {
+    animationParameter_ += 1.0f / animationCycle_;
+    animationParameter_ = animationParameter_ - float(int(animationParameter_));
 }
 
 void StarrySky::Regenerate() {
@@ -89,11 +91,13 @@ void StarrySky::Regenerate() {
     auto SphereSurface = [](float theta, float phi) {
         float ct = std::cos(theta), st = std::sin(theta);
         float cp = std::cos(phi), sp = std::sin(phi);
+        st;
         Vector3 point = { ct * cp, st, ct * sp };
         return point;
     };
 
-    Vector2 deltaAngles = { 2.0f * std::numbers::pi_v<float> / numHorizontalGrids_, std::numbers::pi_v<float> / numVerticalGrids_ };
+    float deltaTheta = std::numbers::pi_v<float> / (numVerticalGrids_ + 1);
+    float deltaPhi = 2.0f * std::numbers::pi_v<float> / numHorizontalGrids_;
 
     float reciSize = 1.0f / seeds.size();
     for (size_t y = 0; y < numVerticalGrids_; ++y) {
@@ -103,17 +107,18 @@ void StarrySky::Regenerate() {
 
             star.seed = seeds[index] * reciSize;
 
-            Vector2 sphericalAngles = Vector2::Scale(deltaAngles, Vector2((float)x, (float)y));
-            sphericalAngles.x += Math::Lerp(randGen_.NextFloatUnit(), 0.0f, deltaAngles.x);
-            sphericalAngles.y += Math::Lerp(randGen_.NextFloatUnit(), 0.0f, deltaAngles.y);
-            Vector3 position = SphereSurface(sphericalAngles.x, sphericalAngles.y) * distance_;
+            float theta = -std::numbers::pi_v<float> / 2.0f + deltaTheta * y;
+            float phi = deltaPhi * x;
+            phi += Math::Lerp(randGen_.NextFloatUnit(), 0.0f, deltaTheta);
+            theta += Math::Lerp(randGen_.NextFloatUnit(), 0.0f, deltaPhi);
+            Vector3 position = SphereSurface(theta, phi) * (distance_ + star.seed * 10.0f);
 
             Vector3 up = Vector3::unitY;
             if (position.x == 0.0f && position.z == 0.0f) {
                 up = Vector3::unitX;
             }
             star.worldMatrix = Matrix4x4::identity;
-            star.worldMatrix *= Matrix4x4::MakeScaling(Vector3(Math::Lerp(randGen_.NextFloatUnit(), minScale_, maxScale_)));
+            star.worldMatrix *= Matrix4x4::MakeScaling(Vector3(Math::Lerp(1.0f, minScale_, maxScale_)));
             star.worldMatrix *= Matrix4x4::MakeRotationZ(star.seed * Math::TwoPi);
             star.worldMatrix *= Matrix4x4::MakeLookRotation(-position, up);
             star.worldMatrix *= Matrix4x4::MakeTranslation(position);
