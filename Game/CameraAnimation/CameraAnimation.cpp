@@ -14,22 +14,45 @@ void CameraAnimation::Initialize() {
     camera_ = std::make_shared<Camera>();
     RenderManager::GetInstance()->SetCamera(camera_);
 
+    angles_.x = 0.0f;
+    angles_.y = Math::Pi;
+    
     //	X軸回転、俯瞰視点
-    transform.translate = Vector3(0.0f, 10.0f, -12.5f);
-    transform.rotate = Quaternion::MakeLookRotation(-transform.translate);
+    //transform.translate = Vector3(0.0f, 10.0f, -12.5f);
+    transform.translate = Vector3(0.0f, 10.0f, -50.0f);
+    //transform.rotate = Quaternion::MakeLookRotation(-transform.translate);
+    transform.rotate = Quaternion::MakeForYAxis(angles_.y);
+
+    destinationTranslate_ = transform.translate;
+    destinationRotate_ = transform.rotate;
+
     offset_ = Vector3{ 0.0f, 2.0f, 0.0f };
     upDown.x = -70.0f;
     upDown.y = 70.0f;
 }
 
 void CameraAnimation::Update() {
+    static bool flag = false;
 
+    if (Input::GetInstance()->IsKeyTrigger(DIK_K)) {
+        flag = !flag;
+        if (flag) {
+            angles_ = Vector2::zero;
+            destinationTargetPosition_ = Vector3(0.0f, 10.0f, -50.0f);
+        }
+        else {
+            angles_.y = Math::Pi;
+            angles_.x = 0.0f;
+            destinationTranslate_ = Vector3(0.0f, 10.0f, -50.0f);
+            destinationRotate_ = Quaternion::MakeForYAxis(angles_.y);
+        }
+    }
 
     DrawImGui();
 
-    UpdateInput();
+    if (target_ && flag) {
+        UpdateInput();
 
-    if (target_) {
         // 注視点
         Vector3 localTarget = offset_;
         Quaternion localRotate = Quaternion::MakeForYAxis(angles_.y) * Quaternion::MakeForXAxis(angles_.x);
@@ -56,7 +79,7 @@ void CameraAnimation::Update() {
         info.nearest = 1.0f;
     }
     transform.translate = lastTargetPosition_ + diff * info.nearest;
-    
+
     if (rayCastResult) {
         auto nearestInfo = CollisionManager::GetInstance()->NearestCollider(transform.translate, CollisionConfig::Stage);
         transform.translate += nearestInfo.normal * 0.5f;
@@ -72,8 +95,8 @@ void CameraAnimation::Restart() {
 void CameraAnimation::DrawImGui() {
 #ifdef _DEBUG
     ImGui::Begin("camera");
-    ImGui::DragFloat3("Position", &offset_.x, 0.01f);
-    ImGui::DragFloat3("radR", &radRot_.x, 0.01f);
+    ImGui::DragFloat3("Position", &transform.translate.x, 0.01f);
+    ImGui::DragFloat2("radR", &angles_.x, 0.1f);
     ImGui::DragFloat2("Limit Down:Up", &upDown.x, 0.01f);
     ImGui::End();
 #endif // _DEBUG
