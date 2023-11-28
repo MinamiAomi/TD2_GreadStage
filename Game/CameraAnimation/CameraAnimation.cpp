@@ -33,10 +33,13 @@ void CameraAnimation::Initialize() {
 
 void CameraAnimation::Update() {
     static bool flag = false;
-
-    if (Input::GetInstance()->IsKeyTrigger(DIK_K)) {
-        flag = !flag;
-        if (flag) {
+    if (isLeaved_ != preIsLeaved_) {
+        flag = true;
+    }
+    preIsLeaved_ = isLeaved_;
+    if (flag) {
+        isTitleMove_ = !isTitleMove_;
+        if (isTitleMove_) {
             angles_ = preAngles_;
             lastTargetPosition_ = Vector3(0.0f, 10.0f, -50.0f);
         }
@@ -47,45 +50,12 @@ void CameraAnimation::Update() {
             destinationTranslate_ = Vector3(0.0f, 10.0f, -50.0f);
             destinationRotate_ = Quaternion::MakeForYAxis(angles_.y);
         }
+        flag = false;
     }
 
     DrawImGui();
-
-    if (target_ && flag) {
-        UpdateInput();
-
-        // 注視点
-        Vector3 localTarget = offset_;
-        Quaternion localRotate = Quaternion::MakeForYAxis(angles_.y) * Quaternion::MakeForXAxis(angles_.x);
-        // 視線
-        Vector3 localDir = localRotate.GetForward();
-
-        Vector3 localPosition = localTarget + -localDir * distance_;
-
-        destinationTranslate_ = localPosition * target_->worldMatrix;
-
-        destinationTargetPosition_ = localTarget * target_->worldMatrix;
-
-        destinationRotate_ = target_->rotate * localRotate;
-    }
-
-    if (flag) {
-        transform.rotate = Quaternion::Slerp(1.0f - followDelay_, transform.rotate, destinationRotate_);
-        lastTargetPosition_ = Vector3::Lerp(1.0f - followDelay_, lastTargetPosition_, destinationTargetPosition_);
-
-        Vector3 origin = lastTargetPosition_;
-        Vector3 diff = -transform.rotate.GetForward() * distance_;
-        RayCastInfo info{};
-        bool rayCastResult = CollisionManager::GetInstance()->RayCast(origin, diff, CollisionConfig::Stage, &info);
-        if (!rayCastResult) {
-            info.nearest = 1.0f;
-        }
-        transform.translate = lastTargetPosition_ + diff * info.nearest;
-
-        if (rayCastResult) {
-            auto nearestInfo = CollisionManager::GetInstance()->NearestCollider(transform.translate, CollisionConfig::Stage);
-            transform.translate += nearestInfo.normal * 0.5f;
-        }
+    if (isTitleMove_) {
+        NormalUpdate();
     }
     else {
         transform.rotate = Quaternion::Slerp(1.0f - followDelay_, transform.rotate, destinationRotate_);
@@ -140,6 +110,42 @@ void CameraAnimation::UpdateInput() {
         angles_ += viewMove;
         angles_.x = std::clamp(angles_.x, pitchAngleLimits_.y * Math::ToRadian, pitchAngleLimits_.x * Math::ToRadian);
         angles_.y = std::fmod(angles_.y, Math::TwoPi);
+    }
+}
+
+void CameraAnimation::NormalUpdate() {
+    if (target_) {
+        UpdateInput();
+
+        // 注視点
+        Vector3 localTarget = offset_;
+        Quaternion localRotate = Quaternion::MakeForYAxis(angles_.y) * Quaternion::MakeForXAxis(angles_.x);
+        // 視線
+        Vector3 localDir = localRotate.GetForward();
+
+        Vector3 localPosition = localTarget + -localDir * distance_;
+
+        destinationTranslate_ = localPosition * target_->worldMatrix;
+
+        destinationTargetPosition_ = localTarget * target_->worldMatrix;
+
+        destinationRotate_ = target_->rotate * localRotate;
+    }
+    transform.rotate = Quaternion::Slerp(1.0f - followDelay_, transform.rotate, destinationRotate_);
+    lastTargetPosition_ = Vector3::Lerp(1.0f - followDelay_, lastTargetPosition_, destinationTargetPosition_);
+
+    Vector3 origin = lastTargetPosition_;
+    Vector3 diff = -transform.rotate.GetForward() * distance_;
+    RayCastInfo info{};
+    bool rayCastResult = CollisionManager::GetInstance()->RayCast(origin, diff, CollisionConfig::Stage, &info);
+    if (!rayCastResult) {
+        info.nearest = 1.0f;
+    }
+    transform.translate = lastTargetPosition_ + diff * info.nearest;
+
+    if (rayCastResult) {
+        auto nearestInfo = CollisionManager::GetInstance()->NearestCollider(transform.translate, CollisionConfig::Stage);
+        transform.translate += nearestInfo.normal * 0.5f;
     }
 }
 

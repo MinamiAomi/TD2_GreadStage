@@ -77,6 +77,6 @@ private: // メンバ関数
 	void WallUpdate(Vector3 moveVec);
 
 	void OnCollision(const CollisionInfo& collisionInfo);
-
+	
 	void DrawImGui();
 };
