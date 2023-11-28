@@ -196,8 +196,8 @@ void Player::MoveLimit() {
     if (input->IsKeyTrigger(DIK_R) ||
         xInput.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER && !(preXInput.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)) {
         jumpParameters_.isJumped = false;
-        transform.translate = Vector3(0.0f, 4.0f, 0.0f);
-        transform.rotate = Quaternion::identity;
+        transform.translate = respawnPos_;
+        transform.rotate = respawnRot_;
         jumpParameters_.fallSpeed = 0.0f;
     }
 }
