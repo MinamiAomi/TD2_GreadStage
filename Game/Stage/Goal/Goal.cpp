@@ -8,6 +8,7 @@ void Goal::Initialize() {
     collider_ = std::make_unique<BoxCollider>();
 
     transform.scale = Vector3(1.0f, 1.0f, 1.0f);
+    transform.UpdateMatrix();
 
     model_->SetModel(ResourceManager::GetInstance()->FindModel("GoalWell"));
     model_->SetIsActive(true);
@@ -21,11 +22,11 @@ void Goal::Initialize() {
 }
 
 void Goal::Update() {
+    transform.scale = Vector3::one;
     // 当たり判定、描画を更新
     transform.UpdateMatrix();
     collider_->SetOrientation(transform.rotate);
-    collider_->SetSize(transform.scale);
-    collider_->SetCenter(transform.translate);
+    collider_->SetCenter(Vector3{ 0.0f, 0.5f, 0.0f } *transform.worldMatrix);
     model_->SetWorldMatrix(transform.worldMatrix);
 }
 

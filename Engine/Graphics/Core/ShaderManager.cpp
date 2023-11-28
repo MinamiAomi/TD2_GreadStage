@@ -36,8 +36,9 @@ void ShaderManager::Initialize() {
 }
 
 Microsoft::WRL::ComPtr<IDxcBlob> ShaderManager::Compile(const std::wstring& path, Type type) {
-    auto parent = std::filesystem::current_path().parent_path();
-    return Compile((parent / path).wstring(), profiles[type]);
+    auto parent = std::filesystem::current_path();
+    auto fullpath = parent / path;
+    return Compile(fullpath, profiles[type]);
 }
 
 Microsoft::WRL::ComPtr<IDxcBlob> ShaderManager::Compile(const std::wstring& path, const std::wstring& profile) {
@@ -46,7 +47,14 @@ Microsoft::WRL::ComPtr<IDxcBlob> ShaderManager::Compile(const std::wstring& path
     //MessageBoxW(nullptr, path.wstring().c_str(), L"Cap", S_OK);
 
     ComPtr<IDxcBlobEncoding> shaderSource;
+#ifdef DEBUG
     ASSERT_IF_FAILED(utils_->LoadFile(path.c_str(), nullptr, shaderSource.GetAddressOf()));
+#else
+    if (FAILED(utils_->LoadFile(path.c_str(), nullptr, shaderSource.GetAddressOf()))) {
+       MessageBoxW(nullptr, path.c_str(), L"シェーダーの読み込みに失敗!!", S_OK);
+       return Microsoft::WRL::ComPtr<IDxcBlob>();
+    }
+#endif // DEBUG
 
     DxcBuffer shader_source_buffer{};
     shader_source_buffer.Ptr = shaderSource->GetBufferPointer();

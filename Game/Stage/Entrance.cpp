@@ -11,6 +11,8 @@ void Entrance::Initialize(const int& number) {
     model_ = std::make_unique<ModelInstance>();
     collider_ = std::make_unique<BoxCollider>();
 
+    transform.scale = Vector3::one;
+
     model_->SetModel(ResourceManager::GetInstance()->FindModel("StartWell"));
     model_->SetIsActive(true);
     model_->SetColor(color_);
@@ -36,7 +38,7 @@ void Entrance::Update() {
     transform.UpdateMatrix();
     collider_->SetOrientation(transform.rotate);
     collider_->SetSize(transform.scale);
-    collider_->SetCenter(transform.translate);
+    collider_->SetCenter(Vector3{ 0.0f, 0.5f, 0.0f} * transform.worldMatrix);
     model_->SetWorldMatrix(transform.worldMatrix);
 }
 
