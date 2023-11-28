@@ -89,9 +89,9 @@
                1.0
           ],
           "Goal : Translate": [
-               0.0,
-               0.0,
-               2.0
+               168.89999389648438,
+               164.6999969482422,
+               100.80000305175781
           ],
           "ItemConfirmation": 0,
           "Player : Rotate": [
@@ -101,9 +101,9 @@
                1.0
           ],
           "Player : Translate": [
-               0.0,
+               0.23971006274223328,
                5.0,
-               0.0
+               -1.8902397155761719
           ],
           "StageConfirmation": 6,
           "StageNumber : 0 : Rotate": [
