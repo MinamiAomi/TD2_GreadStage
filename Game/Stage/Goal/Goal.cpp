@@ -7,7 +7,7 @@ void Goal::Initialize() {
     model_ = std::make_unique<ModelInstance>();
     collider_ = std::make_unique<BoxCollider>();
 
-    transform.scale = Vector3(1.0f, 2.0f, 1.0f);
+    transform.scale = Vector3(1.0f, 1.0f, 1.0f);
 
     model_->SetModel(ResourceManager::GetInstance()->FindModel("GoalWell"));
     model_->SetIsActive(true);
