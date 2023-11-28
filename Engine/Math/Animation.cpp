@@ -9,6 +9,8 @@ namespace Animation {
         assert(!keyFrames_.empty());
         // 一つの場合はそれ
         if (keyFrames_.size() == 1) { return keyFrames_[0].value; }
+        // 1を超える場合最後のキーフレームの値
+        if (animationTime >= 1.0f) { return keyFrames_.back().value; }
 
         size_t prevIndex = GetKeyFrameIndex(animationTime);
         size_t nextIndex = prevIndex + 1;
@@ -21,6 +23,8 @@ namespace Animation {
         assert(!keyFrames_.empty());
         // 一つの場合はそれ
         if (keyFrames_.size() == 1) { return keyFrames_[0].value; }
+        // 1を超える場合最後のキーフレームの値
+        if (animationTime >= 1.0f) { return keyFrames_.back().value; }
 
         size_t prevIndex = GetKeyFrameIndex(animationTime);
         size_t nextIndex = prevIndex + 1;
@@ -33,6 +37,8 @@ namespace Animation {
         assert(!keyFrames_.empty());
         // 一つの場合はそれ
         if (keyFrames_.size() == 1) { return keyFrames_[0].value; }
+        // 1を超える場合最後のキーフレームの値
+        if (animationTime >= 1.0f) { return keyFrames_.back().value; }
 
         size_t prevIndex = GetKeyFrameIndex(animationTime);
         size_t nextIndex = prevIndex + 1;

@@ -359,6 +359,8 @@ public:
 #pragma region メンバ変数
     float x, y, z;
 #pragma endregion
+
+    bool IsNan() const { return isnan(x) || isnan(y) || isnan(z); }
 };
 
 class Vector4 {
@@ -479,6 +481,8 @@ public:
 #pragma region メンバ変数
     float x, y, z, w;
 #pragma endregion 
+
+    bool IsNan() const { return isnan(x) || isnan(y) || isnan(z) || isnan(w); }
 };
 
 class Quaternion {
@@ -654,6 +658,8 @@ public:
 #pragma region メンバ変数
     float x, y, z, w;
 #pragma endregion
+
+    bool IsNan() const { return isnan(x) || isnan(y) || isnan(z) || isnan(w); }
 };
 
 class Matrix3x3 {
@@ -1146,5 +1152,4 @@ public:
     float m[4][4];
 #pragma endregion
 };
-
 

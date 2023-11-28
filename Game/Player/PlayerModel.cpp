@@ -1,4 +1,5 @@
 #include "PlayerModel.h"
+
 #include "Graphics/ResourceManager.h"
 
 const Vector3 PlayerModel::kInitialTranslates[PlayerModel::kNumParts] = {
@@ -12,8 +13,18 @@ const Vector3 PlayerModel::kInitialTranslates[PlayerModel::kNumParts] = {
     {  0.0f,  0.0f, 0.0f },
 };
 
-std::function<void(PlayerModel&)> PlayerModel::kAnimationTable[PlayerModel::kNumAnimations] = {
+std::function<void(PlayerModel&)> PlayerModel::kAnimationTable[PlayerModel::kNumAnimationTypes] = {
     &PlayerModel::WalkAnimation,
+};
+
+std::array<Animation::QuaternionNode, PlayerModel::kNumParts> PlayerModel::kWalkRotateAnimationTable = {
+    Animation::QuaternionNode({{Quaternion::identity, 0.0f}, {Quaternion::MakeForYAxis(-5.0f * Math::ToRadian), 0.25f}, {Quaternion::identity, 0.5f}, {Quaternion::MakeForYAxis(5.0f * Math::ToRadian), 0.75f}, {Quaternion::identity, 1.0f}}),
+    Animation::QuaternionNode({Quaternion::identity, 0}),
+    Animation::QuaternionNode({{Quaternion::identity, 0.0f}, {Quaternion::MakeForXAxis(-45.0f * Math::ToRadian), 0.25f}, {Quaternion::identity, 0.5f}, {Quaternion::MakeForXAxis(45.0f * Math::ToRadian), 0.75f}, {Quaternion::identity, 1.0f}}),
+    Animation::QuaternionNode({{Quaternion::identity, 0.0f}, {Quaternion::MakeForXAxis(45.0f * Math::ToRadian), 0.25f}, {Quaternion::identity, 0.5f}, {Quaternion::MakeForXAxis(-45.0f * Math::ToRadian), 0.75f}, {Quaternion::identity, 1.0f}}),
+    Animation::QuaternionNode({{Quaternion::identity, 0.0f}, {Quaternion::MakeForXAxis(45.0f * Math::ToRadian), 0.25f}, {Quaternion::identity, 0.5f}, {Quaternion::MakeForXAxis(-45.0f * Math::ToRadian), 0.75f}, {Quaternion::identity, 1.0f}}),
+    Animation::QuaternionNode({{Quaternion::identity, 0.0f}, {Quaternion::MakeForXAxis(-45.0f * Math::ToRadian), 0.25f}, {Quaternion::identity, 0.5f}, {Quaternion::MakeForXAxis(45.0f * Math::ToRadian), 0.75f}, {Quaternion::identity, 1.0f}}),
+    Animation::QuaternionNode({Quaternion::identity, 0}),
 };
 
 void PlayerModel::Initialize(Transform* transform) {
@@ -59,7 +70,7 @@ void PlayerModel::Update() {
     }
 }
 
-void PlayerModel::PlayAnimation(Animation animation, bool isLoop) {
+void PlayerModel::PlayAnimation(AnimationType animation, bool isLoop) {
     animation_ = animation;
     isLoop_ = isLoop;
     animationParameter_ = 0.0f;
@@ -70,19 +81,14 @@ void PlayerModel::StopAnimation() {
 }
 
 void PlayerModel::WalkAnimation() {
-    static const uint32_t kAnimationCycle = 120;
+    static const uint32_t kAnimationCycle = 90;
 
     if (!UpdateAnimationParameter(1.0f / kAnimationCycle)) {
         return;
     }
 
-
-    // 足アニメーション
-    {
-
-
-        partTransform_[kLeftFoot];
-        partTransform_[kRightFoot];
+    for (uint32_t i = 0; i < kNumParts; ++i) {
+        partTransform_[i].rotate = kWalkRotateAnimationTable[i].GetInterpolatedValue(animationParameter_);
     }
 }
 
@@ -95,7 +101,7 @@ bool PlayerModel::UpdateAnimationParameter(float delta) {
             animation_ = std::nullopt;
             return false;
         }
-        animationParameter_ = float(int(animationParameter_));
+        animationParameter_ -= float(int(animationParameter_));
     }
     return true;
 }

@@ -20,6 +20,7 @@ void Player::Initialize() {
     modelTrans_.translate = {};
     modelTrans_.UpdateMatrix();
     playerModel_.Initialize(&modelTrans_);
+    playerModel_.PlayAnimation(PlayerModel::kWalk, true);
     //modelTrans_.scale = {1.0f,0.5f,1.0f};
 
     collider_ = std::make_unique<SphereCollider>();
@@ -97,7 +98,7 @@ void Player::PostCollisionUpdate() {
 
             Vector3 up = transform.rotate.GetUp();
             Vector3 normal = nearestInfo.normal.Normalized();
-            if (Dot(up, normal) < 0.9999f) {
+            if (std::abs(Dot(up, normal)) < 0.9999f) {
                 Quaternion diff = Quaternion::MakeFromTwoVector(up, normal);
                 transform.rotate = diff * transform.rotate;
             }
@@ -105,7 +106,6 @@ void Player::PostCollisionUpdate() {
 
         UpdateTransform();
     }
-
 
     if (moveDirection_ != Vector3::zero) {
 

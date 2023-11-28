@@ -2,6 +2,7 @@
 
 #include <functional>
 #include <optional>
+#include <array>
 
 #include "Math/Transform.h"
 #include "Math/Animation.h"
@@ -21,21 +22,22 @@ public:
         kNumParts
     };
 
-    enum Animation {
+    enum AnimationType {
         kWalk,
 
-        kNumAnimations
+        kNumAnimationTypes
     };
 
     void Initialize(Transform* transform);
     void Update();
 
-    void PlayAnimation(Animation animation, bool isLoop);
+    void PlayAnimation(AnimationType animation, bool isLoop);
     void StopAnimation();
 
 private:
     static const Vector3 kInitialTranslates[kNumParts];
-    static std::function<void(PlayerModel&)> kAnimationTable[kNumAnimations];
+    static std::function<void(PlayerModel&)> kAnimationTable[kNumAnimationTypes];
+    static std::array<Animation::QuaternionNode, kNumParts> kWalkRotateAnimationTable;
 
     void WalkAnimation();
     // 続行する場合true
@@ -47,6 +49,6 @@ private:
     std::shared_ptr<ModelInstance> partModels_[kNumParts];
 
     float animationParameter_;
-    std::optional<Animation> animation_;
+    std::optional<AnimationType> animation_;
     bool isLoop_;
 };
