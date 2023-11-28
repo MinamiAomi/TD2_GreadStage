@@ -27,6 +27,7 @@ void ModelRenderer::Render(CommandContext& commandContext, const Camera& camera)
         Vector3 cameraPosition;
         float ditheringRange;
         uint32_t numDirectionalLights;
+        uint32_t numCircleShadows;
     };
 
     struct InstanceConstant {
@@ -35,6 +36,7 @@ void ModelRenderer::Render(CommandContext& commandContext, const Camera& camera)
         uint32_t useLighting{};
         Vector3 rimLightColor;
         uint32_t useRimLight{};
+        uint32_t receiveShadow{};
     };
 
     struct DirectionalLightData {
@@ -43,13 +45,23 @@ void ModelRenderer::Render(CommandContext& commandContext, const Camera& camera)
         Vector3 color;
     };
 
+    struct CircleShadowData {
+        Vector3 position;
+        float distance;
+        Vector3 direction;
+        float decay;
+        float cosAngle;
+        float cosFalloffStart;
+    };
 
     auto& instanceList = ModelInstance::GetInstanceList();
     auto& directionalLights = DirectionalLight::GetInstanceList();
+    auto& circleShadows = CircleShadow::GetInstanceList();
 
     // 描画
     commandContext.SetRootSignature(rootSignature_);
     commandContext.SetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
 
     std::vector<DirectionalLightData> directionalLightDatas;
     for (auto& directionalLight : directionalLights) {
@@ -70,6 +82,29 @@ void ModelRenderer::Render(CommandContext& commandContext, const Camera& camera)
         commandContext.SetDynamicShaderResourceView(ModelRootIndex::DirectionalLight, sizeof(DirectionalLightData) * directionalLightDatas.size(), directionalLightDatas.data());
     }
 
+    std::vector<CircleShadowData> circleShadowDatas;
+    for (auto& circleShadow : circleShadows) {
+        if (circleShadow->isActive) {
+            CircleShadowData d{
+                .position = circleShadow->position,
+                .distance = circleShadow->distance,
+                .direction = circleShadow->direction.Normalized(),
+                .decay = circleShadow->decay,
+                .cosAngle = std::cos(circleShadow->angle),
+                .cosFalloffStart = std::cos(circleShadow->falloffStartAngle)
+
+            };
+            circleShadowDatas.emplace_back(d);
+        }
+        // 最大16まで
+        if (circleShadowDatas.size() > 16) {
+            break;
+        }
+    }
+    if (!circleShadowDatas.empty()) {
+        commandContext.SetDynamicShaderResourceView(ModelRootIndex::CircleShadow, sizeof(CircleShadow) * circleShadowDatas.size(), circleShadowDatas.data());
+    }
+
 
     SceneConstant scene{};
     scene.viewMatrix = camera.GetViewMatrix();
@@ -77,6 +112,7 @@ void ModelRenderer::Render(CommandContext& commandContext, const Camera& camera)
     scene.cameraPosition = camera.GetPosition();
     scene.ditheringRange = ditheringRange_;
     scene.numDirectionalLights = uint32_t(directionalLightDatas.size());
+    scene.numCircleShadows = uint32_t(circleShadowDatas.size());
     commandContext.SetDynamicConstantBufferView(ModelRootIndex::Scene, sizeof(scene), &scene);
 
 
@@ -90,7 +126,8 @@ void ModelRenderer::Render(CommandContext& commandContext, const Camera& camera)
             data.useLighting = instance->useLighting_ ? 1 : 0;
             data.rimLightColor = instance->rimLightColor_;
             data.useRimLight = instance->useRimLight_ ? 1 : 0;
-            commandContext.SetDynamicConstantBufferView(ModelRootIndex::Instance, sizeof(data), &data); 
+            data.receiveShadow = instance->receiveShadow_ ? 1 : 0;
+            commandContext.SetDynamicConstantBufferView(ModelRootIndex::Instance, sizeof(data), &data);
 
             // オブジェクト描画
             commandContext.SetPipelineState(pipelineState_);
@@ -135,6 +172,7 @@ void ModelRenderer::InitializeRootSignature() {
     rootParameters[ModelRootIndex::Texture].InitAsDescriptorTable(1, &srvRange);
     rootParameters[ModelRootIndex::Sampler].InitAsDescriptorTable(1, &samplerRange);
     rootParameters[ModelRootIndex::DirectionalLight].InitAsShaderResourceView(1);
+    rootParameters[ModelRootIndex::CircleShadow].InitAsShaderResourceView(2);
 
     D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};
     rootSignatureDesc.NumParameters = _countof(rootParameters);

@@ -19,4 +19,10 @@ private: // メンバ変数
 	std::shared_ptr<CameraAnimation> camera_;
 	std::shared_ptr<Stage> stage_;
 
+	bool isPaused_ = false; // true : ポーズ中/false : 通常
+
+private:
+	void NormalUpdate(); // 通常のゲームシーン用更新
+	void PauseUpdate(); // ポーズ用更新
+
 };

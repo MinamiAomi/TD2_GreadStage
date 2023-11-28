@@ -23,6 +23,9 @@ void Stage::Initialize() {
     lights_[3]->direction = Vector3::left;
     lights_[3]->color = { 0.2f, 0.2f,0.2f };
 
+    sha_ = CircleShadow::Create();
+    sha_->position = { 0.0f,10.0f,0.0f };
+
     starrySky_ = std::make_shared<StarrySky>();
     starrySky_->Initialize();
     RenderManager::GetInstance()->AddCustomRenderer(starrySky_);

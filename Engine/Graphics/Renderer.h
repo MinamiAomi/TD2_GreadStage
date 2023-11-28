@@ -17,6 +17,7 @@ struct ModelRootIndex {
         Texture,
         Sampler,
         DirectionalLight,
+        CircleShadow,
 
         NumParameters
     };

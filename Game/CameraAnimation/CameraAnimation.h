@@ -11,6 +11,8 @@ public:
     void Initialize();
     void Update();
     void Restart();
+    // title用更新
+    void TitleUpdate();
 private:
     void DrawImGui();
     void TransUpdate();
@@ -54,5 +56,8 @@ private: //	メンバ変数
     bool isTitleMove_ = false;
 
     Vector2 upDown = Vector2::zero;
+
+public:
+    static bool nowTitle_;
 
 };
