@@ -1,6 +1,7 @@
 #include "Goal.h"
 #include "Graphics/ResourceManager.h"
 #include "Graphics/ImGuiManager.h"
+#include "CollisionConfig.h"
 
 void Goal::Initialize() {
     SetName("Goal");
@@ -14,6 +15,8 @@ void Goal::Initialize() {
     model_->SetIsActive(true);
 
     collider_->SetName("Goal");
+    collider_->SetCollisionAttribute(CollisionConfig::Goal);
+    collider_->SetCollisionMask(CollisionConfig::Player);
     collider_->SetGameObject(this);
     collider_->SetOrientation(transform.rotate);
     collider_->SetSize(transform.scale);

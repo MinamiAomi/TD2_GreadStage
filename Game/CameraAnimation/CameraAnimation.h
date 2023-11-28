@@ -34,7 +34,7 @@ private: //	メンバ変数
     Vector2 angles_;
     Vector3 destinationTranslate_;
     Quaternion destinationRotate_;
-    float followDelay_ = 0.9f;
+    float followDelay_ = 0.95f;
     float distance_ = 15.0f;
 
     // 度数法(pitch, yaw)

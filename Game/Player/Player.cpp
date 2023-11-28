@@ -20,7 +20,7 @@ void Player::Initialize() {
     modelTrans_.translate = {};
     modelTrans_.UpdateMatrix();
     playerModel_.Initialize(&modelTrans_);
-    playerModel_.PlayAnimation(PlayerModel::kWalk, true);
+    playerModel_.PlayAnimation(PlayerModel::kWait, true);
     //modelTrans_.scale = {1.0f,0.5f,1.0f};
 
     collider_ = std::make_unique<SphereCollider>();
@@ -33,8 +33,16 @@ void Player::Initialize() {
     //collider_->SetSize({ 1.0f, 2.0f, 1.0f });
     collider_->SetCallback([this](const CollisionInfo& collisionInfo) { OnCollision(collisionInfo); });
 
+    upperCollider_ = std::make_unique<SphereCollider>();
+    upperCollider_->SetGameObject(this);
+    upperCollider_->SetName("Player");
+    upperCollider_->SetCenter(transform.translate + upperColliderOffset_);
+    upperCollider_->SetRadius(0.5f);
+    upperCollider_->SetCollisionAttribute(CollisionConfig::Player);
+    upperCollider_->SetCollisionMask(~CollisionConfig::Player);
+
     // パラメーター初期化
-    moveSpeed_ = 0.25f;
+    moveSpeed_ = 0.15f;
     jumpParameters_.isJumped = false;
     jumpParameters_.fallSpeed = 0.0f;
     jumpParameters_.jumpPower = 0.5f;
@@ -51,7 +59,10 @@ void Player::Update() {
     }
 #endif // DEBUG
 
-    MoveUpdate();
+    if (!jumpParameters_.isJumped &&
+        playerModel_.GetAnimationType() != PlayerModel::kLanding && playerModel_.GetAnimationType() != PlayerModel::kBlend) {
+        MoveUpdate();
+    }
     JumpUpdate();
 
     MoveLimit();
@@ -133,6 +144,7 @@ void Player::UpdateTransform() {
     modelTrans_.UpdateMatrix();
 
     collider_->SetCenter(colliderOffset_ * transform.worldMatrix);
+    upperCollider_->SetCenter(upperColliderOffset_ * transform.worldMatrix);
     //collider_->SetOrientation(rotate);
 }
 
@@ -179,11 +191,20 @@ void Player::MoveUpdate() {
 
         //move = camera_->GetCamera()->GetRotate() * move;
         move = move.Normalized();
-        move *= moveSpeed_;
-        transform.translate += move;
+        transform.translate += move * moveSpeed_;
 
         //Vector3 forward = transform.rotate.GetForward();
         //transform.rotate = transform.rotate * Quaternion::Slerp(0.1f, Quaternion::identity,Quaternion::MakeFromTwoVector(forward, move));
+
+        auto animeType = playerModel_.GetAnimationType();
+        if (animeType != PlayerModel::kWalk && animeType != PlayerModel::kBlend) {
+            playerModel_.PlayAnimation(PlayerModel::kWalk, true);
+        }
+    }
+    else {
+        if (playerModel_.GetAnimationType() == PlayerModel::kWalk) {
+            playerModel_.PlayAnimation(PlayerModel::kWait, true, true, 30);
+        }
     }
 
     moveDirection_ = move;
@@ -199,6 +220,7 @@ void Player::MoveLimit() {
         transform.translate = respawnPos_;
         transform.rotate = respawnRot_;
         jumpParameters_.fallSpeed = 0.0f;
+        playerModel_.PlayAnimation(PlayerModel::kWait, false);
     }
 }
 
@@ -206,16 +228,29 @@ void Player::JumpUpdate() {
     auto input = Input::GetInstance();
     auto& xInput = input->GetXInputState();
     auto& preXInput = input->GetPreXInputState();
+
+    Vector3 gravityDirection = transform.rotate.GetUp();
+
+    auto animeType = playerModel_.GetAnimationType();
     if (!jumpParameters_.isJumped &&
         (input->IsKeyTrigger(DIK_SPACE) ||
-            xInput.Gamepad.wButtons & XINPUT_GAMEPAD_A && !(preXInput.Gamepad.wButtons & XINPUT_GAMEPAD_A))) {
+            xInput.Gamepad.wButtons & XINPUT_GAMEPAD_A && !(preXInput.Gamepad.wButtons & XINPUT_GAMEPAD_A)) &&
+        animeType != PlayerModel::kLanding && animeType != PlayerModel::kBlend) {
         jumpParameters_.isJumped = true;
         jumpParameters_.fallSpeed = jumpParameters_.jumpPower;
+        jumpParameters_.direction = moveDirection_;
+        jumpParameters_.jumpHeight = Vector3::Dot(transform.translate, gravityDirection);
+
+        playerModel_.PlayAnimation(PlayerModel::kJump, false, true, 30);
     }
 
     jumpParameters_.fallSpeed -= jumpParameters_.gravity;
-    Vector3 gravityDirection = transform.rotate.GetUp();
     transform.translate += gravityDirection * jumpParameters_.fallSpeed;
+
+    if (jumpParameters_.isJumped &&
+        Vector3::Dot(transform.translate, gravityDirection) > jumpParameters_.jumpHeight) {
+        transform.translate += jumpParameters_.direction * moveSpeed_;
+    }
 
     jumpParameters_.fallSpeed = std::max(jumpParameters_.fallSpeed, -jumpParameters_.fallSpeedLimits);
 }
@@ -250,8 +285,7 @@ void Player::OnCollision(const CollisionInfo& collisionInfo) {
             Vector3 normal = collisionInfo.normal.Normalized();
 
             if (std::abs(Dot(up, normal)) > std::cos(45.0f * Math::ToRadian)) {
-                jumpParameters_.isJumped = false;
-                jumpParameters_.fallSpeed = 0.0f;
+                Landing();
             }
         }
         else {
@@ -259,12 +293,11 @@ void Player::OnCollision(const CollisionInfo& collisionInfo) {
             auto wallCollider = std::find(wallColliders_.begin(), wallColliders_.end(), collisionInfo.collider);
             if (wallCollider == wallColliders_.end()) {
 
-                jumpParameters_.isJumped = false;
-                jumpParameters_.fallSpeed = 0.0f;
+                Landing();
 
                 Vector3 up = transform.rotate.GetUp();
                 Vector3 normal = collisionInfo.normal.Normalized();
-                if (Dot(up, normal) < 0.9999f) {
+                if (std::abs(Dot(up, normal)) < 0.9999f) {
                     Quaternion diff = Quaternion::MakeFromTwoVector(up, normal);
                     transform.rotate = diff * transform.rotate;
                 }
@@ -297,6 +330,14 @@ void Player::DrawImGui() {
         jumpParameters_.fallSpeed = 0.0f;
     }
     ImGui::End();
-    
+
 #endif // _DEBUG
+}
+
+void Player::Landing() {
+    jumpParameters_.fallSpeed = 0.0f;
+    if (jumpParameters_.isJumped) {
+        jumpParameters_.isJumped = false;
+        playerModel_.PlayAnimation(PlayerModel::kLanding, false, true, 20);
+    }
 }

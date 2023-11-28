@@ -22,8 +22,8 @@ void Entrance::Initialize(const int& number) {
     collider_->SetOrientation(transform.rotate);
     collider_->SetSize(transform.scale);
     collider_->SetCenter(transform.translate);
-    collider_->SetCollisionAttribute(CollisionConfig::Stage);
-    collider_->SetCollisionMask(~CollisionConfig::Stage);
+    collider_->SetCollisionAttribute(CollisionConfig::Entrance);
+    collider_->SetCollisionMask(CollisionConfig::Player);
     collider_->SetCallback([this](const CollisionInfo& collisionInfo) { OnCollision(collisionInfo); });
 
     stageNumber_ = number;

@@ -43,10 +43,18 @@ void CameraAnimation::Update() {
         destinationTargetPosition_ = localTarget * target_->worldMatrix;
 
         destinationRotate_ = target_->rotate * localRotate;
+
+        if (destinationRotate_.IsNan()) {
+            assert(false);
+        }
     }
 
     transform.rotate = Quaternion::Slerp(1.0f - followDelay_, transform.rotate, destinationRotate_);
     lastTargetPosition_ = Vector3::Lerp(1.0f - followDelay_, lastTargetPosition_, destinationTargetPosition_);
+
+    if (transform.rotate.IsNan()) {
+        assert(false);
+    }
 
     Vector3 origin = lastTargetPosition_;
     Vector3 diff = -transform.rotate.GetForward() * distance_;
