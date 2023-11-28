@@ -15,8 +15,8 @@ void CameraAnimation::Initialize() {
 	transform.translate = Vector3(0.0f, 10.0f, -12.5f);
 	transform.rotate = Quaternion::MakeLookRotation(-transform.translate);
 	offset_ = transform.translate + Vector3{0.0f, -8.0f, 0.0f};
-	upDown.x = -10.0f;
-	upDown.y = 20.0f;
+	upDown.x = -70.0f;
+	upDown.y = 70.0f;
 }
 
 void CameraAnimation::Update() {

@@ -16,8 +16,8 @@ void MasterGame::OnInitialize() {
 	// シーンのシングルトンの取得
 	SceneManager* sceneManager = SceneManager::GetInstance();
 	// シーンの設定
-	//sceneManager->ChangeScene<TitleScene>();
-	sceneManager->ChangeScene<CreateStageScene>();
+	sceneManager->ChangeScene<TitleScene>();
+	//sceneManager->ChangeScene<CreateStageScene>();
 
 	// リソースマネージャーのシングルトンの取得
 	ResourceManager* resourceManager = ResourceManager::GetInstance();
@@ -82,6 +82,10 @@ void MasterGame::OnInitialize() {
 	toonModel = std::make_shared<Model>();
 	toonModel->Create(ModelData::LoadObjFile("Resources/Model/GoalWell/GoalWell.obj"));
 	resourceManager->AddToonModel("GoalWell", toonModel);
+  
+	toonModel = std::make_shared<Model>();
+	toonModel->Create(ModelData::LoadObjFile("Resources/Model/StartWell/startWell.obj"));
+	resourceManager->AddToonModel("StartWell", toonModel);
   
   
 	std::shared_ptr<Texture> sprite = std::make_shared<Texture>();

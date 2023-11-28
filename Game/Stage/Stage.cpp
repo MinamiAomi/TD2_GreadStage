@@ -154,6 +154,7 @@ void Stage::Load(const std::filesystem::path& loadFile) {
 	
 	goal_->transform.translate = global->GetVector3Value(selectName, "Goal : Translate");
 	goal_->transform.rotate = global->GetQuaternionValue(selectName, "Goal : Rotate");
+	goal_->transform.scale = global->GetVector3Value(selectName, "Goal : Scale");
 
 	player_->transform.translate = global->GetVector3Value(selectName, "Player : Translate");
 	player_->SetRespawnPos(player_->transform.translate);
