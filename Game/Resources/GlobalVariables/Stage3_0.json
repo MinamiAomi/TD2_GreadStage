@@ -1,0 +1,205 @@
+{
+     "Stage3": {
+          "BoxConfirmation": 6,
+          "BoxNumber : 0 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "BoxNumber : 0 : Scale": [
+               12.0,
+               5.0,
+               15.0
+          ],
+          "BoxNumber : 0 : Translate": [
+               0.0,
+               0.0,
+               0.0
+          ],
+          "BoxNumber : 1 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "BoxNumber : 1 : Scale": [
+               7.0,
+               5.0,
+               10.0
+          ],
+          "BoxNumber : 1 : Translate": [
+               0.0,
+               2.5,
+               7.5
+          ],
+          "BoxNumber : 2 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "BoxNumber : 2 : Scale": [
+               10.0,
+               5.0,
+               10.0
+          ],
+          "BoxNumber : 2 : Translate": [
+               0.0,
+               0.0,
+               22.5
+          ],
+          "BoxNumber : 3 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "BoxNumber : 3 : Scale": [
+               12.0,
+               5.0,
+               10.0
+          ],
+          "BoxNumber : 3 : Translate": [
+               0.0,
+               -5.0,
+               35.0
+          ],
+          "BoxNumber : 4 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "BoxNumber : 4 : Scale": [
+               20.0,
+               5.0,
+               10.0
+          ],
+          "BoxNumber : 4 : Translate": [
+               0.0,
+               0.0,
+               40.0
+          ],
+          "BoxNumber : 5 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "BoxNumber : 5 : Scale": [
+               12.0,
+               5.0,
+               10.0
+          ],
+          "BoxNumber : 5 : Translate": [
+               0.0,
+               5.0,
+               45.0
+          ],
+          "CollectConfirmation": 3,
+          "CollectNumber : 0 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "CollectNumber : 0 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "CollectNumber : 0 : Translate": [
+               0.0,
+               5.5,
+               4.0
+          ],
+          "CollectNumber : 1 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "CollectNumber : 1 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "CollectNumber : 1 : Translate": [
+               0.0,
+               5.5,
+               6.0
+          ],
+          "CollectNumber : 2 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "CollectNumber : 2 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "CollectNumber : 2 : Translate": [
+               1.5,
+               3.0,
+               0.0
+          ],
+          "Goal : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "Goal : Translate": [
+               0.0,
+               8.5,
+               49.0
+          ],
+          "ItemConfirmation": 2,
+          "ItemNumber : 0 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "ItemNumber : 0 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "ItemNumber : 0 : Translate": [
+               0.0,
+               3.0,
+               0.0
+          ],
+          "ItemNumber : 1 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "ItemNumber : 1 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "ItemNumber : 1 : Translate": [
+               0.0,
+               3.0,
+               20.0
+          ],
+          "Player : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "Player : Translate": [
+               0.0,
+               2.5999999046325684,
+               -5.0
+          ]
+     }
+}
