@@ -1,6 +1,6 @@
 {
-     "StageSelect": {
-          "BoxConfirmation": 1,
+     "StageSelect_ver1.0": {
+          "BoxConfirmation": 5,
           "BoxNumber : 0 : Rotate": [
                0.0,
                0.0,
@@ -8,14 +8,78 @@
                1.0
           ],
           "BoxNumber : 0 : Scale": [
+               20.0,
+               5.0,
+               20.0
+          ],
+          "BoxNumber : 0 : Translate": [
+               0.0,
+               2.5,
+               5.0
+          ],
+          "BoxNumber : 1 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "BoxNumber : 1 : Scale": [
                10.0,
                10.0,
                10.0
           ],
-          "BoxNumber : 0 : Translate": [
+          "BoxNumber : 1 : Translate": [
+               0.0,
+               7.5,
+               15.0
+          ],
+          "BoxNumber : 2 : Rotate": [
                0.0,
                0.0,
-               0.0
+               0.0,
+               1.0
+          ],
+          "BoxNumber : 2 : Scale": [
+               10.0,
+               15.0,
+               10.0
+          ],
+          "BoxNumber : 2 : Translate": [
+               10.0,
+               9.5,
+               10.5
+          ],
+          "BoxNumber : 3 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "BoxNumber : 3 : Scale": [
+               8.800000190734863,
+               10.0,
+               11.899999618530273
+          ],
+          "BoxNumber : 3 : Translate": [
+               -18.0,
+               20.0,
+               10.0
+          ],
+          "BoxNumber : 4 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "BoxNumber : 4 : Scale": [
+               12.5,
+               4.0,
+               15.5
+          ],
+          "BoxNumber : 4 : Translate": [
+               0.0,
+               30.0,
+               10.0
           ],
           "CollectConfirmation": 0,
           "Goal : Rotate": [
@@ -41,7 +105,7 @@
                5.0,
                0.0
           ],
-          "StageConfirmation": 3,
+          "StageConfirmation": 6,
           "StageNumber : 0 : Rotate": [
                0.0,
                0.0,
@@ -50,19 +114,19 @@
           ],
           "StageNumber : 0 : Scale": [
                1.0,
-               2.0,
+               3.0,
                1.0
           ],
           "StageNumber : 0 : Translate": [
-               -3.0,
-               6.0,
-               3.0
+               0.0,
+               6.5,
+               6.0
           ],
           "StageNumber : 1 : Rotate": [
                0.0,
                0.0,
-               0.0,
-               1.0
+               0.7071067690849304,
+               0.7071067690849304
           ],
           "StageNumber : 1 : Scale": [
                1.0,
@@ -70,9 +134,9 @@
                1.0
           ],
           "StageNumber : 1 : Translate": [
-               0.0,
-               6.0,
-               3.0
+               -6.0,
+               8.5,
+               14.100000381469727
           ],
           "StageNumber : 2 : Rotate": [
                0.0,
@@ -86,9 +150,57 @@
                1.0
           ],
           "StageNumber : 2 : Translate": [
+               0.0,
+               13.5,
+               15.100000381469727
+          ],
+          "StageNumber : 3 : Rotate": [
+               0.7071067690849304,
+               0.0,
+               0.0,
+               0.7071067690849304
+          ],
+          "StageNumber : 3 : Scale": [
+               1.0,
                3.0,
-               6.0,
-               3.0
+               1.0
+          ],
+          "StageNumber : 3 : Translate": [
+               9.600000381469727,
+               13.199999809265137,
+               4.0
+          ],
+          "StageNumber : 4 : Rotate": [
+               0.0,
+               0.0,
+               0.7071067690849304,
+               0.7071067690849304
+          ],
+          "StageNumber : 4 : Scale": [
+               1.0,
+               3.0,
+               1.0
+          ],
+          "StageNumber : 4 : Translate": [
+               -12.0,
+               20.0,
+               10.0
+          ],
+          "StageNumber : 5 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "StageNumber : 5 : Scale": [
+               1.0,
+               3.200000047683716,
+               1.0
+          ],
+          "StageNumber : 5 : Translate": [
+               0.0,
+               27.0,
+               9.0
           ]
      }
 }
