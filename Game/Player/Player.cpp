@@ -282,6 +282,8 @@ void Player::OnCollision(const CollisionInfo& collisionInfo) {
 }
 
 void Player::DrawImGui() {
+#ifdef _DEBUG
+
     ImGui::Begin("test", nullptr, ImGuiWindowFlags_MenuBar);
     ImGui::DragFloat("MoveSpeed", &moveSpeed_, 0.01f);
     ImGui::DragFloat("JumpPower", &jumpParameters_.jumpPower, 0.01f);
@@ -295,4 +297,6 @@ void Player::DrawImGui() {
         jumpParameters_.fallSpeed = 0.0f;
     }
     ImGui::End();
+    
+#endif // _DEBUG
 }

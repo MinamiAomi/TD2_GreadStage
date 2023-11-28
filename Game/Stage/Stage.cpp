@@ -48,6 +48,9 @@ void Stage::Update() {
 
 	player_->SimpleUpdate();
 
+#ifdef _DEBUG
+
+
 	static float volume = 0.0f;
 	static float knee = 0.0f;
 	static float threshold = 0.0f;
@@ -58,6 +61,7 @@ void Stage::Update() {
 	RenderManager::GetInstance()->GetBloom().SetKnee(knee);
 	RenderManager::GetInstance()->GetBloom().SetThreshold(threshold);
 
+#endif // DEBUG
 }
 
 void Stage::Add(const std::shared_ptr<Box>& box) {
