@@ -38,10 +38,12 @@ private: //	メンバ変数
     float distance_ = 15.0f;
 
     // 度数法(pitch, yaw)
-    Vector2 cameraSpeed_ = { 1.0f,1.0f };
+    Vector2 cameraSpeed_ = { 2.0f,2.0f };
     // pitch角の制限(up, down)
     Vector2 pitchAngleLimits_ = { 60.0f, -50.0f };
 
+    Vector3 destinationTargetPosition_;
+    Vector3 lastTargetPosition_;
 
 
     Vector2 upDown = Vector2::zero;
