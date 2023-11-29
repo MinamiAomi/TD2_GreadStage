@@ -8,6 +8,7 @@
 #include "Audio/Audio.h"
 #include "Graphics/ImGuiManager.h"
 #include "CollisionConfig.h"
+#include "Stage/Stage.h"
 
 void Player::Initialize() {
     SetName("Player");
@@ -348,7 +349,9 @@ void Player::OnCollision(const CollisionInfo& collisionInfo) {
     }
 
     if (collisionInfo.collider->GetName() == "Goal") {
-        isCleared_ = true;
+        if (Stage::ItemCount_ == 0) {
+            isCleared_ = true;
+        }
     }
 
     UpdateTransform();
