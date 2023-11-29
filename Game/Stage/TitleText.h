@@ -30,6 +30,13 @@ private:
     };
     AnimationType animationType_ = AnimationType::Normal;
 
+    // sin派
+    const float amplitude_ = 0.5f;  // 振幅
+    const float frequency_ = 1.0f;  // 周波数（1サイクルあたりの波の数）
+    const float phaseShift_ = 10.0f; // 位相シフト（初期位相）
+
+    int nowTime_ = 0;
+
 private:
 
     void AnimationUpdate();

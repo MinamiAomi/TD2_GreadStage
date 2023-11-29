@@ -6,6 +6,7 @@ struct Scene {
     float3 cameraPosition;
     float ditheringRange;
     uint numDirectionalLights;
+    uint numCircleShadows;
 };
 ConstantBuffer<Scene> scene_ : register(b0);
 
@@ -15,6 +16,8 @@ struct Instance {
     uint useLighting;
     float3 rimLightColor;
     uint useRimLight;
+    uint receiveShadow;
+    float3 pad;
 };
 ConstantBuffer<Instance> instance_ : register(b1);
 
@@ -24,15 +27,17 @@ struct Material {
 };
 ConstantBuffer<Material> material_ : register(b2);
 
-//// 平行光源
-//struct DirectionalLight
-//{
-//    float3 direction; // 方向
-//    float3 color; // 色
-//    float intensity; // 強さ
-//};
-
 StructuredBuffer<DirectionalLight> directionalLights_ : register(t1);
+
+struct CircleShadow {
+    float3 position;
+    float distance;
+    float3 direction;
+    float decay;
+    float cosAngle;
+    float cosFalloffStart;
+};
+StructuredBuffer<CircleShadow> circleShadows_ : register(t2);
 
 Texture2D<float4> texture_ : register(t0);
 SamplerState sampler_ : register(s0);
@@ -107,35 +112,29 @@ PSOutput main(PSInput input) {
         }
     }
     
+    if (instance_.receiveShadow) {
+        for (uint i = 0; i < scene_.numCircleShadows; ++i) {
+            float3 spotLightDirectionOnSurface = normalize(position - circleShadows_[i].position);
+            
+            float distance = length(circleShadows_[i].position - position);
+            float attenuationFactor = pow(saturate(-distance / circleShadows_[i].distance + 1.0f), circleShadows_[i].decay);
+            float cosAngle = dot(spotLightDirectionOnSurface, circleShadows_[i].direction);
+            float falloffFactor = saturate((cosAngle - circleShadows_[i].cosAngle) / (circleShadows_[i].cosFalloffStart - circleShadows_[i].cosAngle));
+            
+            attenuationFactor *= step(0.0f, attenuationFactor);
+                       
+            output.color.rgb -=  falloffFactor * attenuationFactor;
+
+        }
+    }
     
-    //    float3 ambient = float3(0.1f, 0.1f, 0.1f);
-    //// テクスチャの色
-    //float3 textureColor = texture_.Sample(sampler_, input.texcoord).rgb * instance_.color;
-    //// 拡散反射
-    //float3 diffuse = material_.diffuse * HalfLambertReflection(normal, directionalLight_.direction);
-    //// 鏡面反射
-    //float3 specular = material_.specular * BlinnPhongReflection(normal, directionalLight_.direction, pixelToCamera, 10.0f);
-    //// シェーディングによる色
-    //float3 shadeColor = (diffuse + specular + ambient) * directionalLight_.color * directionalLight_.intensity;
-    //// ライティングを使用しない場合テクスチャの色をそのまま使う
-    //shadeColor = lerp(float3(1.0f, 1.0f, 1.0f), shadeColor, (float)instance_.useLighting);
-       
     output.color.a = 1.0f;
     
-    //float b = length((input.position.xy / float2(1280.0f, 720.0f)) * 2.0f - 1.0f);
-    //output.color.rgb = b;
-    
-    //output.color.rg = input.position.xy / float2(1280.0f, 720.0f) * 2.0f -0.5f;
-    //output.color.b = 0.0f;
-    
-   // output.color.rgb = float3(0.0f, 0.0f, 0.0f);
     
     // リムライト
     float m = saturate(1.0f - dot(normal, pixelToCamera));
     m = m * m * m * m * m;
     output.color.rgb = lerp(output.color.rgb, instance_.rimLightColor, lerp(0.0f, m, (float) instance_.useRimLight));
-    
-    //output.color.rgb = specular;
     
     return output;
 }

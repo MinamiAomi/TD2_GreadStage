@@ -17,6 +17,8 @@ void TitleText::Initialize() {
 }
 
 void TitleText::Update() {
+    AnimationUpdate();
+
     transform.UpdateMatrix();
     model_->SetWorldMatrix(transform.worldMatrix);
 }
@@ -33,5 +35,16 @@ void TitleText::DrawImGui() {
 }
 
 void TitleText::AnimationUpdate() {
+    // サンプリングするポイント数と時間間隔 4秒
+    const int numPoints = 4 * 60;
+    const float timeInterval = 2.0f * Math::Pi / numPoints;
+    // sin波を生成して表示
+    float time = nowTime_ * timeInterval;
 
+    transform.translate.y = phaseShift_ + sin(time) * amplitude_;
+    
+    nowTime_++;
+    if (nowTime_ >= numPoints) {
+        nowTime_ = 0;
+    }
 }

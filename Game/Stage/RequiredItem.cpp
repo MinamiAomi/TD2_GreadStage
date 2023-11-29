@@ -17,7 +17,7 @@ void RequiredItem::Initialize() {
     collider_->SetName("RequiredItem");
     collider_->SetGameObject(this);
     collider_->SetOrientation(transform.rotate);
-    collider_->SetSize(transform.scale);
+    collider_->SetSize(Vector3::Scale(transform.scale, { 2.0f,1.0f,2.0f }));
     collider_->SetCenter(transform.translate);
     collider_->SetCollisionAttribute(CollisionConfig::Item);
     collider_->SetCollisionMask(CollisionConfig::Player);
