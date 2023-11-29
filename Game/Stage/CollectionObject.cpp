@@ -63,7 +63,7 @@ void CollectionObject::AnimationUpdate() {
 }
 
 void CollectionObject::TypeNormalUpdate() {
-    //transform.rotate = Quaternion::MakeFromAngleAxis(1.0f * Math::ToRadian, transform.rotate.GetUp()) * transform.rotate;
+    transform.rotate = Quaternion::MakeFromAngleAxis(1.0f * Math::ToRadian, Vector3::one.Normalized()) * transform.rotate;
 }
 
 void CollectionObject::TypeGetUpdate() {

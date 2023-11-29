@@ -35,7 +35,7 @@ void Stage::Initialize() {
     starrySky_->SetVolume(0.8f);
 
     bgmPlayHandle_ = Audio::GetInstance()->SoundPlayLoopStart(ResourceManager::GetInstance()->FindSound("BGM"));
-    Audio::GetInstance()->SetValume(bgmPlayHandle_, 1.0f);
+    Audio::GetInstance()->SetValume(bgmPlayHandle_, 0.8f);
 }
 
 void Stage::Update() {

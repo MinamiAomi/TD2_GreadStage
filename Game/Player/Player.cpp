@@ -1,11 +1,12 @@
 #include "Player.h"
 
+#include <numbers>
+
 #include "Graphics/ResourceManager.h"
 #include "Engine/Input/Input.h"
 #include "Collision/CollisionManager.h"
-
+#include "Audio/Audio.h"
 #include "Graphics/ImGuiManager.h"
-#include <numbers>
 #include "CollisionConfig.h"
 
 void Player::Initialize() {
@@ -49,6 +50,15 @@ void Player::Initialize() {
 
     floorCollider_ = nullptr;
     isCleared_ = false;
+
+    {
+        auto resourceManager = ResourceManager::GetInstance();
+        walkSoundHandle_ = resourceManager->FindSound("Walk");
+        jumpSoundHandle_ = resourceManager->FindSound("Jump");
+        landingSoundHandle_ = resourceManager->FindSound("Landing");
+        walkPlayHandle_ = (size_t)-1;
+    }
+
 
     shadowOffset_ = { 0.0f, 100.0f, 0.0f };
     circleShadow_ = CircleShadow::Create();
@@ -209,10 +219,15 @@ void Player::MoveUpdate() {
         auto animeType = playerModel_.GetAnimationType();
         if (animeType != PlayerModel::kWalk && animeType != PlayerModel::kBlend) {
             playerModel_.PlayAnimation(PlayerModel::kWalk, true);
+            walkPlayHandle_ = Audio::GetInstance()->SoundPlayLoopStart(walkSoundHandle_);
         }
     }
     else {
         if (playerModel_.GetAnimationType() == PlayerModel::kWalk) {
+            if (walkPlayHandle_ != (size_t)-1) {
+                Audio::GetInstance()->SoundPlayLoopEnd(walkPlayHandle_);
+                walkPlayHandle_ = (size_t)-1;
+            }
             playerModel_.PlayAnimation(PlayerModel::kWait, true, true, 30);
         }
     }
@@ -252,6 +267,13 @@ void Player::JumpUpdate() {
         jumpParameters_.jumpHeight = Vector3::Dot(transform.translate, gravityDirection);
 
         playerModel_.PlayAnimation(PlayerModel::kJump, false, true, 30);
+
+        if (walkPlayHandle_ != (size_t)-1) {
+            Audio::GetInstance()->SoundPlayLoopEnd(walkPlayHandle_);
+            walkPlayHandle_ = (size_t)-1;
+        }
+        auto jumpPlayHandle = Audio::GetInstance()->SoundPlayWave(jumpSoundHandle_);
+        Audio::GetInstance()->SetValume(jumpPlayHandle, 1.2f);
     }
 
     jumpParameters_.fallSpeed -= jumpParameters_.gravity;
@@ -349,5 +371,7 @@ void Player::Landing() {
     if (jumpParameters_.isJumped) {
         jumpParameters_.isJumped = false;
         playerModel_.PlayAnimation(PlayerModel::kLanding, false, true, 20);
+        auto landingPlayHandle = Audio::GetInstance()->SoundPlayWave(landingSoundHandle_);
+        Audio::GetInstance()->SetValume(landingPlayHandle, 2.0f);
     }
 }

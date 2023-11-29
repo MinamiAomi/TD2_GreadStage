@@ -120,7 +120,8 @@ void MasterGame::OnInitialize() {
 	resourceManager->AddSound("Jump", audio->SoundLoadWave("Resources/Sound/jump.wav"));
 	resourceManager->AddSound("MoonGet", audio->SoundLoadWave("Resources/Sound/moonGet.wav"));
 	resourceManager->AddSound("StarGet", audio->SoundLoadWave("Resources/Sound/starGet.wav"));
-	resourceManager->AddSound("Step", audio->SoundLoadWave("Resources/Sound/stepSound.wav"));
+	resourceManager->AddSound("Walk", audio->SoundLoadWave("Resources/Sound/stepSound.wav"));
+	resourceManager->AddSound("Landing", audio->SoundLoadWave("Resources/Sound/landing.wav"));
 
 	// トランジション用初期化
 	auto trans = Transition::GetInstance();

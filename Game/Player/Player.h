@@ -13,6 +13,7 @@
 
 class Player : public GameObject {
 public:
+
     // 初期化処理
     void Initialize();
     // 更新処理
@@ -71,6 +72,11 @@ private: // メンバ変数
 
     std::shared_ptr<CircleShadow> circleShadow_;
     Vector3 shadowOffset_;
+
+    size_t walkSoundHandle_;
+    size_t walkPlayHandle_;
+    size_t jumpSoundHandle_;
+    size_t landingSoundHandle_;
 
 private: // メンバ関数
     // 座標更新

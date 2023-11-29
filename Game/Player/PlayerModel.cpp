@@ -157,7 +157,7 @@ void PlayerModel::WaitAnimationStep() {
 }
 
 void PlayerModel::WalkAnimationStep() {
-    static const uint32_t kCycle = 90;
+    static const uint32_t kCycle = 120;
 
     animationParameter_ += 1.0f / kCycle;
     if (animationParameter_ >= 1.0f) {
