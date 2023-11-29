@@ -14,8 +14,8 @@
 
 void GamePause::Initialize() {
 	
-	textureParam_[StageSelect] = { "StageSelect",{900.0f,256.0f},0.0f,{425.0f,73.0f},2u,Vector4::one,true };
-	textureParam_[Restart] = { "Restart",{900.0f,256.0f},0.0f,{325.0f,175.0f},2u,Vector4::one,true };
+	textureParam_[StageSelect] = { "StageSelect",{900.0f,256.0f},0.0f,{425.0f,73.0f},2u,Vector4(0.02f,0.63f,0.01f,1.0f),true };
+	textureParam_[Restart] = { "Restart",{900.0f,256.0f},0.0f,{325.0f,175.0f},2u,Vector4(0.02f,0.63f,0.01f,1.0f),true };
 	textureParam_[Pose] = { "Pose",{900.0f,256.0f},0.0f,{645.0f,623.0f},2u,Vector4::one,true };
 	textureParam_[Controller] = { "Controller",{525.0f,290.0f},0.0f,{1020.0f,110.0f},2u,Vector4::one,true };
 	textureParam_[BackGround] = { "BackGround",{1280.0f,720.0f},0.0f,{640.0f,360.0f},1u,Color::Convert(0xffffffaa),true };
@@ -41,6 +41,8 @@ void GamePause::Initialize() {
 	easeTime_ = 0.0f;
 
 	changeFlag_ = false;
+
+	noSelectColor_ = Vector4(0.42f, 0.44f, 0.45f, 1.0f);
 
 }
 
@@ -131,15 +133,15 @@ void GamePause::SelectUpdate() {
 		float T = Easing::EaseOutQuart(easeTime_);
 
 		if (isSelected_) {
-			textureParam_[Restart].color_ = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
-			textureParam_[StageSelect].color_ = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+			textureParam_[Restart].color_ = noSelectColor_;
+			textureParam_[StageSelect].color_ = Vector4(0.02f, 0.63f, 0.01f, 1.0f);
 
 			textureParam_[Restart].scale_ = Vector2(900.0f, 256.0f);
 			textureParam_[StageSelect].scale_ = Vector2::Slerp(T, Vector2(900.0f, 256.0f), Vector2(1000.0f, 300.0f));
 		}
 		else {
-			textureParam_[Restart].color_ = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-			textureParam_[StageSelect].color_ = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
+			textureParam_[Restart].color_ = Vector4(0.02f, 0.63f, 0.01f, 1.0f);
+			textureParam_[StageSelect].color_ = noSelectColor_;
 
 			textureParam_[Restart].scale_ = Vector2::Slerp(T, Vector2(900.0f, 256.0f), Vector2(1000.0f, 300.0f));
 			textureParam_[StageSelect].scale_ = Vector2(900.0f, 256.0f);
