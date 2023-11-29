@@ -8,6 +8,7 @@
 #include "Audio/Audio.h"
 #include "Graphics/ImGuiManager.h"
 #include "CollisionConfig.h"
+#include "Stage/Stage.h"
 
 Player::~Player() {
     if (walkPlayHandle_ != (size_t)-1) {
@@ -356,9 +357,11 @@ void Player::OnCollision(const CollisionInfo& collisionInfo) {
     }
 
     if (collisionInfo.collider->GetName() == "Goal") {
-        isCleared_ = true;
-        if (walkPlayHandle_ != (size_t)-1) {
-            Audio::GetInstance()->SoundPlayLoopEnd(walkPlayHandle_);
+        if (Stage::ItemCount_ == 0) {
+            isCleared_ = true;
+            if (walkPlayHandle_ != (size_t)-1) {
+                Audio::GetInstance()->SoundPlayLoopEnd(walkPlayHandle_);
+            }
         }
     }
 

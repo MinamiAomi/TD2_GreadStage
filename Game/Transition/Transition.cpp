@@ -10,7 +10,7 @@ void Transition::Initialize() {
 	number = 1;
 	isTransition_ = true;
 	scale_ = Vector2::zero;
-	fadeSpeed_ = Vector2(10.0f, 10.0f);
+	fadeSpeed_ = Vector2(20.0f, 20.0f);
 
 	texture_ = std::make_unique<Sprite>();
 	texture_->SetTexture(ResourceManager::GetInstance()->FindTexture("Block"));
@@ -20,7 +20,7 @@ void Transition::Initialize() {
 	texture_->SetScale(scale_);
   
 	texture_->SetPosition(Vector2(640.0f, 360.0f));
-	texture_->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+	texture_->SetColor(Vector4(0.0f, 0.0f, 0.0f, 1.0f));
 }
 
 bool Transition::Update() {

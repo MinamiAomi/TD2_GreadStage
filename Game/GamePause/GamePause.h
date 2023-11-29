@@ -13,7 +13,6 @@ public:
 
 private:
 	std::vector<std::unique_ptr<Sprite>> texture_;
-	const uint32_t kMaxTextures_ = 5;
 	struct TextureParam {
 		std::string name_;
 		Vector2 scale_;
@@ -23,14 +22,20 @@ private:
 		Vector4 color_;
 		bool isActive_;
 	};
-	TextureParam textureParam_[5];
 	enum TextureName {
-		StageSelect,
+		StageSelect = 0,
 		Restart,
 		Pose,
 		Controller,
 		BackGround,
+		Frame,
+		Moon1,
+		Moon2,
+		Moon3,
+
+		MaxTexture,
 	};
+	TextureParam textureParam_[TextureName::MaxTexture];
 
 	bool isSelected_ = false; // true : ステージセレクトへ / false : リスタート
 	bool preIsSelected_ = false;

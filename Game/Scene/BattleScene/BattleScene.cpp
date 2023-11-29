@@ -59,10 +59,13 @@ void BattleScene::OnFinalize() {
 }
 
 void BattleScene::NormalUpdate() {
+	auto trans = Transition::GetInstance();
 	pause_->SetDraw(false);
 
 	stage_->Update();
-	player_->Update();
+	if (!trans->GetIsTransition()) {
+		player_->Update();
+	}
 
 	player_->PreCollisionUpdate();
 	CollisionManager::GetInstance()->CheckCollision();
@@ -95,7 +98,6 @@ void BattleScene::NormalUpdate() {
 	if (player_->GetCleared()) {
 		Transition::GetInstance()->SetComeToStage();
 	}
-	auto trans = Transition::GetInstance();
 	if (trans->Update()) {
 		// シーンのシングルトンの取得
 		SceneManager* sceneManager = SceneManager::GetInstance();

@@ -10,6 +10,8 @@
 #include "Scene/TitleScene/TitleScene.h"
 #include "Scene/BattleScene/BattleScene.h"
 
+#include "Stage/Stage.h"
+
 void GamePause::Initialize() {
 	
 	textureParam_[StageSelect] = { "StageSelect",{900.0f,256.0f},0.0f,{425.0f,73.0f},2u,Vector4::one,true };
@@ -17,8 +19,12 @@ void GamePause::Initialize() {
 	textureParam_[Pose] = { "Pose",{900.0f,256.0f},0.0f,{645.0f,623.0f},2u,Vector4::one,true };
 	textureParam_[Controller] = { "Controller",{525.0f,290.0f},0.0f,{1020.0f,110.0f},2u,Vector4::one,true };
 	textureParam_[BackGround] = { "BackGround",{1280.0f,720.0f},0.0f,{640.0f,360.0f},1u,Color::Convert(0xffffffaa),true };
+	textureParam_[Frame] = { "Frame",{570.0f,170.0f},0.0f,{647.0f,390.0f},1u,Vector4::one,true };
+	textureParam_[Moon1] = { "Moon",{160.0f,160.0f},0.0f,{502.0f,390.0f},1u,Vector4::one,false };
+	textureParam_[Moon2] = { "Moon",{160.0f,160.0f},0.0f,{675.0f,390.0f},1u,Vector4::one,false };
+	textureParam_[Moon3] = { "Moon",{160.0f,160.0f},0.0f,{848.0f,390.0f},1u,Vector4::one,false };
 
-	for (uint32_t index = 0; index < kMaxTextures_; index++) {
+	for (uint32_t index = 0; index < TextureName::MaxTexture; index++) {
 		auto& sprite = texture_.emplace_back(std::make_unique<Sprite>());
 		sprite->SetTexture(ResourceManager::GetInstance()->FindTexture(textureParam_[index].name_));
 		sprite->SetTexcoordRect({ 0.0f,0.0f }, { sprite->GetTexture()->GetWidth(), sprite->GetTexture()->GetHeight() });
@@ -41,35 +47,43 @@ void GamePause::Initialize() {
 void GamePause::Update() {
 #ifdef _DEBUG
 	ImGui::Begin("GamePose");
+	int i = 0;
 	for (auto& param : textureParam_) {
+		if (ImGui::TreeNode(std::string(param.name_ + std::to_string(i)).c_str())) {
 			ImGui::DragFloat2("pos", &param.position_.x);
-		if (ImGui::TreeNode(std::string(param.name_).c_str())) {
 			ImGui::DragFloat2("scale", &param.scale_.x);
 			ImGui::TreePop();
-		}
+		}i++;
 	}
 	ImGui::End();
 #endif // _DEBUG
 
+	SetDraw(true);
+
 	SelectUpdate();
+
+	for (uint32_t index = 0; index < Stage::ItemCount_; index++) {
+		textureParam_[Moon3 - index].isActive_ = false;
+	}
 
 	TextureUpdate();
 }
 
 void GamePause::SetDraw(const bool& flag) {
-	for (uint32_t i = 0; i < kMaxTextures_; i++) {
+	for (uint32_t i = 0; i < TextureName::MaxTexture; i++) {
+		textureParam_[i].isActive_ = flag;
 		texture_[i]->SetIsActive(flag);
 	}
 }
 
 void GamePause::TextureUpdate() {
-	for (uint32_t i = 0; i < kMaxTextures_; i++) {
+	for (uint32_t i = 0; i < TextureName::MaxTexture; i++) {
 		texture_[i]->SetScale(textureParam_[i].scale_);
 		texture_[i]->SetRotate(textureParam_[i].rotate_);
 		texture_[i]->SetPosition(textureParam_[i].position_);
 		texture_[i]->SetColor(textureParam_[i].color_);
+		texture_[i]->SetIsActive(textureParam_[i].isActive_);
 	}
-	SetDraw(true);
 }
 
 void GamePause::SelectUpdate() {

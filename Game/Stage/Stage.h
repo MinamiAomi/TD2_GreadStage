@@ -41,6 +41,8 @@ public:
 
     void SetPlayerPtr(std::shared_ptr<Player> player) { player_ = player; }
 
+    static uint32_t ItemCount_;
+
 private:
     static const unsigned int kStageCount_ = 8u;
     static const uint32_t kNumLights = 4;

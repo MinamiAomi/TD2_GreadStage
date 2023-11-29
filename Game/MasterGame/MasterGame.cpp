@@ -142,6 +142,18 @@ void MasterGame::OnInitialize() {
 	texture->Load("Resources/Model/StartWell/board6.png");
 	resourceManager->AddTexture("Board6", texture);
 
+	texture = std::make_shared<Texture>();
+	texture->Load("Resources/Texture/Pause/pose_backGround.png");
+	resourceManager->AddTexture("BackGround", texture);
+
+	texture = std::make_shared<Texture>();
+	texture->Load("Resources/Texture/Pause/waku.png");
+	resourceManager->AddTexture("Frame", texture);
+
+	texture = std::make_shared<Texture>();
+	texture->Load("Resources/Texture/Pause/moon.png");
+	resourceManager->AddTexture("Moon", texture);
+
 	resourceManager->AddSound("BGM", audio->SoundLoadWave("Resources/Sound/bgm.wav"));
 	resourceManager->AddSound("GravityChange", audio->SoundLoadWave("Resources/Sound/gravityChange.wav"));
 	resourceManager->AddSound("Jump", audio->SoundLoadWave("Resources/Sound/jump.wav"));

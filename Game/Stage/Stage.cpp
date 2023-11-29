@@ -7,6 +7,8 @@
 #include "Graphics/ResourceManager.h"
 #include "Graphics/ImGuiManager.h"
 
+decltype(Stage::ItemCount_) Stage::ItemCount_ = 3u;
+
 Stage::~Stage() {
     Audio::GetInstance()->SoundPlayLoopEnd(bgmPlayHandle_);
 }
@@ -62,6 +64,8 @@ void Stage::Update() {
         });
 
     goal_->Update();
+
+    ItemCount_ = static_cast<uint32_t>(items_.size());
 
     player_->SimpleUpdate();
 
