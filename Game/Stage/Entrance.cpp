@@ -59,13 +59,7 @@ void Entrance::Update() {
 
 void Entrance::OnCollision(const CollisionInfo& collisionInfo) {
     if (collisionInfo.collider->GetName() == "Player") {
-        auto input = Input::GetInstance();
-        auto& xInput = input->GetXInputState();
-        auto& preXInput = input->GetPreXInputState();
-        if (input->IsKeyTrigger(DIK_M)
-            || (xInput.Gamepad.wButtons & XINPUT_GAMEPAD_A && preXInput.Gamepad.wButtons & XINPUT_GAMEPAD_A)) {
-            Transition::GetInstance()->SetComeToStage(stageNumber_);
-        }
+        Transition::GetInstance()->SetComeToStage(stageNumber_);
     }
 }
 
