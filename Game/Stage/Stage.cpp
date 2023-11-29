@@ -196,6 +196,9 @@ void Stage::Load(const std::filesystem::path& loadFile) {
     player_->transform.rotate = global->GetQuaternionValue(selectName, "Player : Rotate");
     player_->SetRespawnRot(player_->transform.rotate);
 
+    if (collects_.empty()) {
+        numMaxCollects_ = 1;
+    }
 }
 
 void Stage::StageSelectload(const std::filesystem::path& loadFile) {
@@ -219,6 +222,7 @@ void Stage::StageSelectload(const std::filesystem::path& loadFile) {
             box->SetTexture(ResourceManager::GetInstance()->FindTexture(texture));
         }
     }
+    collects_.clear();
     numMaxCollects_ = 1;
 }
 
