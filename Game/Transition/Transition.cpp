@@ -15,7 +15,7 @@ void Transition::Initialize() {
 	texture_ = std::make_unique<Sprite>();
 	texture_->SetTexture(ResourceManager::GetInstance()->FindTexture("Block"));
 	texture_->SetIsActive(true);
-	texture_->SetDrawOrder(1);
+	texture_->SetDrawOrder(10);
 
 	texture_->SetScale(scale_);
   

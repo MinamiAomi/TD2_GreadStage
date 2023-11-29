@@ -14,11 +14,13 @@ void BattleScene::OnInitialize() {
 	player_ = std::make_shared<Player>();
 	camera_ = std::make_shared<CameraAnimation>();
 	stage_ = std::make_shared<Stage>();
+	pause_ = std::make_unique<GamePause>();
 
 	// 初期化
 	player_->Initialize();
 	camera_->Initialize();
 	stage_->Initialize();
+	pause_->Initialize();
 
 	// セット
 	stage_->SetPlayerPtr(player_);
@@ -49,6 +51,8 @@ void BattleScene::OnFinalize() {
 }
 
 void BattleScene::NormalUpdate() {
+	pause_->SetDraw(false);
+
 	stage_->Update();
 	player_->Update();
 
@@ -93,5 +97,5 @@ void BattleScene::NormalUpdate() {
 }
 
 void BattleScene::PauseUpdate() {
-
+	pause_->Update();
 }
