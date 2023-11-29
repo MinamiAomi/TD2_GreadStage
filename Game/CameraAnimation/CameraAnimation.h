@@ -4,6 +4,7 @@
 #include "Math/Camera.h"
 #include "Math/Transform.h"
 #include <memory>
+#include <optional>
 
 class CameraAnimation :
     public GameObject {
@@ -62,14 +63,43 @@ private: //	メンバ変数
     bool isStageMove_ = false;
 
     // イージング用
-    Vector3 startPos_;
-    Vector3 endPos_;
-    Vector2 startAngle_;
-    Vector2 endAngle_;
+
+    struct Set {
+        Vector3 pos;
+        Vector2 angle;
+        float speed;
+    };
+public:
+    struct EaseParameter {
+        Set first;
+        Set second;
+        Set third;
+        Set fourth;
+        Set fifth;
+    };
+private:
+    EaseParameter easeParameter_;
+    enum class Fase {
+        First,
+        Second,
+        Third,
+        Fourth,
+        Fifth
+    };
+    Fase nowFase_ = Fase::First;
+    //	次の振る舞いリクエスト
+    std::optional<Fase> behaviorRequest_ = Fase::First;
+
+    Set easeStart_;
+    Set easeEnd_;
+    
     float easeCount_ = 0.0f;
-    void EaseUpdate();
+    float easeSpeed_ = 0.0f;
+    bool EaseUpdate();
 
 public:
+    void SetEaseParameter(const EaseParameter& param) { easeParameter_ = param; }
+    bool GetStageMove() const { return isStageMove_; }
     static bool nowTitle_;
 
 };

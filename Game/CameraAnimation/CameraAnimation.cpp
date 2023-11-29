@@ -39,14 +39,13 @@ void CameraAnimation::Initialize() {
     upDown.x = -70.0f;
     upDown.y = 70.0f;
 
-    isStageMove_ = false;
+    isStageMove_ = true;
 }
 
 void CameraAnimation::Update() {
-    //DrawImGui();
-
+    
     isStageMove_ ? StageMoveUpdate() : NormalUpdate();
-
+    
     TransUpdate();
 }
 
@@ -57,9 +56,9 @@ void CameraAnimation::Restart() {
 void CameraAnimation::DrawImGui() {
 #ifdef _DEBUG
     ImGui::Begin("camera");
-    ImGui::DragFloat3("Position", &transform.translate.x, 0.01f);
-    ImGui::DragFloat2("rotate", &angles_.x, 0.1f, -360.0f, 360.0f);
-    transform.rotate = Quaternion::MakeFromEulerAngle(Vector3(angles_.x, angles_.y, 0.0f) * Math::ToRadian);
+    ImGui::DragFloat3("Position", &offset_.x, 0.1f);
+    //ImGui::DragFloat2("rotate", &angles_.x, 0.1f, -360.0f, 360.0f);
+    //transform.rotate = Quaternion::MakeFromEulerAngle(Vector3(angles_.x, angles_.y, 0.0f) * Math::ToRadian);
     ImGui::DragFloat2("Limit Down:Up", &upDown.x, 0.01f);
     ImGui::End();
 #endif // _DEBUG
@@ -135,11 +134,6 @@ void CameraAnimation::NormalUpdate() {
     }
 }
 
-void CameraAnimation::StageMoveUpdate() {
-    
-
-}
-
 void CameraAnimation::TitleUpdate() {
     
     static bool flag = false;
@@ -178,10 +172,93 @@ void CameraAnimation::SetCamera() {
     RenderManager::GetInstance()->SetCamera(camera_);
 }
 
-void CameraAnimation::EaseUpdate() {
+bool CameraAnimation::EaseUpdate() {
     easeCount_ = std::clamp(easeCount_, 0.0f, 1.0f);
-    float T = Easing::EaseInSine(easeCount_);
-    transform.translate = Vector3::Lerp(T, startPos_, endPos_);
-    angles_ = Vector2::Lerp(T, startAngle_, endAngle_);
+    //float T = Easing::EaseOutExpo(easeCount_);
+    float T = easeCount_;
+    transform.translate = Vector3::Lerp(T, easeStart_.pos, easeEnd_.pos);
+    angles_ = Vector2::Lerp(T, easeStart_.angle, easeEnd_.angle);
     transform.rotate = Quaternion::MakeFromEulerAngle(Vector3(angles_.x, angles_.y, 0.0f) * Math::ToRadian);
+    if (easeCount_ >= 1.0f) {
+        return true;
+    }
+    easeCount_ += easeSpeed_;
+    return false;
 }
+
+void CameraAnimation::StageMoveUpdate() {
+    
+    auto& ease = easeParameter_;
+    // 初期化段階
+    if (behaviorRequest_) {
+        nowFase_ = behaviorRequest_.value();
+        easeCount_ = 0.0f;
+        switch (nowFase_) {
+        case CameraAnimation::Fase::First:
+            easeStart_.pos = ease.first.pos;
+            easeStart_.angle = ease.first.angle;
+            easeEnd_.pos = ease.second.pos;
+            easeEnd_.angle = ease.second.angle;
+            easeSpeed_ = ease.first.speed;
+            break;
+        case CameraAnimation::Fase::Second:
+            easeStart_.pos = ease.second.pos;
+            easeStart_.angle = ease.second.angle;
+            easeEnd_.pos = ease.third.pos;
+            easeEnd_.angle = ease.third.angle;
+            easeSpeed_ = ease.second.speed;
+            break;
+        case CameraAnimation::Fase::Third:
+            easeStart_.pos = ease.third.pos;
+            easeStart_.angle = ease.third.angle;
+            easeEnd_.pos = ease.fourth.pos;
+            easeEnd_.angle = ease.fourth.angle;
+            easeSpeed_ = ease.third.speed;
+            break;
+        case CameraAnimation::Fase::Fourth:
+            easeStart_.pos = ease.fourth.pos;
+            easeStart_.angle = ease.fourth.angle;
+            easeEnd_.pos = ease.fifth.pos;
+            easeEnd_.angle = ease.fifth.angle;
+            easeSpeed_ = ease.fourth.speed;
+            break;
+        case CameraAnimation::Fase::Fifth:
+            break;
+        }
+        behaviorRequest_ = std::nullopt;
+    }
+
+    // 更新
+    switch (nowFase_) {
+    case CameraAnimation::Fase::First:
+    default:
+        if (EaseUpdate()) {
+            behaviorRequest_ = CameraAnimation::Fase::Second;
+        }
+        break;
+    case CameraAnimation::Fase::Second:
+        if (EaseUpdate()) {
+            behaviorRequest_ = CameraAnimation::Fase::Third;
+        }
+        break;
+    case CameraAnimation::Fase::Third:
+        if (EaseUpdate()) {
+            behaviorRequest_ = CameraAnimation::Fase::Fourth;
+        }
+        break;
+    case CameraAnimation::Fase::Fourth:
+        if (EaseUpdate()) {
+            behaviorRequest_ = CameraAnimation::Fase::Fifth;
+        }
+        break;
+    case CameraAnimation::Fase::Fifth:
+        angles_ = Vector2::zero;
+        isStageMove_ = false;
+        lastTargetPosition_ = transform.translate;
+        break;
+    }
+
+}
+
+
+
