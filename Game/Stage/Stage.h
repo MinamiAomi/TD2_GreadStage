@@ -47,6 +47,7 @@ private:
     static const unsigned int kStageCount_ = 8u;
     static const uint32_t kNumLights = 4;
 
+    ModelInstance model_;
     std::vector<std::shared_ptr<Box>> boxes_;
     std::vector<std::shared_ptr<RequiredItem>> items_;
     std::vector<std::shared_ptr<CollectionObject>> collects_;

@@ -193,6 +193,9 @@ void Stage::Load(const std::filesystem::path& loadFile) {
     player_->SetRespawnPos(player_->transform.translate);
     player_->transform.rotate = global->GetQuaternionValue(selectName, "Player : Rotate");
     player_->SetRespawnRot(player_->transform.rotate);
+
+
+    //model_.SetModel(ResourceManager::GetInstance()->FindModel("Stage"));
 }
 
 void Stage::StageSelectload(const std::filesystem::path& loadFile) {
