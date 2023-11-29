@@ -35,6 +35,8 @@ public:
 	Quaternion GetQuaternionValue(const std::string& groupName, const std::string& key) const;
 	std::string GetStringValue(const std::string& groupName, const std::string& key) const;
 
+	bool HasValue(const std::string& groupName, const std::string& key) const;
+
 	void SaveFile(const std::string& groupName);
 
 	void LoadFiles();

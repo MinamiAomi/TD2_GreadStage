@@ -31,6 +31,10 @@ void Box::Update() {
     model_->SetWorldMatrix(transform.worldMatrix);
 }
 
+void Box::SetTexture(const std::shared_ptr<Texture>& texture) {
+    model_->SetCoverTexture(texture);
+}
+
 void Box::DrawImGui() {
 #ifdef _DEBUG
 

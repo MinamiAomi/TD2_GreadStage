@@ -154,6 +154,8 @@ void MasterGame::OnInitialize() {
 	texture->Load("Resources/Texture/Pause/moon.png");
 	resourceManager->AddTexture("Moon", texture);
 
+
+
 	resourceManager->AddSound("BGM", audio->SoundLoadWave("Resources/Sound/bgm.wav"));
 	resourceManager->AddSound("GravityChange", audio->SoundLoadWave("Resources/Sound/gravityChange.wav"));
 	resourceManager->AddSound("Jump", audio->SoundLoadWave("Resources/Sound/jump.wav"));

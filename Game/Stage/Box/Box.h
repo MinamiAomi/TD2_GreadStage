@@ -14,6 +14,8 @@ public:
     void Initialize();
     void Update();
 
+    void SetTexture(const std::shared_ptr<Texture>& texture);
+
     void DrawImGui();
 
 private:

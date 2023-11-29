@@ -276,6 +276,12 @@ std::string GlobalVariables::GetStringValue(const std::string& groupName, const 
 	return std::get<std::string>(group.find(key)->second);
 }
 
+bool GlobalVariables::HasValue(const std::string& groupName, const std::string& key) const {
+	assert(datas_.find(groupName) != datas_.end());
+	const Group& group = datas_.at(groupName);
+	return group.find(key) != group.end();
+}
+
 void GlobalVariables::SaveFile(const std::string& groupName) {
 
 	std::map<std::string, Group>::iterator itGroup = datas_.find(groupName);

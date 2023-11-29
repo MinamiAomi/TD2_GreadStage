@@ -140,6 +140,10 @@ void Stage::Load(const std::filesystem::path& loadFile) {
         box->transform.rotate = rot;
         box->transform.scale = scal;
         box->Initialize();
+        std::string texture = global->GetStringValue(selectName, "BoxNumber : " + std::to_string(i) + " : Texture");
+        if (!texture.empty()) {
+            box->SetTexture(ResourceManager::GetInstance()->FindTexture(texture));
+        }
     }
 
     num = global->GetIntValue(selectName, "ItemConfirmation");
@@ -207,5 +211,9 @@ void Stage::StageSelectload(const std::filesystem::path& loadFile) {
         box->transform.rotate = rot;
         box->transform.scale = scal;
         box->Initialize();
+        std::string texture = global->GetStringValue(selectName, "BoxNumber : " + std::to_string(i) + " : Texture");
+        if (!texture.empty()) {
+            box->SetTexture(ResourceManager::GetInstance()->FindTexture(texture));
+        }
     }
 }
