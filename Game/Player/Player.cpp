@@ -409,6 +409,7 @@ void Player::PlayerReset() {
     transform.translate = respawnPos_;
     transform.rotate = respawnRot_;
     jumpParameters_.fallSpeed = 0.0f;
+    playerModel_.PlayAnimation(PlayerModel::kWait, true);
     if (walkPlayHandle_ != (size_t)-1) {
         Audio::GetInstance()->SoundPlayLoopEnd(walkPlayHandle_);
         walkPlayHandle_ = (size_t)-1;

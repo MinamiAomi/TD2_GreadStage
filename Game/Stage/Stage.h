@@ -57,5 +57,6 @@ private:
     std::shared_ptr<Player> player_;
     std::shared_ptr<StarrySky> starrySky_;
     std::vector<std::shared_ptr<DirectionalLight>> lights_;
+    size_t numMaxCollects_;
     size_t bgmPlayHandle_;
 };

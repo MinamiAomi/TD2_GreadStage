@@ -72,19 +72,20 @@ void Stage::Update() {
 #ifdef _DEBUG
 
 
-    static float volume = 0.5f;
-    static float knee = 0.3f;
-    static float threshold = 1.0f;
-    ImGui::DragFloat("volume", &volume, 0.01f, 0.0f, 1.0f);
-    ImGui::DragFloat("knee", &knee, 0.01f, 0.0f, 1.0f);
-    ImGui::DragFloat("threshold", &threshold, 0.01f, 0.0f, 1.0f);
-    starrySky_->SetVolume(volume);
-    RenderManager::GetInstance()->GetBloom().SetKnee(knee);
-    RenderManager::GetInstance()->GetBloom().SetThreshold(threshold);
+    //static float volume = 0.5f;
+    //static float knee = 0.3f;
+    //static float threshold = 1.0f;
+    //ImGui::DragFloat("volume", &volume, 0.01f, 0.0f, 1.0f);
+    //ImGui::DragFloat("knee", &knee, 0.01f, 0.0f, 1.0f);
+    //ImGui::DragFloat("threshold", &threshold, 0.01f, 0.0f, 1.0f);
+    //starrySky_->SetVolume(volume);
+    //RenderManager::GetInstance()->GetBloom().SetKnee(knee);
+    //RenderManager::GetInstance()->GetBloom().SetThreshold(threshold);
 
 
 #endif // DEBUG
 
+    starrySky_->SetVolume(1.0f - float(collects_.size()) / numMaxCollects_);
     starrySky_->Update();
 
 }
@@ -171,6 +172,7 @@ void Stage::Load(const std::filesystem::path& loadFile) {
         collect->transform.scale = scal;
         collect->Initialize();
     }
+    numMaxCollects_ = size_t(collects_.size());
 
     num = global->GetIntValue(selectName, "StageConfirmation");
     entrances_.clear(); // 要素の全削除
@@ -217,6 +219,7 @@ void Stage::StageSelectload(const std::filesystem::path& loadFile) {
             box->SetTexture(ResourceManager::GetInstance()->FindTexture(texture));
         }
     }
+    numMaxCollects_ = 1;
 }
 
 void Stage::SetModel(const std::string& name) {
