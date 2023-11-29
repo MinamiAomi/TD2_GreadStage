@@ -7,6 +7,8 @@
 #include "Transition/Transition.h"
 #include <algorithm>
 
+#include "Graphics/ImGuiManager.h"
+
 decltype(TitleScene::leavingTime_) TitleScene::leavingTime_ = 300u;
 
 void TitleScene::OnInitialize() {
@@ -32,6 +34,12 @@ void TitleScene::OnInitialize() {
 }
 
 void TitleScene::OnUpdate() {
+#ifdef _DEBUG
+	//	ImGui のフレームに一つ目の ImGui のウィンドウを描く
+	ImGui::Begin("Control panel");
+	ImGui::Text("Frame rate: %6.2f fps", ImGui::GetIO().Framerate);
+	ImGui::End();
+#endif // _DEBUG
 
 	CheckInput() ? leavingTime_ = 0u : leavingTime_++;
 	
