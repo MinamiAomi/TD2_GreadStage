@@ -43,6 +43,8 @@ private:
 	float easeTime_ = 0.0f;
 	bool changeFlag_ = false;
 
+	Vector4 noSelectColor_;
+
 private:
 	void TextureUpdate();
 	void SelectUpdate();
