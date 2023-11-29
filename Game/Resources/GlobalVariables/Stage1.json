@@ -26,12 +26,12 @@
           "BoxNumber : 1 : Scale": [
                15.0,
                5.0,
-               15.0
+               20.0
           ],
           "BoxNumber : 1 : Translate": [
                0.0,
-               -15.0,
-               17.5
+               -18.0,
+               15.0
           ],
           "BoxNumber : 2 : Rotate": [
                0.0,
@@ -49,7 +49,7 @@
                0.0,
                2.5
           ],
-          "CollectConfirmation": 34,
+          "CollectConfirmation": 36,
           "CollectNumber : 0 : Rotate": [
                0.0,
                0.0,
@@ -463,7 +463,7 @@
           ],
           "CollectNumber : 31 : Translate": [
                0.0,
-               -11.5,
+               -13.0,
                11.5
           ],
           "CollectNumber : 32 : Rotate": [
@@ -479,7 +479,7 @@
           ],
           "CollectNumber : 32 : Translate": [
                0.0,
-               -11.5,
+               -15.0,
                15.0
           ],
           "CollectNumber : 33 : Rotate": [
@@ -497,6 +497,38 @@
                0.0,
                3.0,
                -3.0
+          ],
+          "CollectNumber : 34 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "CollectNumber : 34 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "CollectNumber : 34 : Translate": [
+               0.0,
+               0.0,
+               -8.0
+          ],
+          "CollectNumber : 35 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "CollectNumber : 35 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "CollectNumber : 35 : Translate": [
+               0.0,
+               -11.0,
+               0.0
           ],
           "CollectNumber : 4 : Rotate": [
                0.0,
@@ -607,7 +639,7 @@
           ],
           "Goal : Translate": [
                0.0,
-               -12.300000190734863,
+               -15.300000190734863,
                20.0
           ],
           "ItemConfirmation": 3,
@@ -666,9 +698,9 @@
                1.0
           ],
           "Player : Translate": [
-               0.0,
-               -1.1548399925231934e-07,
-               -5.0
+               0.07109393924474716,
+               -1.7881393432617188e-07,
+               -6.119571208953857
           ],
           "StageConfirmation": 0
      }

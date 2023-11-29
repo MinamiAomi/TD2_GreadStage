@@ -89,7 +89,7 @@
           ],
           "BoxNumber : 5 : Scale": [
                12.0,
-               7.0,
+               9.0,
                10.0
           ],
           "BoxNumber : 5 : Translate": [
@@ -304,7 +304,7 @@
           "CollectNumber : 2 : Translate": [
                0.0,
                5.0,
-               0.0
+               37.0
           ],
           "CollectNumber : 20 : Rotate": [
                0.0,
@@ -552,12 +552,17 @@
                0.0,
                1.0
           ],
+          "Goal : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
           "Goal : Translate": [
                0.0,
                9.600000381469727,
-               49.0
+               47.0
           ],
-          "ItemConfirmation": 2,
+          "ItemConfirmation": 3,
           "ItemNumber : 0 : Rotate": [
                0.0,
                0.0,
@@ -589,6 +594,22 @@
                0.0,
                7.5,
                20.0
+          ],
+          "ItemNumber : 2 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "ItemNumber : 2 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "ItemNumber : 2 : Translate": [
+               0.0,
+               7.5,
+               37.0
           ],
           "Player : Rotate": [
                0.0,

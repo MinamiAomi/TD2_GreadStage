@@ -81,19 +81,472 @@
                -11.300000190734863,
                14.0
           ],
-          "CollectConfirmation": 0,
-          "Goal : Rotate": [
+          "CollectConfirmation": 25,
+          "CollectNumber : 0 : Rotate": [
                0.0,
                0.0,
                0.0,
                1.0
           ],
+          "CollectNumber : 0 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "CollectNumber : 0 : Translate": [
+               0.0,
+               5.0,
+               2.0
+          ],
+          "CollectNumber : 1 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "CollectNumber : 1 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "CollectNumber : 1 : Translate": [
+               0.0,
+               4.0,
+               5.0
+          ],
+          "CollectNumber : 10 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "CollectNumber : 10 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "CollectNumber : 10 : Translate": [
+               0.0,
+               8.5,
+               10.0
+          ],
+          "CollectNumber : 11 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "CollectNumber : 11 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "CollectNumber : 11 : Translate": [
+               0.0,
+               3.5,
+               10.0
+          ],
+          "CollectNumber : 12 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "CollectNumber : 12 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "CollectNumber : 12 : Translate": [
+               0.0,
+               8.5,
+               24.0
+          ],
+          "CollectNumber : 13 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "CollectNumber : 13 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "CollectNumber : 13 : Translate": [
+               0.0,
+               6.0,
+               24.0
+          ],
+          "CollectNumber : 14 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "CollectNumber : 14 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "CollectNumber : 14 : Translate": [
+               0.0,
+               3.5,
+               24.0
+          ],
+          "CollectNumber : 15 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "CollectNumber : 15 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "CollectNumber : 15 : Translate": [
+               -8.0,
+               -11.0,
+               0.0
+          ],
+          "CollectNumber : 16 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "CollectNumber : 16 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "CollectNumber : 16 : Translate": [
+               0.0,
+               0.0,
+               21.0
+          ],
+          "CollectNumber : 17 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "CollectNumber : 17 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "CollectNumber : 17 : Translate": [
+               0.0,
+               -4.0,
+               21.0
+          ],
+          "CollectNumber : 18 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "CollectNumber : 18 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "CollectNumber : 18 : Translate": [
+               0.0,
+               -9.5,
+               19.0
+          ],
+          "CollectNumber : 19 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "CollectNumber : 19 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "CollectNumber : 19 : Translate": [
+               0.0,
+               -13.5,
+               19.0
+          ],
+          "CollectNumber : 2 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "CollectNumber : 2 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "CollectNumber : 2 : Translate": [
+               0.0,
+               0.0,
+               5.0
+          ],
+          "CollectNumber : 20 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "CollectNumber : 20 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "CollectNumber : 20 : Translate": [
+               0.0,
+               -18.0,
+               5.0
+          ],
+          "CollectNumber : 21 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "CollectNumber : 21 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "CollectNumber : 21 : Translate": [
+               0.0,
+               -18.0,
+               -5.0
+          ],
+          "CollectNumber : 22 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "CollectNumber : 22 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "CollectNumber : 22 : Translate": [
+               5.0,
+               -18.0,
+               0.0
+          ],
+          "CollectNumber : 23 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "CollectNumber : 23 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "CollectNumber : 23 : Translate": [
+               -5.0,
+               -18.0,
+               0.0
+          ],
+          "CollectNumber : 24 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "CollectNumber : 24 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "CollectNumber : 24 : Translate": [
+               0.0,
+               -7.0,
+               14.0
+          ],
+          "CollectNumber : 3 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "CollectNumber : 3 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "CollectNumber : 3 : Translate": [
+               0.0,
+               -4.0,
+               5.0
+          ],
+          "CollectNumber : 4 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "CollectNumber : 4 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "CollectNumber : 4 : Translate": [
+               0.0,
+               -8.0,
+               5.0
+          ],
+          "CollectNumber : 5 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "CollectNumber : 5 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "CollectNumber : 5 : Translate": [
+               0.0,
+               6.0,
+               10.0
+          ],
+          "CollectNumber : 6 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "CollectNumber : 6 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "CollectNumber : 6 : Translate": [
+               -3.0,
+               -10.0,
+               0.0
+          ],
+          "CollectNumber : 7 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "CollectNumber : 7 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "CollectNumber : 7 : Translate": [
+               3.0,
+               -10.0,
+               0.0
+          ],
+          "CollectNumber : 8 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "CollectNumber : 8 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "CollectNumber : 8 : Translate": [
+               0.0,
+               -10.0,
+               3.0
+          ],
+          "CollectNumber : 9 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "CollectNumber : 9 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "CollectNumber : 9 : Translate": [
+               0.0,
+               -10.0,
+               -3.0
+          ],
+          "Goal : Rotate": [
+               -0.0,
+               0.0,
+               1.0,
+               -4.371138828673793e-08
+          ],
+          "Goal : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
           "Goal : Translate": [
                0.0,
-               2.5,
+               3.299999952316284,
                17.0
           ],
-          "ItemConfirmation": 0,
+          "ItemConfirmation": 3,
+          "ItemNumber : 0 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "ItemNumber : 0 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "ItemNumber : 0 : Translate": [
+               0.0,
+               11.5,
+               17.0
+          ],
+          "ItemNumber : 1 : Rotate": [
+               -0.7071067690849304,
+               0.0,
+               0.0,
+               0.7071067690849304
+          ],
+          "ItemNumber : 1 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "ItemNumber : 1 : Translate": [
+               0.0,
+               0.0,
+               -4.199999809265137
+          ],
+          "ItemNumber : 2 : Rotate": [
+               0.0,
+               0.0,
+               0.0,
+               1.0
+          ],
+          "ItemNumber : 2 : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
+          "ItemNumber : 2 : Translate": [
+               0.0,
+               -18.5,
+               0.0
+          ],
           "Player : Rotate": [
                0.0,
                0.0,

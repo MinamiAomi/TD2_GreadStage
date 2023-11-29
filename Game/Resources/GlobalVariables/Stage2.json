@@ -1,6 +1,6 @@
 {
      "Stage2": {
-          "BoxConfirmation": 3,
+          "BoxConfirmation": 2,
           "BoxNumber : 0 : Rotate": [
                0.0,
                0.0,
@@ -10,12 +10,12 @@
           "BoxNumber : 0 : Scale": [
                10.0,
                10.0,
-               10.0
+               15.0
           ],
           "BoxNumber : 0 : Translate": [
                0.0,
                -5.0,
-               0.0
+               15.0
           ],
           "BoxNumber : 1 : Rotate": [
                0.0,
@@ -26,12 +26,12 @@
           "BoxNumber : 1 : Scale": [
                10.0,
                10.0,
-               10.0
+               15.0
           ],
           "BoxNumber : 1 : Translate": [
                0.0,
                -10.0,
-               10.0
+               0.0
           ],
           "BoxNumber : 2 : Rotate": [
                0.0,
@@ -49,7 +49,7 @@
                -7.5,
                20.0
           ],
-          "CollectConfirmation": 26,
+          "CollectConfirmation": 23,
           "CollectNumber : 0 : Rotate": [
                0.0,
                0.0,
@@ -63,8 +63,8 @@
           ],
           "CollectNumber : 0 : Translate": [
                0.0,
-               -1.5,
-               17.0
+               -2.0,
+               0.0
           ],
           "CollectNumber : 1 : Rotate": [
                0.0,
@@ -79,8 +79,8 @@
           ],
           "CollectNumber : 1 : Translate": [
                0.0,
-               -1.5,
-               12.0
+               -2.0,
+               3.0
           ],
           "CollectNumber : 10 : Rotate": [
                0.0,
@@ -94,9 +94,9 @@
                1.0
           ],
           "CollectNumber : 10 : Translate": [
-               5.0,
-               -12.0,
-               10.0
+               0.0,
+               -15.5,
+               -6.0
           ],
           "CollectNumber : 11 : Rotate": [
                0.0,
@@ -110,9 +110,9 @@
                1.0
           ],
           "CollectNumber : 11 : Translate": [
-               5.0,
-               -12.0,
-               12.5
+               0.0,
+               -15.5,
+               0.0
           ],
           "CollectNumber : 12 : Rotate": [
                0.0,
@@ -126,9 +126,9 @@
                1.0
           ],
           "CollectNumber : 12 : Translate": [
-               5.0,
-               -12.0,
-               15.0
+               0.0,
+               -15.5,
+               6.0
           ],
           "CollectNumber : 13 : Rotate": [
                0.0,
@@ -143,8 +143,8 @@
           ],
           "CollectNumber : 13 : Translate": [
                0.0,
-               -12.0,
-               16.0
+               -18.0,
+               7.800000190734863
           ],
           "CollectNumber : 14 : Rotate": [
                0.0,
@@ -158,9 +158,9 @@
                1.0
           ],
           "CollectNumber : 14 : Translate": [
-               0.0,
-               -12.0,
-               18.0
+               6.0,
+               -10.0,
+               15.0
           ],
           "CollectNumber : 15 : Rotate": [
                0.0,
@@ -174,9 +174,9 @@
                1.0
           ],
           "CollectNumber : 15 : Translate": [
+               6.0,
                -5.0,
-               -7.0,
-               20.0
+               15.0
           ],
           "CollectNumber : 16 : Rotate": [
                0.0,
@@ -190,9 +190,9 @@
                1.0
           ],
           "CollectNumber : 16 : Translate": [
+               6.0,
                -5.0,
-               -7.0,
-               15.0
+               22.5
           ],
           "CollectNumber : 17 : Rotate": [
                0.0,
@@ -206,9 +206,9 @@
                1.0
           ],
           "CollectNumber : 17 : Translate": [
+               0.0,
                -5.0,
-               -7.0,
-               10.0
+               23.0
           ],
           "CollectNumber : 18 : Rotate": [
                0.0,
@@ -222,9 +222,9 @@
                1.0
           ],
           "CollectNumber : 18 : Translate": [
+               -6.0,
                -5.0,
-               -7.0,
-               5.0
+               22.5
           ],
           "CollectNumber : 19 : Rotate": [
                0.0,
@@ -238,9 +238,9 @@
                1.0
           ],
           "CollectNumber : 19 : Translate": [
+               -6.0,
                -5.0,
-               -10.0,
-               10.0
+               16.0
           ],
           "CollectNumber : 2 : Rotate": [
                0.0,
@@ -255,8 +255,8 @@
           ],
           "CollectNumber : 2 : Translate": [
                0.0,
-               -1.5,
-               7.5
+               -2.0,
+               -3.0
           ],
           "CollectNumber : 20 : Rotate": [
                0.0,
@@ -270,9 +270,9 @@
                1.0
           ],
           "CollectNumber : 20 : Translate": [
-               -5.0,
-               -13.0,
-               10.0
+               -6.0,
+               0.0,
+               16.0
           ],
           "CollectNumber : 21 : Rotate": [
                0.0,
@@ -286,9 +286,9 @@
                1.0
           ],
           "CollectNumber : 21 : Translate": [
-               -5.0,
-               -4.0,
-               0.0
+               0.0,
+               3.5,
+               9.0
           ],
           "CollectNumber : 22 : Rotate": [
                0.0,
@@ -303,8 +303,8 @@
           ],
           "CollectNumber : 22 : Translate": [
                0.0,
-               -11.0,
-               -2.0
+               1.0,
+               12.0
           ],
           "CollectNumber : 23 : Rotate": [
                0.0,
@@ -367,8 +367,8 @@
           ],
           "CollectNumber : 3 : Translate": [
                0.0,
-               0.0,
-               7.5
+               -2.0,
+               -6.0
           ],
           "CollectNumber : 4 : Rotate": [
                0.0,
@@ -383,8 +383,8 @@
           ],
           "CollectNumber : 4 : Translate": [
                0.0,
-               1.5,
-               7.5
+               -3.5,
+               -8.5
           ],
           "CollectNumber : 5 : Rotate": [
                0.0,
@@ -399,8 +399,8 @@
           ],
           "CollectNumber : 5 : Translate": [
                0.0,
-               3.0,
-               7.5
+               -2.0,
+               6.5
           ],
           "CollectNumber : 6 : Rotate": [
                0.0,
@@ -414,9 +414,9 @@
                1.0
           ],
           "CollectNumber : 6 : Translate": [
-               0.0,
-               -4.5,
-               25.0
+               5.0,
+               -2.0,
+               6.5
           ],
           "CollectNumber : 7 : Rotate": [
                0.0,
@@ -430,9 +430,9 @@
                1.0
           ],
           "CollectNumber : 7 : Translate": [
-               0.0,
-               -10.5,
-               25.0
+               -5.0,
+               -2.0,
+               6.5
           ],
           "CollectNumber : 8 : Rotate": [
                0.0,
@@ -446,9 +446,9 @@
                1.0
           ],
           "CollectNumber : 8 : Translate": [
-               5.0,
-               -4.5,
-               10.0
+               0.0,
+               -6.0,
+               -8.5
           ],
           "CollectNumber : 9 : Rotate": [
                0.0,
@@ -462,9 +462,9 @@
                1.0
           ],
           "CollectNumber : 9 : Translate": [
-               5.0,
-               -7.0,
-               10.0
+               0.0,
+               -14.0,
+               -8.5
           ],
           "Goal : Rotate": [
                0.0,
@@ -472,17 +472,22 @@
                0.0,
                1.0
           ],
+          "Goal : Scale": [
+               1.0,
+               1.0,
+               1.0
+          ],
           "Goal : Translate": [
                0.0,
-               1.0,
-               0.0
+               0.0,
+               17.0
           ],
           "ItemConfirmation": 3,
           "ItemNumber : 0 : Rotate": [
+               0.7071067690849304,
                0.0,
                0.0,
-               0.0,
-               1.0
+               0.7071067690849304
           ],
           "ItemNumber : 0 : Scale": [
                1.0,
@@ -491,8 +496,8 @@
           ],
           "ItemNumber : 0 : Translate": [
                0.0,
-               -11.600000381469727,
-               20.0
+               -10.0,
+               -10.0
           ],
           "ItemNumber : 1 : Rotate": [
                0.0,
@@ -508,7 +513,7 @@
           "ItemNumber : 1 : Translate": [
                0.0,
                4.0,
-               7.5
+               6.0
           ],
           "ItemNumber : 2 : Rotate": [
                0.0,
@@ -522,20 +527,20 @@
                1.0
           ],
           "ItemNumber : 2 : Translate": [
-               6.0,
-               -10.0,
+               0.0,
+               -17.5,
                10.0
           ],
           "Player : Rotate": [
-               -0.0,
-               1.0,
-               -0.0,
-               -4.371138828673793e-08
+               0.0,
+               0.0,
+               0.0,
+               1.0
           ],
           "Player : Translate": [
                0.0,
-               -4.5,
-               20.299999237060547
+               -5.0,
+               -5.199999809265137
           ],
           "StageConfirmation": 0
      }
