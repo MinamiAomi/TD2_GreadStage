@@ -1,6 +1,6 @@
 {
      "Stage4": {
-          "BoxConfirmation": 5,
+          "BoxConfirmation": 4,
           "BoxNumber : 0 : Rotate": [
                0.0,
                0.0,
@@ -40,14 +40,14 @@
                1.0
           ],
           "BoxNumber : 2 : Scale": [
-               1.0,
-               1.0,
-               1.0
+               10.0,
+               5.0,
+               12.5
           ],
           "BoxNumber : 2 : Translate": [
                0.0,
-               0.0,
-               0.0
+               6.0,
+               17.0
           ],
           "BoxNumber : 3 : Rotate": [
                0.0,
@@ -56,29 +56,13 @@
                1.0
           ],
           "BoxNumber : 3 : Scale": [
-               10.0,
-               5.0,
-               12.5
-          ],
-          "BoxNumber : 3 : Translate": [
-               0.0,
-               6.0,
-               17.0
-          ],
-          "BoxNumber : 4 : Rotate": [
-               0.0,
-               0.0,
-               0.0,
-               1.0
-          ],
-          "BoxNumber : 4 : Scale": [
                15.0,
                3.5,
                8.0
           ],
-          "BoxNumber : 4 : Translate": [
+          "BoxNumber : 3 : Translate": [
                0.0,
-               -11.300000190734863,
+               -11.5,
                14.0
           ],
           "CollectConfirmation": 25,
