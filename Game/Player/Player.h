@@ -71,6 +71,9 @@ private: // メンバ変数
 
     std::shared_ptr<CircleShadow> circleShadow_;
     Vector3 shadowOffset_;
+    // 落下中
+    uint32_t fallCount_ = 0u;
+    const uint32_t kMaxCount_ = 120u;
 
 private: // メンバ関数
     // 座標更新
@@ -89,4 +92,9 @@ private: // メンバ関数
     void OnCollision(const CollisionInfo& collisionInfo);
 
     void DrawImGui();
+
+    void FallTimer();
+
+    void PlayerReset();
+
 };

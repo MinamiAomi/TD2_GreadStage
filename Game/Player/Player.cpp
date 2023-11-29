@@ -252,6 +252,7 @@ void Player::JumpUpdate() {
         jumpParameters_.jumpHeight = Vector3::Dot(transform.translate, gravityDirection);
 
         playerModel_.PlayAnimation(PlayerModel::kJump, false, true, 30);
+        fallCount_ = 0u;
     }
 
     jumpParameters_.fallSpeed -= jumpParameters_.gravity;
@@ -260,6 +261,9 @@ void Player::JumpUpdate() {
     if (jumpParameters_.isJumped &&
         Vector3::Dot(transform.translate, gravityDirection) > jumpParameters_.jumpHeight) {
         transform.translate += jumpParameters_.direction * moveSpeed_;
+    }
+    else if(jumpParameters_.isJumped) {
+        FallTimer();
     }
 
     jumpParameters_.fallSpeed = std::max(jumpParameters_.fallSpeed, -jumpParameters_.fallSpeedLimits);
@@ -334,10 +338,7 @@ void Player::DrawImGui() {
     ImGui::DragFloat("FallSpeedLimits", &jumpParameters_.fallSpeedLimits, 0.01f);
     ImGui::DragFloat("FallSpeed", &jumpParameters_.fallSpeed, 0.01f, 0.0f, jumpParameters_.fallSpeedLimits);
     if (ImGui::Button("Reset")) {
-        jumpParameters_.isJumped = false;
-        transform.translate = respawnPos_;
-        transform.rotate = respawnRot_;
-        jumpParameters_.fallSpeed = 0.0f;
+        PlayerReset();
     }
     ImGui::End();
 
@@ -350,4 +351,19 @@ void Player::Landing() {
         jumpParameters_.isJumped = false;
         playerModel_.PlayAnimation(PlayerModel::kLanding, false, true, 20);
     }
+}
+
+void Player::FallTimer() {
+    fallCount_++;
+    if (fallCount_ >= kMaxCount_) {
+        //Landing();
+        PlayerReset();
+    }
+}
+
+void Player::PlayerReset() {
+    jumpParameters_.isJumped = false;
+    transform.translate = respawnPos_;
+    transform.rotate = respawnRot_;
+    jumpParameters_.fallSpeed = 0.0f;
 }
