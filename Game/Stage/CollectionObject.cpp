@@ -18,8 +18,8 @@ void CollectionObject::Initialize() {
     collider_->SetOrientation(transform.rotate);
     collider_->SetSize(transform.scale);
     collider_->SetCenter(transform.translate);
-    collider_->SetCollisionAttribute(CollisionConfig::Stage);
-    collider_->SetCollisionMask(~CollisionConfig::Stage);
+    collider_->SetCollisionAttribute(CollisionConfig::Item);
+    collider_->SetCollisionMask(CollisionConfig::Player);
     collider_->SetCallback([this](const CollisionInfo& collisionInfo) { OnCollision(collisionInfo); });
 
     isAlive_ = true;
@@ -56,7 +56,7 @@ void CollectionObject::AnimationUpdate() {
 }
 
 void CollectionObject::TypeNormalUpdate() {
-
+    //transform.rotate = Quaternion::MakeFromAngleAxis(1.0f * Math::ToRadian, transform.rotate.GetUp()) * transform.rotate;
 }
 
 void CollectionObject::TypeGetUpdate() {

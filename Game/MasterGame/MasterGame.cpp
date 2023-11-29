@@ -34,7 +34,7 @@ void MasterGame::OnInitialize() {
 
 	// タイトル用板ポリゴン
 	toonModel = std::make_shared<Model>();
-	toonModel->Create(ModelData::LoadObjFile("Resources/Model/TitleText/titleText.obj"));
+	toonModel->Create(ModelData::LoadObjFile("Resources/Model/title/title.obj"));
 	resourceManager->AddToonModel("TitleText", toonModel);
 
 	// プレイヤー
@@ -91,6 +91,29 @@ void MasterGame::OnInitialize() {
 	std::shared_ptr<Texture> sprite = std::make_shared<Texture>();
 	sprite->Load("Resources/Texture/block.png");
 	resourceManager->AddTexture("Block", sprite);
+
+	// ポーズ用
+	sprite = std::make_shared<Texture>();
+	sprite->Load("Resources/Texture/Pause/stageSelect.png");
+	resourceManager->AddTexture("StageSelect", sprite);
+	
+	sprite = std::make_shared<Texture>();
+	sprite->Load("Resources/Texture/Pause/restart.png");
+	resourceManager->AddTexture("Restart", sprite);
+
+	sprite = std::make_shared<Texture>();
+	sprite->Load("Resources/Texture/Pause/pose.png");
+	resourceManager->AddTexture("Pose", sprite);
+
+	sprite = std::make_shared<Texture>();
+	sprite->Load("Resources/Texture/Pause/controller.png");
+	resourceManager->AddTexture("Controller", sprite);
+
+	sprite = std::make_shared<Texture>();
+	sprite->Load("Resources/Texture/Pause/pose_backGround.png");
+	resourceManager->AddTexture("BackGround", sprite);
+
+
 
 	// トランジション用初期化
 	auto trans = Transition::GetInstance();

@@ -20,6 +20,10 @@ private: // メンバ変数
 	std::shared_ptr<Stage> stage_;
 	std::shared_ptr<TitleText> titleText_;
 
+	bool CheckInput();
+public:
+	// 放置時間
+	static uint32_t leavingTime_;
 
 
 };

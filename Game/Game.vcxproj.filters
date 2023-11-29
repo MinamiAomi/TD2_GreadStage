@@ -59,6 +59,9 @@
     <ClCompile Include="Stage\StarrySky.cpp">
       <Filter>Stage</Filter>
     </ClCompile>
+    <ClCompile Include="GamePause\GamePause.cpp">
+      <Filter>GamePause</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionConfig.h" />
@@ -120,6 +123,9 @@
     <ClInclude Include="Stage\StarrySky.h">
       <Filter>Stage</Filter>
     </ClInclude>
+    <ClInclude Include="GamePause\GamePause.h">
+      <Filter>GamePause</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="MasterGame">
@@ -157,6 +163,9 @@
     </Filter>
     <Filter Include="Stage\TitleText">
       <UniqueIdentifier>{4afa9616-5d97-4c98-aba7-62fe596f0641}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GamePause">
+      <UniqueIdentifier>{6981a5c5-a4a8-442b-9d3c-c7c3dfb3e103}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
