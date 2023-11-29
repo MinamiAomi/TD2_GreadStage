@@ -51,6 +51,8 @@ void BattleScene::OnFinalize() {
 }
 
 void BattleScene::NormalUpdate() {
+	pause_->SetDraw(false);
+
 	stage_->Update();
 	player_->Update();
 

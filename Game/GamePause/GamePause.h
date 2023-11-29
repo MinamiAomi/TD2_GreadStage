@@ -2,20 +2,20 @@
 #include "Graphics/Sprite.h"
 #include <memory>
 #include "Math/Color.h"
+#include <vector>
+#include <string>
 
 class GamePause {
 public:
 	void Initialize();
 	void Update();
+	void SetDraw(const bool& flag);
 
 private:
-	std::unique_ptr<Sprite> stageSelect_;
-	std::unique_ptr<Sprite> restart_;
-	std::unique_ptr<Sprite> pose_;
-	std::unique_ptr<Sprite> controller_;
-	std::unique_ptr<Sprite> backGround_;
-
+	std::vector<std::unique_ptr<Sprite>> texture_;
+	const uint32_t kMaxTextures_ = 5;
 	struct TextureParam {
+		std::string name_;
 		Vector2 scale_;
 		float rotate_;
 		Vector2 position_;
@@ -23,13 +23,23 @@ private:
 		Vector4 color_;
 		bool isActive_;
 	};
-	TextureParam stageSelectParam_;
-	TextureParam restartParam_;
-	TextureParam poseParam_;
-	TextureParam controllerParam_;
-	TextureParam backGroundParam_;
+	TextureParam textureParam_[5];
+	enum TextureName {
+		StageSelect,
+		Restart,
+		Pose,
+		Controller,
+		BackGround,
+	};
+
+	bool isSelected_ = false; // true : ステージセレクトへ / false : リスタート
+	bool preIsSelected_ = false;
+
+	float easeTime_ = 0.0f;
+	bool changeFlag_ = false;
 
 private:
-	void TextureInitialize(Sprite* sprite, TextureParam param);
+	void TextureUpdate();
+	void SelectUpdate();
 
 };

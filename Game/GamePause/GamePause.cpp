@@ -1,74 +1,138 @@
 #include "GamePause.h"
 #include "Graphics/ResourceManager.h"
 #include "Graphics/ImGuiManager.h"
+#include "Input/Input.h"
+#include "Easing/Easing.h"
+#include <algorithm>
+
+#include "Transition/Transition.h"
+#include "Scene/SceneManager.h"
+#include "Scene/TitleScene/TitleScene.h"
+#include "Scene/BattleScene/BattleScene.h"
 
 void GamePause::Initialize() {
-	stageSelect_ = std::make_unique<Sprite>();
-	stageSelect_->SetTexture(ResourceManager::GetInstance()->FindTexture("StageSelect"));
-	stageSelectParam_.scale_ = Vector2(900.0f,256.0f);
-	stageSelectParam_ = { {900.0f,256.0f},0.0f,{0.0f,0.0f},1u,Vector4::one,true };
-	TextureInitialize(stageSelect_.get(), stageSelectParam_);
+	
+	textureParam_[StageSelect] = { "StageSelect",{900.0f,256.0f},0.0f,{425.0f,73.0f},2u,Vector4::one,true };
+	textureParam_[Restart] = { "Restart",{900.0f,256.0f},0.0f,{325.0f,175.0f},2u,Vector4::one,true };
+	textureParam_[Pose] = { "Pose",{900.0f,256.0f},0.0f,{645.0f,623.0f},2u,Vector4::one,true };
+	textureParam_[Controller] = { "Controller",{525.0f,290.0f},0.0f,{1020.0f,110.0f},2u,Vector4::one,true };
+	textureParam_[BackGround] = { "BackGround",{1280.0f,720.0f},0.0f,{640.0f,360.0f},1u,Color::Convert(0xffffffaa),true };
 
-	restart_ = std::make_unique<Sprite>();
-	restart_->SetTexture(ResourceManager::GetInstance()->FindTexture("Restart"));
-	restartParam_ = { {900.0f,256.0f},0.0f,{0.0f,0.0f},2u,Vector4::one,true };
-	TextureInitialize(restart_.get(), restartParam_);
+	for (uint32_t index = 0; index < kMaxTextures_; index++) {
+		auto& sprite = texture_.emplace_back(std::make_unique<Sprite>());
+		sprite->SetTexture(ResourceManager::GetInstance()->FindTexture(textureParam_[index].name_));
+		sprite->SetTexcoordRect({ 0.0f,0.0f }, { sprite->GetTexture()->GetWidth(), sprite->GetTexture()->GetHeight() });
+		sprite->SetScale(textureParam_[index].scale_);
+		sprite->SetRotate(textureParam_[index].rotate_);
+		sprite->SetPosition(textureParam_[index].position_);
+		sprite->SetDrawOrder(textureParam_[index].order_);
+		sprite->SetColor(textureParam_[index].color_);
+		sprite->SetIsActive(textureParam_[index].isActive_);
+	}
 
-	pose_ = std::make_unique<Sprite>();
-	pose_->SetTexture(ResourceManager::GetInstance()->FindTexture("Pose"));
-	poseParam_ = { {900.0f,256.0f},0.0f,{0.0f,0.0f},3u,Vector4::one,true };
-	TextureInitialize(pose_.get(), poseParam_);
+	isSelected_ = false;
+	preIsSelected_ = false;
+	easeTime_ = 0.0f;
 
-	controller_ = std::make_unique<Sprite>();
-	controller_->SetTexture(ResourceManager::GetInstance()->FindTexture("Controller"));
-	controllerParam_ = { {1372.0f,738.0f},0.0f,{0.0f,0.0f},4u,Vector4::one,true };
-	TextureInitialize(controller_.get(), controllerParam_);
-
-	backGround_ = std::make_unique<Sprite>();
-	backGround_->SetTexture(ResourceManager::GetInstance()->FindTexture("BackGround"));
-	backGroundParam_ = { {1280.0f,720.0f},0.0f,{0.0f,0.0f},5u,Vector4::one,true };
-	TextureInitialize(backGround_.get(), backGroundParam_);
+	changeFlag_ = false;
 
 }
 
 void GamePause::Update() {
+#ifdef _DEBUG
 	ImGui::Begin("GamePose");
-	if (ImGui::TreeNode("stageSelect")) {
-		ImGui::DragFloat2("pos",&stageSelectParam_.position_.x);
-		ImGui::TreePop();
-	}
-	if (ImGui::TreeNode("restart")) {
-		ImGui::DragFloat2("pos", &restartParam_.position_.x);
-		ImGui::TreePop();
-	}
-	if (ImGui::TreeNode("poseParam_")) {
-		ImGui::DragFloat2("pos", &poseParam_.position_.x);
-		ImGui::TreePop();
-	}
-	if (ImGui::TreeNode("controllerParam_")) {
-		ImGui::DragFloat2("pos", &controllerParam_.position_.x);
-		ImGui::TreePop();
-	}
-	if (ImGui::TreeNode("backGround_")) {
-		ImGui::DragFloat2("pos", &backGroundParam_.position_.x);
-		ImGui::TreePop();
+	for (auto& param : textureParam_) {
+			ImGui::DragFloat2("pos", &param.position_.x);
+		if (ImGui::TreeNode(std::string(param.name_).c_str())) {
+			ImGui::DragFloat2("scale", &param.scale_.x);
+			ImGui::TreePop();
+		}
 	}
 	ImGui::End();
+#endif // _DEBUG
 
-	TextureInitialize(stageSelect_.get(), stageSelectParam_);
-	TextureInitialize(restart_.get(), restartParam_);
-	TextureInitialize(pose_.get(), poseParam_);
-	TextureInitialize(controller_.get(), controllerParam_);
-	TextureInitialize(backGround_.get(), backGroundParam_);
+	SelectUpdate();
 
+	TextureUpdate();
 }
 
-void GamePause::TextureInitialize(Sprite* sprite, TextureParam param) {
-	sprite->SetScale(param.scale_);
-	sprite->SetRotate(param.rotate_);
-	sprite->SetPosition(param.position_);
-	sprite->SetTexcoordRect({0.0f,0.0f}, { sprite->GetTexture()->GetWidth(), sprite->GetTexture()->GetHeight() });
-	//sprite->SetDrawOrder(param.order_);
-	//sprite->SetColor(param.color_);
-	//sprite->SetIsActive(param.isActive_);
+void GamePause::SetDraw(const bool& flag) {
+	for (uint32_t i = 0; i < kMaxTextures_; i++) {
+		texture_[i]->SetIsActive(flag);
+	}
+}
+
+void GamePause::TextureUpdate() {
+	for (uint32_t i = 0; i < kMaxTextures_; i++) {
+		texture_[i]->SetScale(textureParam_[i].scale_);
+		texture_[i]->SetRotate(textureParam_[i].rotate_);
+		texture_[i]->SetPosition(textureParam_[i].position_);
+		texture_[i]->SetColor(textureParam_[i].color_);
+	}
+	SetDraw(true);
+}
+
+void GamePause::SelectUpdate() {
+	auto input = Input::GetInstance();
+	auto& xInput = input->GetXInputState();
+	auto& preXInput = input->GetPreXInputState();
+
+	if (xInput.Gamepad.sThumbLY > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) {
+		isSelected_ = false;
+	}
+	else if (xInput.Gamepad.sThumbLY < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) {
+		isSelected_ = true;
+	}
+
+	if (isSelected_ != preIsSelected_) {
+		easeTime_ = 0.0f;
+	}
+	preIsSelected_ = isSelected_;
+
+	if (changeFlag_) {
+		auto trans = Transition::GetInstance();
+		if (isSelected_) {
+			trans->SetComeToStage();
+			if (trans->Update()) {
+				// シーンのシングルトンの取得
+				SceneManager* sceneManager = SceneManager::GetInstance();
+				// シーンの設定
+				sceneManager->ChangeScene<TitleScene>();
+			}
+		}
+		else {
+			trans->SetComeToStage(trans->getNum());
+			if (trans->Update()) {
+				// シーンのシングルトンの取得
+				SceneManager* sceneManager = SceneManager::GetInstance();
+				// シーンの設定
+				sceneManager->ChangeScene<BattleScene>();
+			}
+		}
+	}
+	else {
+		constexpr const float b = 1.0f / 60.0f;
+		easeTime_ += b;
+		easeTime_ = std::clamp(easeTime_, 0.0f, 1.0f);
+		float T = Easing::EaseOutQuart(easeTime_);
+
+		if (isSelected_) {
+			textureParam_[Restart].color_ = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
+			textureParam_[StageSelect].color_ = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+
+			textureParam_[Restart].scale_ = Vector2(900.0f, 256.0f);
+			textureParam_[StageSelect].scale_ = Vector2::Slerp(T, Vector2(900.0f, 256.0f), Vector2(1000.0f, 300.0f));
+		}
+		else {
+			textureParam_[Restart].color_ = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+			textureParam_[StageSelect].color_ = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
+
+			textureParam_[Restart].scale_ = Vector2::Slerp(T, Vector2(900.0f, 256.0f), Vector2(1000.0f, 300.0f));
+			textureParam_[StageSelect].scale_ = Vector2(900.0f, 256.0f);
+		}
+
+		if (xInput.Gamepad.wButtons & XINPUT_GAMEPAD_A && !(preXInput.Gamepad.wButtons & XINPUT_GAMEPAD_A)) {
+			changeFlag_ = true;
+		}
+	}
 }
