@@ -9,7 +9,7 @@ void Box::Initialize() {
     collider_ = std::make_unique<BoxCollider>();
 
     model_->SetModel(ResourceManager::GetInstance()->FindModel("Box"));
-    model_->SetIsActive(true);
+    model_->SetIsActive(false);
 
     //rotate_ = Vector3(rotate.x, rotate.y, rotate.z) * Math::ToRadian;
 

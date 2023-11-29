@@ -69,7 +69,7 @@ namespace {
     }
 }
 
-ModelData ModelData::LoadObjFile(const std::filesystem::path& path) {
+ModelData ModelData::LoadObjFile(const std::filesystem::path& path, bool convertLeftHand) {
     ModelData modelData;
     std::ifstream file(path);
     assert(file.is_open());
@@ -104,13 +104,17 @@ ModelData ModelData::LoadObjFile(const std::filesystem::path& path) {
         else if (identifier == "v") {
             Vector3& position = positions.emplace_back();
             iss >> position.x >> position.y >> position.z;
-            // position.z = -position.z;
+            if (convertLeftHand) {
+                position.x = -position.x;
+            }
         }
         // 法線
         else if (identifier == "vn") {
             Vector3& normal = normals.emplace_back();
             iss >> normal.x >> normal.y >> normal.z;
-            // normal.z = -normal.z;
+            if (convertLeftHand) {
+                normal.x = -normal.x;
+            }
         }
         // UV座標
         else if (identifier == "vt") {
@@ -183,9 +187,16 @@ ModelData ModelData::LoadObjFile(const std::filesystem::path& path) {
             // 読み込んだポリゴンを三角形リスト形式で格納していく
             for (uint32_t i = 0; i < face.size() - 2; ++i) {
                 auto& indices = currentMesh->indices;
-                indices.emplace_back(Index(face[0]));
-                indices.emplace_back(Index(face[i + 1ull]));
-                indices.emplace_back(Index(face[i + 2ull]));
+                if (convertLeftHand) {
+                    indices.emplace_back(Index(face[i + 2ull]));
+                    indices.emplace_back(Index(face[i + 1ull]));
+                    indices.emplace_back(Index(face[0]));
+                }
+                else {
+                    indices.emplace_back(Index(face[0]));
+                    indices.emplace_back(Index(face[i + 1ull]));
+                    indices.emplace_back(Index(face[i + 2ull]));
+                }
             }
         }
     }

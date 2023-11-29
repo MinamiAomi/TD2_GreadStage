@@ -30,6 +30,7 @@ void BattleScene::OnInitialize() {
 	//stage_->Load("Stage3");
 	auto i = Transition::GetInstance();
 	stage_->Load(i->GetStageId());
+	stage_->SetModel(i->GetStageId());
 }
 
 void BattleScene::OnUpdate() {
