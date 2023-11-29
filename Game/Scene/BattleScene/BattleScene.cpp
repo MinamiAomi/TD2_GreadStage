@@ -33,6 +33,14 @@ void BattleScene::OnInitialize() {
 }
 
 void BattleScene::OnUpdate() {
+
+#ifdef _DEBUG
+	//	ImGui のフレームに一つ目の ImGui のウィンドウを描く
+	ImGui::Begin("Control panel");
+	ImGui::Text("Frame rate: %6.2f fps", ImGui::GetIO().Framerate);
+	ImGui::End();
+#endif // _DEBUG
+
 	auto input = Input::GetInstance();
 	auto& xInput = input->GetXInputState();
 	auto& preXInput = input->GetPreXInputState();

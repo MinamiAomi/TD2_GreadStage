@@ -19,6 +19,7 @@ private:
     void UpdateInput();
 
     void NormalUpdate();
+    void StageMoveUpdate();
 
 public: // ゲッター
     const std::shared_ptr<Camera>& GetCamera() { return camera_; }
@@ -56,6 +57,17 @@ private: //	メンバ変数
     bool isTitleMove_ = false;
 
     Vector2 upDown = Vector2::zero;
+
+    // ステージのゴールからのカメラ移動用フラグ
+    bool isStageMove_ = false;
+
+    // イージング用
+    Vector3 startPos_;
+    Vector3 endPos_;
+    Vector2 startAngle_;
+    Vector2 endAngle_;
+    float easeCount_ = 0.0f;
+    void EaseUpdate();
 
 public:
     static bool nowTitle_;
