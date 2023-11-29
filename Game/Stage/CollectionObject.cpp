@@ -18,7 +18,7 @@ void CollectionObject::Initialize() {
     collider_->SetName("CollectionObject");
     collider_->SetGameObject(this);
     collider_->SetOrientation(transform.rotate);
-    collider_->SetSize(transform.scale * 1.5f);
+    collider_->SetSize(transform.scale * 1.2f);
     collider_->SetCenter(transform.translate);
     collider_->SetCollisionAttribute(CollisionConfig::Item);
     collider_->SetCollisionMask(CollisionConfig::Player);

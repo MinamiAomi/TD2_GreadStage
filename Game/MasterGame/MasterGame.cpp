@@ -14,161 +14,112 @@
 #include "Transition/Transition.h"
 
 void MasterGame::OnInitialize() {
-	// シーンのシングルトンの取得
-	SceneManager* sceneManager = SceneManager::GetInstance();
-	// シーンの設定
-	sceneManager->ChangeScene<TitleScene>();
-	//sceneManager->ChangeScene<CreateStageScene>();
+    // シーンのシングルトンの取得
+    SceneManager* sceneManager = SceneManager::GetInstance();
+    // シーンの設定
+    sceneManager->ChangeScene<TitleScene>();
+    //sceneManager->ChangeScene<CreateStageScene>();
 
-	// リソースマネージャーのシングルトンの取得
-	ResourceManager* resourceManager = ResourceManager::GetInstance();
+    // リソースマネージャーのシングルトンの取得
+    ResourceManager* resourceManager = ResourceManager::GetInstance();
 
-	Audio* audio = Audio::GetInstance();
-	// モデルの追加
-	std::shared_ptr<Model> model = std::make_shared<Model>();
-	// プレイヤー
-	model->Create(ModelData::LoadObjFile("Resources/Model/player.obj"));
-	resourceManager->AddToonModel("Player", model);
+    Audio* audio = Audio::GetInstance();
 
-	model = std::make_shared<Model>();
-	model->Create(ModelData::LoadObjFile("Resources/Model/box.obj"));
-	resourceManager->AddToonModel("Box", model);
+    auto LoadModel = [resourceManager](const std::string& name, const std::filesystem::path& path) {
+        std::shared_ptr<Model> model = std::make_shared<Model>();
+        model->Create(ModelData::LoadObjFile(path));
+        resourceManager->AddToonModel(name, model);
+        };
 
-	// タイトル用板ポリゴン
-	model = std::make_shared<Model>();
-	model->Create(ModelData::LoadObjFile("Resources/Model/title/title.obj"));
-	resourceManager->AddToonModel("TitleText", model);
+    auto LoadTexture = [resourceManager](const std::string& name, const std::filesystem::path& path) {
+        std::shared_ptr<Texture> texture = std::make_shared<Texture>();
+        texture->Load(path);
+        resourceManager->AddTexture(name, texture);
+        };
 
-	// プレイヤー
-	model = std::make_shared<Model>();
-	model->Create(ModelData::LoadObjFile("Resources/Model/frog/Body.obj"));
-	resourceManager->AddToonModel("FrogBody", model);
+    auto LoadSound = [resourceManager, audio](const std::string& name, const std::filesystem::path& path) {
+        resourceManager->AddSound(name, audio->SoundLoadWave(path.string().c_str()));
+        };
 
-	model = std::make_shared<Model>();
-	model->Create(ModelData::LoadObjFile("Resources/Model/frog/Head.obj"));
-	resourceManager->AddToonModel("FrogHead", model);
+    // 箱
+    LoadModel("Box", "Resources/Model/box.obj");
+    // タイトル
+    LoadModel("TitleText", "Resources/Model/title/title.obj");
+    // カエルからだ
+    LoadModel("FrogBody", "Resources/Model/frog/Body.obj");
+    // カエル頭
+    LoadModel("FrogHead", "Resources/Model/frog/Head.obj");
+    // カエル左腕
+    LoadModel("FrogLeftArm", "Resources/Model/frog/leftarm.obj");
+    // カエル右腕
+    LoadModel("FrogRightArm", "Resources/Model/frog/rightarm.obj");
+    // カエル左脚
+    LoadModel("FrogLeftFoot", "Resources/Model/frog/leftfoot.obj");
+    // カエル右脚
+    LoadModel("FrogRightFoot", "Resources/Model/frog/rightfoot.obj");
+    // カエルカバン
+    LoadModel("FrogBag", "Resources/Model/frog/bag.obj");
+    // 収集物星
+    LoadModel("Star", "Resources/Model/Star/star.obj");
+    // 収集物月
+    LoadModel("Moon", "Resources/Model/moon/moon.obj");
+    // ゴール井戸
+    LoadModel("GoalWell", "Resources/Model/GoalWell/GoalWell.obj");
+    // スタート井戸
+    LoadModel("StartWell", "Resources/Model/StartWell/startWell.obj");
+    // スタート井戸看板
+    LoadModel("StartWellBoard", "Resources/Model/StartWell/board.obj");
 
-	model = std::make_shared<Model>();
-	model->Create(ModelData::LoadObjFile("Resources/Model/frog/leftarm.obj"));
-	resourceManager->AddToonModel("FrogLeftArm", model);
-	
-	model = std::make_shared<Model>();
-	model->Create(ModelData::LoadObjFile("Resources/Model/frog/rightarm.obj"));
-	resourceManager->AddToonModel("FrogRightArm", model);
-	
-	model = std::make_shared<Model>();
-	model->Create(ModelData::LoadObjFile("Resources/Model/frog/leftfoot.obj"));
-	resourceManager->AddToonModel("FrogLeftFoot", model);
-	
-	model = std::make_shared<Model>();
-	model->Create(ModelData::LoadObjFile("Resources/Model/frog/rightfoot.obj"));
-	resourceManager->AddToonModel("FrogRightFoot", model);
-	
-	model = std::make_shared<Model>();
-	model->Create(ModelData::LoadObjFile("Resources/Model/frog/bag.obj"));
-	resourceManager->AddToonModel("FrogBag", model);
-
-	// 収集物
-	model = std::make_shared<Model>();
-	model->Create(ModelData::LoadObjFile("Resources/Model/Crystal/crystal.obj"));
-	resourceManager->AddToonModel("Crystal", model);
-
-	model = std::make_shared<Model>();
-	model->Create(ModelData::LoadObjFile("Resources/Model/Star/star.obj"));
-	resourceManager->AddToonModel("Star", model);
-
-	model = std::make_shared<Model>();
-	model->Create(ModelData::LoadObjFile("Resources/Model/moon/moon.obj"));
-	resourceManager->AddToonModel("Moon", model);
-  
-	model = std::make_shared<Model>();
-	model->Create(ModelData::LoadObjFile("Resources/Model/GoalWell/GoalWell.obj"));
-	resourceManager->AddToonModel("GoalWell", model);
-  
-	model = std::make_shared<Model>();
-	model->Create(ModelData::LoadObjFile("Resources/Model/StartWell/startWell.obj"));
-	resourceManager->AddToonModel("StartWell", model);
-  
-	model = std::make_shared<Model>();
-	model->Create(ModelData::LoadObjFile("Resources/Model/StartWell/board.obj"));
-	resourceManager->AddToonModel("StartWellBoard", model);
-  
-	std::shared_ptr<Texture> texture = std::make_shared<Texture>();
-	texture->Load("Resources/Texture/block.png");
-	resourceManager->AddTexture("Block", texture);
-
-	// ポーズ用
-	texture = std::make_shared<Texture>();
-	texture->Load("Resources/Texture/Pause/stageSelect.png");
-	resourceManager->AddTexture("StageSelect", texture);
-	
-	texture = std::make_shared<Texture>();
-	texture->Load("Resources/Texture/Pause/restart.png");
-	resourceManager->AddTexture("Restart", texture);
-
-	texture = std::make_shared<Texture>();
-	texture->Load("Resources/Texture/Pause/pose.png");
-	resourceManager->AddTexture("Pose", texture);
-
-	texture = std::make_shared<Texture>();
-	texture->Load("Resources/Texture/Pause/controller.png");
-	resourceManager->AddTexture("Controller", texture);
-
-	texture = std::make_shared<Texture>();
-	texture->Load("Resources/Texture/Pause/pose_backGround.png");
-	resourceManager->AddTexture("BackGround", texture);
-
-	texture = std::make_shared<Texture>();
-	texture->Load("Resources/Model/StartWell/board1.png");
-	resourceManager->AddTexture("Board1", texture);
-
-	texture = std::make_shared<Texture>();
-	texture->Load("Resources/Model/StartWell/board2.png");
-	resourceManager->AddTexture("Board2", texture);
-
-	texture = std::make_shared<Texture>();
-	texture->Load("Resources/Model/StartWell/board3.png");
-	resourceManager->AddTexture("Board3", texture);
-
-	texture = std::make_shared<Texture>();
-	texture->Load("Resources/Model/StartWell/board4.png");
-	resourceManager->AddTexture("Board4", texture);
-
-	texture = std::make_shared<Texture>();
-	texture->Load("Resources/Model/StartWell/board5.png");
-	resourceManager->AddTexture("Board5", texture);
-
-	texture = std::make_shared<Texture>();
-	texture->Load("Resources/Model/StartWell/board6.png");
-	resourceManager->AddTexture("Board6", texture);
-
-	texture = std::make_shared<Texture>();
-	texture->Load("Resources/Texture/Pause/pose_backGround.png");
-	resourceManager->AddTexture("BackGround", texture);
-
-	texture = std::make_shared<Texture>();
-	texture->Load("Resources/Texture/Pause/waku.png");
-	resourceManager->AddTexture("Frame", texture);
-
-	texture = std::make_shared<Texture>();
-	texture->Load("Resources/Texture/Pause/moon.png");
-	resourceManager->AddTexture("Moon", texture);
+    // ブロック
+    LoadTexture("Block", "Resources/Texture/block.png");
+    // ステージセレクト画像
+    LoadTexture("StageSelect", "Resources/Texture/Pause/stageSelect.png");
+    // リスタート画像
+    LoadTexture("Restart", "Resources/Texture/Pause/restart.png");
+    // ポーズ画像
+    LoadTexture("Pose", "Resources/Texture/Pause/pose.png");
+    // コントローラー
+    LoadTexture("Controller", "Resources/Texture/Pause/controller.png");
+    // ポーズ時の背景
+    LoadTexture("BackGround", "Resources/Texture/Pause/pose_backGround.png");
+    // セレクト井戸のボード1
+    LoadTexture("Board1", "Resources/Model/StartWell/board1.png");
+    // セレクト井戸のボード2
+    LoadTexture("Board2", "Resources/Model/StartWell/board2.png");
+    // セレクト井戸のボード3
+    LoadTexture("Board3", "Resources/Model/StartWell/board3.png");
+    // セレクト井戸のボード4
+    LoadTexture("Board4", "Resources/Model/StartWell/board4.png");
+    // セレクト井戸のボード5
+    LoadTexture("Board5", "Resources/Model/StartWell/board5.png");
+    // セレクト井戸のボード6
+    LoadTexture("Board6", "Resources/Model/StartWell/board6.png");
+    //フレーム
+    LoadTexture("Frame", "Resources/Texture/Pause/frame.png");
+    // 収集物 月
+    LoadTexture("Moon", "Resources/Texture/Pause/moon.png");
 
 
+    LoadTexture("Ground00", "Resources/Texture/Ground/ground00.png");
 
-	resourceManager->AddSound("BGM", audio->SoundLoadWave("Resources/Sound/bgm.wav"));
-	resourceManager->AddSound("GravityChange", audio->SoundLoadWave("Resources/Sound/gravityChange.wav"));
-	resourceManager->AddSound("Jump", audio->SoundLoadWave("Resources/Sound/jump.wav"));
-	resourceManager->AddSound("MoonGet", audio->SoundLoadWave("Resources/Sound/moonGet.wav"));
-	resourceManager->AddSound("StarGet", audio->SoundLoadWave("Resources/Sound/starGet.wav"));
-	resourceManager->AddSound("Walk", audio->SoundLoadWave("Resources/Sound/stepSound.wav"));
-	resourceManager->AddSound("Landing", audio->SoundLoadWave("Resources/Sound/landing.wav"));
+    // BGM
+    LoadSound("BGM", "Resources/Sound/bgm.wav");
+    // ジャンプ
+    LoadSound("Jump", "Resources/Sound/jump.wav");
+    // 月取得時
+    LoadSound("MoonGet", "Resources/Sound/moonGet.wav");
+    // 星取得時
+    LoadSound("StarGet", "Resources/Sound/starGet.wav");
+    // 歩く音
+    LoadSound("Walk", "Resources/Sound/stepSound.wav");
+    // 着地音
+    LoadSound("Landing", "Resources/Sound/landing.wav");
 
-	// トランジション用初期化
-	auto trans = Transition::GetInstance();
-	trans->Initialize();
-	// ガウシアンブラーのオフ
-	RenderManager::GetInstance()->UseGaussianBlur(false);
+    // トランジション用初期化
+    auto trans = Transition::GetInstance();
+    trans->Initialize();
+    // ガウシアンブラーのオフ
+    RenderManager::GetInstance()->UseGaussianBlur(false);
 }
 
 void MasterGame::OnFinalize() {
