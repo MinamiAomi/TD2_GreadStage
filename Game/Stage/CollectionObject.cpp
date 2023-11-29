@@ -35,7 +35,7 @@ void CollectionObject::Update() {
     // 当たり判定、描画を更新
     transform.UpdateMatrix();
     collider_->SetOrientation(transform.rotate);
-    collider_->SetSize(transform.scale);
+    //collider_->SetSize(transform.scale);
     collider_->SetCenter(transform.translate);
     model_->SetWorldMatrix(transform.worldMatrix);
 }

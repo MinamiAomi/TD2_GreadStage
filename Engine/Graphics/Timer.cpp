@@ -1,5 +1,8 @@
 #include "Timer.h"
 
+#include <Windows.h>
+#pragma comment(lib, "winmm.lib")
+
 using namespace std::chrono;
 
 void Timer::Initialize() {

@@ -246,6 +246,10 @@ void Player::MoveLimit() {
         transform.rotate = respawnRot_;
         jumpParameters_.fallSpeed = 0.0f;
         playerModel_.PlayAnimation(PlayerModel::kWait, false);
+        if (walkPlayHandle_ != (size_t)-1) {
+            Audio::GetInstance()->SoundPlayLoopEnd(walkPlayHandle_);
+            walkPlayHandle_ = (size_t)-1;
+        }
     }
 }
 
@@ -391,4 +395,8 @@ void Player::PlayerReset() {
     transform.translate = respawnPos_;
     transform.rotate = respawnRot_;
     jumpParameters_.fallSpeed = 0.0f;
+    if (walkPlayHandle_ != (size_t)-1) {
+        Audio::GetInstance()->SoundPlayLoopEnd(walkPlayHandle_);
+        walkPlayHandle_ = (size_t)-1;
+    }
 }
