@@ -110,9 +110,9 @@
                1.0
           ],
           "Goal : Translate": [
-               0.0,
-               0.0,
-               -1.399999976158142
+               1000.0,
+               1000.0,
+               1000.0
           ],
           "ItemConfirmation": 0,
           "Player : Rotate": [

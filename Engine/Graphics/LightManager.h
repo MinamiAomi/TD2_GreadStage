@@ -28,6 +28,23 @@ private:
 
 };
 
+class SpotLight {
+public:
+    static std::shared_ptr<SpotLight> Create();
+    static std::list<SpotLight*>& GetInstanceList() { return instanceList_; }
+
+    SpotLight(const SpotLight&) = delete;
+    SpotLight& operator=(const SpotLight&) = delete;
+    SpotLight(SpotLight&&) = delete;
+    SpotLight& operator=(SpotLight&&) = delete;
+
+private:
+    SpotLight();
+    ~SpotLight();
+
+    static std::list<SpotLight*> instanceList_;
+};
+
 class CircleShadow {
 public:
     static std::shared_ptr<CircleShadow> Create();
