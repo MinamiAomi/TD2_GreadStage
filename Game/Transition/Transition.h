@@ -19,6 +19,7 @@ public: // セッター
 public: // ゲッター
 	std::string GetStageId() { return Directory + std::to_string(number); }
 	int getNum() const { return number; }
+	bool GetIsTransition() { return isTransition_; }
 
 private:
 	Transition() = default;
