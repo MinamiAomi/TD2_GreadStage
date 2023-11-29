@@ -194,8 +194,6 @@ void Stage::Load(const std::filesystem::path& loadFile) {
     player_->transform.rotate = global->GetQuaternionValue(selectName, "Player : Rotate");
     player_->SetRespawnRot(player_->transform.rotate);
 
-
-    //model_.SetModel(ResourceManager::GetInstance()->FindModel("Stage"));
 }
 
 void Stage::StageSelectload(const std::filesystem::path& loadFile) {
@@ -219,4 +217,8 @@ void Stage::StageSelectload(const std::filesystem::path& loadFile) {
             box->SetTexture(ResourceManager::GetInstance()->FindTexture(texture));
         }
     }
+}
+
+void Stage::SetModel(const std::string& name) {
+    model_.SetModel(ResourceManager::GetInstance()->FindModel(name));
 }

@@ -25,9 +25,9 @@ void MasterGame::OnInitialize() {
 
     Audio* audio = Audio::GetInstance();
 
-    auto LoadModel = [resourceManager](const std::string& name, const std::filesystem::path& path) {
+    auto LoadModel = [resourceManager](const std::string& name, const std::filesystem::path& path, bool convertLeftHand = false) {
         std::shared_ptr<Model> model = std::make_shared<Model>();
-        model->Create(ModelData::LoadObjFile(path));
+        model->Create(ModelData::LoadObjFile(path, convertLeftHand));
         resourceManager->AddToonModel(name, model);
         };
 
@@ -70,19 +70,17 @@ void MasterGame::OnInitialize() {
     // スタート井戸看板
     LoadModel("StartWellBoard", "Resources/Model/StartWell/board.obj");
     
-    LoadModel("StageSelect", "Resources/Model/Stage/stageSelect.obj");
+    LoadModel("StageSelect", "Resources/Model/Stage/stageSelect.obj", true);
     // Stage1
-    LoadModel("Stage1", "Resources/Model/Stage/stage1.obj");
+    LoadModel("Stage1", "Resources/Model/Stage/stage1.obj", true);
     // Stage2
-    LoadModel("Stage2", "Resources/Model/Stage/stage2.obj");
+    LoadModel("Stage2", "Resources/Model/Stage/stage2.obj", true);
     // Stage3
-    LoadModel("Stage3", "Resources/Model/Stage/stage3.obj");
+    LoadModel("Stage3", "Resources/Model/Stage/stage3.obj", true);
     // Stage4
-    LoadModel("Stage4", "Resources/Model/Stage/stage4.obj");
+    LoadModel("Stage4", "Resources/Model/Stage/stage4.obj", true);
     // Stage5
-    LoadModel("Stage5", "Resources/Model/Stage/stage5.obj");
-    // Stage6
-    LoadModel("Stage6", "Resources/Model/Stage/stage6.obj");
+    LoadModel("Stage5", "Resources/Model/Stage/stage5.obj", true);
 
     // ブロック
     LoadTexture("Block", "Resources/Texture/block.png");

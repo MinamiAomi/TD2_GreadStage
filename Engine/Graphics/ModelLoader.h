@@ -34,7 +34,7 @@ struct ModelData {
     };
 
 
-    static ModelData LoadObjFile(const std::filesystem::path& path);
+    static ModelData LoadObjFile(const std::filesystem::path& path, bool convertLeftHand = false);
 
     std::string name;
     std::vector<Mesh> meshes;

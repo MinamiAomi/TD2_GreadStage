@@ -63,6 +63,7 @@ void RequiredItem::AnimationUpdate() {
 }
 
 void RequiredItem::TypeNormalUpdate() {
+    transform.rotate = Quaternion::MakeFromAngleAxis(1.0f * Math::ToRadian, transform.rotate.GetUp()) * transform.rotate;
 
 }
 

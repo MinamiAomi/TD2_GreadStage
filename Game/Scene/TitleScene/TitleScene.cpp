@@ -32,6 +32,7 @@ void TitleScene::OnInitialize() {
 	camera_->SetTarget(&player_->transform);
 
 	stage_->Load("StageSelect");
+	stage_->SetModel("StageSelect");
 
 }
 
