@@ -98,6 +98,8 @@ void MasterGame::OnInitialize() {
     LoadTexture("Frame", "Resources/Texture/Pause/frame.png");
     // 収集物 月
     LoadTexture("Moon", "Resources/Texture/Pause/moon.png");
+    // オプション
+    LoadTexture("Option", "Resources/Texture/Pause/option.png");
 
 
     LoadTexture("Ground00", "Resources/Texture/Ground/ground00.png");

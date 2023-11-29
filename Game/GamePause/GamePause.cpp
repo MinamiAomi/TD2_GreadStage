@@ -12,7 +12,7 @@
 
 #include "Stage/Stage.h"
 
-void GamePause::Initialize() {
+void GamePause::Initialize(const uint32_t& num) {
 	
 	textureParam_[StageSelect] = { "StageSelect",{900.0f,256.0f},0.0f,{425.0f,73.0f},2u,Vector4(0.02f,0.63f,0.01f,1.0f),true };
 	textureParam_[Restart] = { "Restart",{900.0f,256.0f},0.0f,{325.0f,175.0f},2u,Vector4(0.02f,0.63f,0.01f,1.0f),true };
@@ -36,6 +36,17 @@ void GamePause::Initialize() {
 		sprite->SetIsActive(textureParam_[index].isActive_);
 	}
 
+	optionParam_ = { "Option",{128.0f,128.0f},0.0f,{100.0f,640.0f},1u,Vector4::one,true };
+	optionText_ = std::make_unique<Sprite>();
+	optionText_->SetTexture(ResourceManager::GetInstance()->FindTexture(optionParam_.name_));
+	optionText_->SetTexcoordRect({ 0.0f,0.0f }, { optionText_->GetTexture()->GetWidth(), optionText_->GetTexture()->GetHeight() });
+	optionText_->SetScale(optionParam_.scale_);
+	optionText_->SetRotate(optionParam_.rotate_);
+	optionText_->SetPosition(optionParam_.position_);
+	optionText_->SetDrawOrder(optionParam_.order_);
+	optionText_->SetColor(optionParam_.color_);
+	optionText_->SetIsActive(optionParam_.isActive_);
+
 	isSelected_ = false;
 	preIsSelected_ = false;
 	easeTime_ = 0.0f;
@@ -43,7 +54,7 @@ void GamePause::Initialize() {
 	changeFlag_ = false;
 
 	noSelectColor_ = Vector4(0.42f, 0.44f, 0.45f, 1.0f);
-
+	sceneNumber = num;
 }
 
 void GamePause::Update() {
@@ -57,6 +68,10 @@ void GamePause::Update() {
 			ImGui::TreePop();
 		}i++;
 	}
+	ImGui::DragFloat2("testPos", &optionParam_.position_.x);
+	ImGui::DragFloat2("testscale", &optionParam_.scale_.x);
+	optionText_->SetScale(optionParam_.scale_);
+	optionText_->SetPosition(optionParam_.position_);
 	ImGui::End();
 #endif // _DEBUG
 
@@ -117,13 +132,25 @@ void GamePause::SelectUpdate() {
 			}
 		}
 		else {
-			trans->SetComeToStage(trans->getNum());
-			if (trans->Update()) {
-				// シーンのシングルトンの取得
-				SceneManager* sceneManager = SceneManager::GetInstance();
-				// シーンの設定
-				sceneManager->ChangeScene<BattleScene>();
+			if (sceneNumber == 0) {
+				trans->SetComeToStage();
+				if (trans->Update()) {
+					// シーンのシングルトンの取得
+					SceneManager* sceneManager = SceneManager::GetInstance();
+					// シーンの設定
+					sceneManager->ChangeScene<TitleScene>();
+				}
 			}
+			else {
+				trans->SetComeToStage(trans->getNum());
+				if (trans->Update()) {
+					// シーンのシングルトンの取得
+					SceneManager* sceneManager = SceneManager::GetInstance();
+					// シーンの設定
+					sceneManager->ChangeScene<BattleScene>();
+				}
+			}
+			
 		}
 	}
 	else {
