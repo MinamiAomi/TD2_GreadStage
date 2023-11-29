@@ -8,6 +8,7 @@
 #include "Core/TextureResource.h"
 
 #include "ModelLoader.h"
+#include "Sprite.h"
 
 class Model {
     friend class ModelRenderer;
@@ -41,6 +42,7 @@ public:
     virtual ~ModelInstance();
 
     void SetModel(const std::shared_ptr<Model>& model) { model_ = model; }
+    void SetCoverTexture(const std::shared_ptr<Texture>& texture) { coverTexture_ = texture; }
     void SetWorldMatrix(const Matrix4x4& worldMatrix) { worldMatrix_ = worldMatrix; }
     void SetUseLighting(bool useLighting) { useLighting_ = useLighting; }
     void SetIsActive(bool isActive) { isActive_ = isActive; }
@@ -60,11 +62,12 @@ private:
     ModelInstance& operator=(ModelInstance&&) = delete;
 
     std::shared_ptr<Model> model_;
+    std::shared_ptr<Texture> coverTexture_;
     Matrix4x4 worldMatrix_;
     Vector3 color_ = Vector3::one;
     Vector3 rimLightColor_ = Vector3::one;
     bool useLighting_ = true;
     bool useRimLight_ = false;
-    bool receiveShadow_ = false;
+    bool receiveShadow_ = true;
     bool isActive_ = true;
 };

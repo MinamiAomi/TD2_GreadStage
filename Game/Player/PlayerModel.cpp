@@ -35,7 +35,7 @@ Animation::FloatNode PlayerModel::kWalkHeightAnimation = { { { 0.0f, 0.0f }, { 0
 
 
 std::array<Animation::QuaternionNode, PlayerModel::kNumParts> PlayerModel::kWalkRotateAnimationTable = {
-    Animation::QuaternionNode({{Quaternion::identity, 0.0f}, {Quaternion::MakeForYAxis(-5.0f * Math::ToRadian), 0.25f}, {Quaternion::identity, 0.5f}, {Quaternion::MakeForYAxis(5.0f * Math::ToRadian), 0.75f}, {Quaternion::identity, 1.0f}}),
+    Animation::QuaternionNode({{Quaternion::identity, 0.0f}, {Quaternion::MakeForYAxis(-10.0f * Math::ToRadian), 0.25f}, {Quaternion::identity, 0.5f}, {Quaternion::MakeForYAxis(10.0f * Math::ToRadian), 0.75f}, {Quaternion::identity, 1.0f}}),
     Animation::QuaternionNode({ Quaternion::identity, 0.0f}),
     Animation::QuaternionNode({{Quaternion::identity, 0.0f}, {Quaternion::MakeForXAxis(-60.0f * Math::ToRadian), 0.25f}, {Quaternion::identity, 0.5f}, {Quaternion::MakeForXAxis(60.0f * Math::ToRadian), 0.75f}, {Quaternion::identity, 1.0f}}),
     Animation::QuaternionNode({{Quaternion::identity, 0.0f}, {Quaternion::MakeForXAxis(60.0f * Math::ToRadian), 0.25f}, {Quaternion::identity, 0.5f}, {Quaternion::MakeForXAxis(-60.0f * Math::ToRadian), 0.75f}, {Quaternion::identity, 1.0f}}),
@@ -93,6 +93,7 @@ void PlayerModel::Initialize(Transform* transform) {
     for (uint32_t i = 0; i < kNumParts; ++i) {
         partModels_[i] = std::make_shared<ModelInstance>();
         partModels_[i]->SetModel(rm->FindModel(kPartModelName[i]));
+        partModels_[i]->SetreceiveShadow(false);
     }
 }
 

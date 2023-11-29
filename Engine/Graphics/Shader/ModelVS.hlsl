@@ -4,6 +4,7 @@ struct Scene {
     float3 cameraPosition;
     float ditheringRange;
     uint numDirectionalLights;
+    uint numCircleShadows;
 };
 ConstantBuffer<Scene> scene_ : register(b0);
 

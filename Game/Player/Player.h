@@ -8,6 +8,7 @@
 #include "Math/Transform.h"
 #include "CameraAnimation/CameraAnimation.h"
 #include "Collision/Collider.h"
+#include "Graphics/LightManager.h"
 #include "PlayerModel.h"
 
 class Player : public GameObject {
@@ -67,6 +68,9 @@ private: // メンバ変数
 
     Vector3 respawnPos_;
     Quaternion respawnRot_;
+
+    std::shared_ptr<CircleShadow> circleShadow_;
+    Vector3 shadowOffset_;
 
 private: // メンバ関数
     // 座標更新

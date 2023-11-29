@@ -49,6 +49,13 @@ void Player::Initialize() {
 
     floorCollider_ = nullptr;
     isCleared_ = false;
+
+    shadowOffset_ = { 0.0f, 100.0f, 0.0f };
+    circleShadow_ = CircleShadow::Create();
+    circleShadow_->distance = 200.0f;
+    circleShadow_->decay = 1.0f;
+    circleShadow_->angle = 0.5f * Math::ToRadian;
+    circleShadow_->falloffStartAngle = 0.45f * Math::ToRadian;
 }
 
 void Player::Update() {
@@ -145,6 +152,9 @@ void Player::UpdateTransform() {
 
     collider_->SetCenter(colliderOffset_ * transform.worldMatrix);
     upperCollider_->SetCenter(upperColliderOffset_ * transform.worldMatrix);
+
+    circleShadow_->position = shadowOffset_ * transform.worldMatrix;
+    circleShadow_->direction = -transform.rotate.GetUp();
     //collider_->SetOrientation(rotate);
 }
 

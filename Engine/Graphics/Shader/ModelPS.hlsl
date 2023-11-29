@@ -17,6 +17,7 @@ struct Instance {
     float3 rimLightColor;
     uint useRimLight;
     uint receiveShadow;
+    float3 pad;
 };
 ConstantBuffer<Instance> instance_ : register(b1);
 
@@ -25,14 +26,6 @@ struct Material {
     float3 specular;
 };
 ConstantBuffer<Material> material_ : register(b2);
-
-//// 平行光源
-//struct DirectionalLight
-//{
-//    float3 direction; // 方向
-//    float3 color; // 色
-//    float intensity; // 強さ
-//};
 
 StructuredBuffer<DirectionalLight> directionalLights_ : register(t1);
 
@@ -128,7 +121,10 @@ PSOutput main(PSInput input) {
             float cosAngle = dot(spotLightDirectionOnSurface, circleShadows_[i].direction);
             float falloffFactor = saturate((cosAngle - circleShadows_[i].cosAngle) / (circleShadows_[i].cosFalloffStart - circleShadows_[i].cosAngle));
             
-            output.color.rgb -= attenuationFactor * falloffFactor;
+            attenuationFactor *= step(0.0f, attenuationFactor);
+                       
+            output.color.rgb -=  falloffFactor * attenuationFactor;
+
         }
     }
     
