@@ -135,7 +135,7 @@ void ModelRenderer::Render(CommandContext& commandContext, const Camera& camera)
                 commandContext.SetConstantBuffer(ModelRootIndex::Material, mesh.material->constantBuffer.GetGPUVirtualAddress());
                 if (instance->coverTexture_) {
                     commandContext.SetDescriptorTable(ModelRootIndex::Texture, instance->coverTexture_->GetTexture());
-                    commandContext.SetDescriptorTable(ModelRootIndex::Sampler, instance->coverTexture_->GetSampler());
+                    commandContext.SetDescriptorTable(ModelRootIndex::Sampler, SamplerManager::AnisotropicWrap);
                 }
                 else {
                     if (mesh.material->texture) {

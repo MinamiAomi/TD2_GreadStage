@@ -13,7 +13,7 @@
 
 class Player : public GameObject {
 public:
-
+    ~Player();
     // 初期化処理
     void Initialize();
     // 更新処理

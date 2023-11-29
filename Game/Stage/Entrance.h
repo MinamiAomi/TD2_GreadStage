@@ -22,7 +22,8 @@ public:
     int stageNumber_ = 0;
 
 private:
-    std::unique_ptr<ModelInstance> model_;
+    std::unique_ptr<ModelInstance> wellModel_;
+    std::unique_ptr<ModelInstance> boardModel_;
     std::unique_ptr<BoxCollider> collider_;
 
     // 回転保管用

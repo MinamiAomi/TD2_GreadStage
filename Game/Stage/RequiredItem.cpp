@@ -13,6 +13,7 @@ void RequiredItem::Initialize() {
     model_->SetModel(ResourceManager::GetInstance()->FindModel("Moon"));
     model_->SetIsActive(true);
     model_->SetColor(color_);
+    model_->SetReceiveShadow(false);
 
     collider_->SetName("RequiredItem");
     collider_->SetGameObject(this);

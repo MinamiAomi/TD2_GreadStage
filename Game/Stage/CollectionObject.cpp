@@ -13,6 +13,7 @@ void CollectionObject::Initialize() {
     model_->SetModel(ResourceManager::GetInstance()->FindModel("Star"));
     model_->SetIsActive(true);
     model_->SetColor(color_);
+    model_->SetReceiveShadow(false);
 
     collider_->SetName("CollectionObject");
     collider_->SetGameObject(this);

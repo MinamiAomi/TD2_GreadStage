@@ -9,6 +9,12 @@
 #include "Graphics/ImGuiManager.h"
 #include "CollisionConfig.h"
 
+Player::~Player() {
+    if (walkPlayHandle_ != (size_t)-1) {
+       Audio::GetInstance()->SoundPlayLoopEnd(walkPlayHandle_);
+    }
+}
+
 void Player::Initialize() {
     SetName("Player");
 
@@ -219,7 +225,9 @@ void Player::MoveUpdate() {
         auto animeType = playerModel_.GetAnimationType();
         if (animeType != PlayerModel::kWalk && animeType != PlayerModel::kBlend) {
             playerModel_.PlayAnimation(PlayerModel::kWalk, true);
-            walkPlayHandle_ = Audio::GetInstance()->SoundPlayLoopStart(walkSoundHandle_);
+            if (walkPlayHandle_ == (size_t)-1) {
+                walkPlayHandle_ = Audio::GetInstance()->SoundPlayLoopStart(walkSoundHandle_);
+            }
         }
     }
     else {
@@ -349,6 +357,9 @@ void Player::OnCollision(const CollisionInfo& collisionInfo) {
 
     if (collisionInfo.collider->GetName() == "Goal") {
         isCleared_ = true;
+        if (walkPlayHandle_ != (size_t)-1) {
+            Audio::GetInstance()->SoundPlayLoopEnd(walkPlayHandle_);
+        }
     }
 
     UpdateTransform();

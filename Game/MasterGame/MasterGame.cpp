@@ -25,95 +25,122 @@ void MasterGame::OnInitialize() {
 
 	Audio* audio = Audio::GetInstance();
 	// モデルの追加
-	std::shared_ptr<Model> toonModel = std::make_shared<Model>();
+	std::shared_ptr<Model> model = std::make_shared<Model>();
 	// プレイヤー
-	toonModel->Create(ModelData::LoadObjFile("Resources/Model/player.obj"));
-	resourceManager->AddToonModel("Player", toonModel);
+	model->Create(ModelData::LoadObjFile("Resources/Model/player.obj"));
+	resourceManager->AddToonModel("Player", model);
 
-	toonModel = std::make_shared<Model>();
-	toonModel->Create(ModelData::LoadObjFile("Resources/Model/box.obj"));
-	resourceManager->AddToonModel("Box", toonModel);
+	model = std::make_shared<Model>();
+	model->Create(ModelData::LoadObjFile("Resources/Model/box.obj"));
+	resourceManager->AddToonModel("Box", model);
 
 	// タイトル用板ポリゴン
-	toonModel = std::make_shared<Model>();
-	toonModel->Create(ModelData::LoadObjFile("Resources/Model/title/title.obj"));
-	resourceManager->AddToonModel("TitleText", toonModel);
+	model = std::make_shared<Model>();
+	model->Create(ModelData::LoadObjFile("Resources/Model/title/title.obj"));
+	resourceManager->AddToonModel("TitleText", model);
 
 	// プレイヤー
-	toonModel = std::make_shared<Model>();
-	toonModel->Create(ModelData::LoadObjFile("Resources/Model/frog/Body.obj"));
-	resourceManager->AddToonModel("FrogBody", toonModel);
+	model = std::make_shared<Model>();
+	model->Create(ModelData::LoadObjFile("Resources/Model/frog/Body.obj"));
+	resourceManager->AddToonModel("FrogBody", model);
 
-	toonModel = std::make_shared<Model>();
-	toonModel->Create(ModelData::LoadObjFile("Resources/Model/frog/Head.obj"));
-	resourceManager->AddToonModel("FrogHead", toonModel);
+	model = std::make_shared<Model>();
+	model->Create(ModelData::LoadObjFile("Resources/Model/frog/Head.obj"));
+	resourceManager->AddToonModel("FrogHead", model);
 
-	toonModel = std::make_shared<Model>();
-	toonModel->Create(ModelData::LoadObjFile("Resources/Model/frog/leftarm.obj"));
-	resourceManager->AddToonModel("FrogLeftArm", toonModel);
+	model = std::make_shared<Model>();
+	model->Create(ModelData::LoadObjFile("Resources/Model/frog/leftarm.obj"));
+	resourceManager->AddToonModel("FrogLeftArm", model);
 	
-	toonModel = std::make_shared<Model>();
-	toonModel->Create(ModelData::LoadObjFile("Resources/Model/frog/rightarm.obj"));
-	resourceManager->AddToonModel("FrogRightArm", toonModel);
+	model = std::make_shared<Model>();
+	model->Create(ModelData::LoadObjFile("Resources/Model/frog/rightarm.obj"));
+	resourceManager->AddToonModel("FrogRightArm", model);
 	
-	toonModel = std::make_shared<Model>();
-	toonModel->Create(ModelData::LoadObjFile("Resources/Model/frog/leftfoot.obj"));
-	resourceManager->AddToonModel("FrogLeftFoot", toonModel);
+	model = std::make_shared<Model>();
+	model->Create(ModelData::LoadObjFile("Resources/Model/frog/leftfoot.obj"));
+	resourceManager->AddToonModel("FrogLeftFoot", model);
 	
-	toonModel = std::make_shared<Model>();
-	toonModel->Create(ModelData::LoadObjFile("Resources/Model/frog/rightfoot.obj"));
-	resourceManager->AddToonModel("FrogRightFoot", toonModel);
+	model = std::make_shared<Model>();
+	model->Create(ModelData::LoadObjFile("Resources/Model/frog/rightfoot.obj"));
+	resourceManager->AddToonModel("FrogRightFoot", model);
 	
-	toonModel = std::make_shared<Model>();
-	toonModel->Create(ModelData::LoadObjFile("Resources/Model/frog/bag.obj"));
-	resourceManager->AddToonModel("FrogBag", toonModel);
+	model = std::make_shared<Model>();
+	model->Create(ModelData::LoadObjFile("Resources/Model/frog/bag.obj"));
+	resourceManager->AddToonModel("FrogBag", model);
 
 	// 収集物
-	toonModel = std::make_shared<Model>();
-	toonModel->Create(ModelData::LoadObjFile("Resources/Model/Crystal/crystal.obj"));
-	resourceManager->AddToonModel("Crystal", toonModel);
+	model = std::make_shared<Model>();
+	model->Create(ModelData::LoadObjFile("Resources/Model/Crystal/crystal.obj"));
+	resourceManager->AddToonModel("Crystal", model);
 
-	toonModel = std::make_shared<Model>();
-	toonModel->Create(ModelData::LoadObjFile("Resources/Model/Star/star.obj"));
-	resourceManager->AddToonModel("Star", toonModel);
+	model = std::make_shared<Model>();
+	model->Create(ModelData::LoadObjFile("Resources/Model/Star/star.obj"));
+	resourceManager->AddToonModel("Star", model);
 
-	toonModel = std::make_shared<Model>();
-	toonModel->Create(ModelData::LoadObjFile("Resources/Model/moon/moon.obj"));
-	resourceManager->AddToonModel("Moon", toonModel);
+	model = std::make_shared<Model>();
+	model->Create(ModelData::LoadObjFile("Resources/Model/moon/moon.obj"));
+	resourceManager->AddToonModel("Moon", model);
   
-	toonModel = std::make_shared<Model>();
-	toonModel->Create(ModelData::LoadObjFile("Resources/Model/GoalWell/GoalWell.obj"));
-	resourceManager->AddToonModel("GoalWell", toonModel);
+	model = std::make_shared<Model>();
+	model->Create(ModelData::LoadObjFile("Resources/Model/GoalWell/GoalWell.obj"));
+	resourceManager->AddToonModel("GoalWell", model);
   
-	toonModel = std::make_shared<Model>();
-	toonModel->Create(ModelData::LoadObjFile("Resources/Model/StartWell/startWell.obj"));
-	resourceManager->AddToonModel("StartWell", toonModel);
+	model = std::make_shared<Model>();
+	model->Create(ModelData::LoadObjFile("Resources/Model/StartWell/startWell.obj"));
+	resourceManager->AddToonModel("StartWell", model);
   
+	model = std::make_shared<Model>();
+	model->Create(ModelData::LoadObjFile("Resources/Model/StartWell/board.obj"));
+	resourceManager->AddToonModel("StartWellBoard", model);
   
-	std::shared_ptr<Texture> sprite = std::make_shared<Texture>();
-	sprite->Load("Resources/Texture/block.png");
-	resourceManager->AddTexture("Block", sprite);
+	std::shared_ptr<Texture> texture = std::make_shared<Texture>();
+	texture->Load("Resources/Texture/block.png");
+	resourceManager->AddTexture("Block", texture);
 
 	// ポーズ用
-	sprite = std::make_shared<Texture>();
-	sprite->Load("Resources/Texture/Pause/stageSelect.png");
-	resourceManager->AddTexture("StageSelect", sprite);
+	texture = std::make_shared<Texture>();
+	texture->Load("Resources/Texture/Pause/stageSelect.png");
+	resourceManager->AddTexture("StageSelect", texture);
 	
-	sprite = std::make_shared<Texture>();
-	sprite->Load("Resources/Texture/Pause/restart.png");
-	resourceManager->AddTexture("Restart", sprite);
+	texture = std::make_shared<Texture>();
+	texture->Load("Resources/Texture/Pause/restart.png");
+	resourceManager->AddTexture("Restart", texture);
 
-	sprite = std::make_shared<Texture>();
-	sprite->Load("Resources/Texture/Pause/pose.png");
-	resourceManager->AddTexture("Pose", sprite);
+	texture = std::make_shared<Texture>();
+	texture->Load("Resources/Texture/Pause/pose.png");
+	resourceManager->AddTexture("Pose", texture);
 
-	sprite = std::make_shared<Texture>();
-	sprite->Load("Resources/Texture/Pause/controller.png");
-	resourceManager->AddTexture("Controller", sprite);
+	texture = std::make_shared<Texture>();
+	texture->Load("Resources/Texture/Pause/controller.png");
+	resourceManager->AddTexture("Controller", texture);
 
-	sprite = std::make_shared<Texture>();
-	sprite->Load("Resources/Texture/Pause/pose_backGround.png");
-	resourceManager->AddTexture("BackGround", sprite);
+	texture = std::make_shared<Texture>();
+	texture->Load("Resources/Texture/Pause/pose_backGround.png");
+	resourceManager->AddTexture("BackGround", texture);
+
+	texture = std::make_shared<Texture>();
+	texture->Load("Resources/Model/StartWell/board1.png");
+	resourceManager->AddTexture("Board1", texture);
+
+	texture = std::make_shared<Texture>();
+	texture->Load("Resources/Model/StartWell/board2.png");
+	resourceManager->AddTexture("Board2", texture);
+
+	texture = std::make_shared<Texture>();
+	texture->Load("Resources/Model/StartWell/board3.png");
+	resourceManager->AddTexture("Board3", texture);
+
+	texture = std::make_shared<Texture>();
+	texture->Load("Resources/Model/StartWell/board4.png");
+	resourceManager->AddTexture("Board4", texture);
+
+	texture = std::make_shared<Texture>();
+	texture->Load("Resources/Model/StartWell/board5.png");
+	resourceManager->AddTexture("Board5", texture);
+
+	texture = std::make_shared<Texture>();
+	texture->Load("Resources/Model/StartWell/board6.png");
+	resourceManager->AddTexture("Board6", texture);
 
 	resourceManager->AddSound("BGM", audio->SoundLoadWave("Resources/Sound/bgm.wav"));
 	resourceManager->AddSound("GravityChange", audio->SoundLoadWave("Resources/Sound/gravityChange.wav"));

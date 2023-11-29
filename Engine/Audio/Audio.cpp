@@ -11,7 +11,10 @@ Audio* Audio::GetInstance() {
 
 Audio::~Audio() {
     for (size_t i = 0; i < kMaxNumPlayHandles; ++i) {
-        DestroyPlayHandle(i);
+        if (sourceVoices_[i]) {
+            sourceVoices_[i]->DestroyVoice();
+            sourceVoices_[i] = nullptr;
+        }
     }
 
     if (masterVoice_) {
@@ -30,7 +33,10 @@ void Audio::Initialize() {
     assert(SUCCEEDED(result));
 
     for (size_t i = 0; i < kMaxNumPlayHandles; ++i) {
-        DestroyPlayHandle(i);
+        if (sourceVoices_[i]) {
+            sourceVoices_[i]->DestroyVoice();
+            sourceVoices_[i] = nullptr;
+        }
     }
 }
 
@@ -111,6 +117,16 @@ void Audio::SoundPlayLoopEnd(size_t playHandle) {
         sourceVoices_[playHandle]->Stop();
         DestroyPlayHandle(playHandle);
     }
+}
+
+void Audio::Stop(size_t playHandle) {
+    assert(IsValidPlayHandle(playHandle));
+    sourceVoices_[playHandle]->Stop();
+}
+
+void Audio::Restart(size_t playHandle) {
+    assert(IsValidPlayHandle(playHandle));
+    sourceVoices_[playHandle]->Start();
 }
 
 size_t Audio::SoundLoadWave(const char* filename) {
@@ -194,18 +210,13 @@ size_t Audio::SoundLoadWave(const char* filename) {
     return soundData_.size() - 1;
 }
 
-void Audio::StopSound(size_t playHandle) {
-    assert(playHandle < kMaxNumPlayHandles);
-    DestroyPlayHandle(playHandle);
-}
-
 void Audio::SetPitch(size_t playHandle, float pitch) {
-    assert(playHandle < kMaxNumPlayHandles);
+    assert(IsValidPlayHandle(playHandle));
     sourceVoices_[playHandle]->SetFrequencyRatio(pitch);
 }
 
 void Audio::SetValume(size_t playHandle, float volume) {
-    assert(playHandle < kMaxNumPlayHandles);
+    assert(IsValidPlayHandle(playHandle));
     sourceVoices_[playHandle]->SetVolume(volume);
 }
 
@@ -224,7 +235,7 @@ size_t Audio::FindUnusedPlayHandle() {
 }
 
 void Audio::DestroyPlayHandle(size_t playHandle) {
-    assert(playHandle < kMaxNumPlayHandles);
+    assert(IsValidPlayHandle(playHandle));
     if (sourceVoices_[playHandle]) {
         sourceVoices_[playHandle]->DestroyVoice();
         sourceVoices_[playHandle] = nullptr;

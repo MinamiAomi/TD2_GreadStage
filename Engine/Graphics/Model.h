@@ -49,7 +49,7 @@ public:
     void SetColor(const Vector3& color) { color_ = color; }
     void SetUseRimLight(bool useRimLight) { useRimLight_ = useRimLight; }
     void SetRimLightColor(const Vector3& color) { rimLightColor_ = color; }
-    void SetreceiveShadow(bool receiveShadow) { receiveShadow_ = receiveShadow; }
+    void SetReceiveShadow(bool receiveShadow) { receiveShadow_ = receiveShadow; }
 
     bool IsActive() const { return isActive_; }
 

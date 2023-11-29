@@ -93,7 +93,7 @@ void PlayerModel::Initialize(Transform* transform) {
     for (uint32_t i = 0; i < kNumParts; ++i) {
         partModels_[i] = std::make_shared<ModelInstance>();
         partModels_[i]->SetModel(rm->FindModel(kPartModelName[i]));
-        partModels_[i]->SetreceiveShadow(false);
+        partModels_[i]->SetReceiveShadow(false);
     }
 }
 

@@ -54,6 +54,10 @@ public:
 
     size_t SoundPlayLoopStart(size_t soundHandle);
     void SoundPlayLoopEnd(size_t playHandle);
+
+    void Stop(size_t playHandle);
+    void Restart(size_t playHandle);
+
     /// <summary>
     /// 音声ロード
     /// </summary>
@@ -61,7 +65,7 @@ public:
     /// <returns></returns>
     size_t SoundLoadWave(const char* filename);
 
-    void StopSound(size_t playHandle);
+    void DestroyPlayHandle(size_t playHandle);
     void SetPitch(size_t playHandle, float pitch);
     void SetValume(size_t playHandle, float volume);
     bool IsValidPlayHandle(size_t playHandle);
@@ -69,7 +73,6 @@ public:
 private:
     size_t FindUnusedPlayHandle();
 
-    void DestroyPlayHandle(size_t playHandle);
 
     Audio() = default;
     Audio(const Audio&) = delete;

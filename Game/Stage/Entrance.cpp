@@ -1,4 +1,6 @@
 #include "Entrance.h"
+
+#include <cassert>
 #include "Graphics/ResourceManager.h"
 #include "Graphics/ImGuiManager.h"
 #include "CollisionConfig.h"
@@ -7,17 +9,29 @@
 #include "Transition/Transition.h"
 
 void Entrance::Initialize(const int& number) {
-    SetName("Entrance" + std::to_string(number));
-    model_ = std::make_unique<ModelInstance>();
+    assert(number > 0 && number <= 6);
+
+    std::string numStr = std::to_string(number);
+
+    SetName("Entrance" + numStr);
+    wellModel_ = std::make_unique<ModelInstance>();
+    boardModel_ = std::make_unique<ModelInstance>();
     collider_ = std::make_unique<BoxCollider>();
 
     transform.scale = Vector3::one;
 
-    model_->SetModel(ResourceManager::GetInstance()->FindModel("StartWell"));
-    model_->SetIsActive(true);
-    model_->SetColor(color_);
+    wellModel_->SetModel(ResourceManager::GetInstance()->FindModel("StartWell"));
+    wellModel_->SetIsActive(true);
+    wellModel_->SetColor(color_);
+    wellModel_->SetReceiveShadow(false);
 
-    collider_->SetName("Entrance" + std::to_string(number));
+    boardModel_->SetModel(ResourceManager::GetInstance()->FindModel("StartWellBoard"));
+    boardModel_->SetIsActive(true);
+    boardModel_->SetColor(color_);
+    boardModel_->SetCoverTexture(ResourceManager::GetInstance()->FindTexture("Board" + numStr));
+    boardModel_->SetReceiveShadow(false);
+
+    collider_->SetName("Entrance" + numStr);
     collider_->SetGameObject(this);
     collider_->SetOrientation(transform.rotate);
     collider_->SetSize(transform.scale);
@@ -39,7 +53,8 @@ void Entrance::Update() {
     collider_->SetOrientation(transform.rotate);
     collider_->SetSize(transform.scale);
     collider_->SetCenter(Vector3{ 0.0f, 0.5f, 0.0f} * transform.worldMatrix);
-    model_->SetWorldMatrix(transform.worldMatrix);
+    wellModel_->SetWorldMatrix(transform.worldMatrix);
+    boardModel_->SetWorldMatrix(transform.worldMatrix);
 }
 
 void Entrance::OnCollision(const CollisionInfo& collisionInfo) {
