@@ -26,6 +26,10 @@ private:
     // 回転保管用
     Vector3 rotate_;
     Vector3 color_ = Vector3::one;
+    
+    size_t soundHandle_;
+    size_t playHandle_;
+    
     bool isAlive_ = true;
 
     enum class AnimationType {

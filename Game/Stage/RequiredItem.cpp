@@ -3,6 +3,8 @@
 #include "Graphics/ImGuiManager.h"
 #include "CollisionConfig.h"
 
+#include "Audio/Audio.h"
+
 void RequiredItem::Initialize() {
     SetName("RequiredItem");
     model_ = std::make_unique<ModelInstance>();
@@ -21,6 +23,8 @@ void RequiredItem::Initialize() {
     collider_->SetCollisionMask(CollisionConfig::Player);
     collider_->SetCallback([this](const CollisionInfo& collisionInfo) { OnCollision(collisionInfo); });
 
+    soundHandle_ = ResourceManager::GetInstance()->FindSound("MoonGet");
+
     isAlive_ = true;
     animationType_ = AnimationType::Normal;
 
@@ -38,14 +42,17 @@ void RequiredItem::Update() {
 }
 
 void RequiredItem::OnCollision(const CollisionInfo& collisionInfo) {
-    if (collisionInfo.collider->GetName() == "Player") {
-        animationType_ = AnimationType::Get;
+    if (animationType_ != AnimationType::Get) {
+        if (collisionInfo.collider->GetName() == "Player") {
+            animationType_ = AnimationType::Get;
+            playHandle_ = Audio::GetInstance()->SoundPlayWave(soundHandle_);
+            Audio::GetInstance()->SetValume(playHandle_, 1.2f);
+        }
     }
 }
 
 void RequiredItem::AnimationUpdate() {
-    switch (animationType_)
-    {
+    switch (animationType_) {
     case AnimationType::Normal:
         TypeNormalUpdate();
         break;

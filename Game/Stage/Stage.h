@@ -15,6 +15,8 @@
 
 class Stage {
 public:
+    ~Stage();
+
     void Initialize();
     void Update();
 
@@ -51,5 +53,5 @@ private:
     std::shared_ptr<Player> player_;
     std::shared_ptr<StarrySky> starrySky_;
     std::vector<std::shared_ptr<DirectionalLight>> lights_;
-    std::shared_ptr<CircleShadow> sha_;
+    size_t bgmPlayHandle_;
 };

@@ -10,6 +10,7 @@
 #include "Game/Scene/TitleScene/TitleScene.h"
 #include "Game/Scene/BattleScene/BattleScene.h"
 #include "Editor/CreateStageScene/CreateStageScene.h"
+#include "Audio/Audio.h"
 #include "Transition/Transition.h"
 
 void MasterGame::OnInitialize() {
@@ -22,6 +23,7 @@ void MasterGame::OnInitialize() {
 	// リソースマネージャーのシングルトンの取得
 	ResourceManager* resourceManager = ResourceManager::GetInstance();
 
+	Audio* audio = Audio::GetInstance();
 	// モデルの追加
 	std::shared_ptr<Model> toonModel = std::make_shared<Model>();
 	// プレイヤー
@@ -113,15 +115,18 @@ void MasterGame::OnInitialize() {
 	sprite->Load("Resources/Texture/Pause/pose_backGround.png");
 	resourceManager->AddTexture("BackGround", sprite);
 
-
+	resourceManager->AddSound("BGM", audio->SoundLoadWave("Resources/Sound/bgm.wav"));
+	resourceManager->AddSound("GravityChange", audio->SoundLoadWave("Resources/Sound/gravityChange.wav"));
+	resourceManager->AddSound("Jump", audio->SoundLoadWave("Resources/Sound/jump.wav"));
+	resourceManager->AddSound("MoonGet", audio->SoundLoadWave("Resources/Sound/moonGet.wav"));
+	resourceManager->AddSound("StarGet", audio->SoundLoadWave("Resources/Sound/starGet.wav"));
+	resourceManager->AddSound("Step", audio->SoundLoadWave("Resources/Sound/stepSound.wav"));
 
 	// トランジション用初期化
 	auto trans = Transition::GetInstance();
 	trans->Initialize();
 	// ガウシアンブラーのオフ
 	RenderManager::GetInstance()->UseGaussianBlur(false);
-
-
 }
 
 void MasterGame::OnFinalize() {

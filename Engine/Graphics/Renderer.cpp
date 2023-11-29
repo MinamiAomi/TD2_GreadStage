@@ -133,13 +133,19 @@ void ModelRenderer::Render(CommandContext& commandContext, const Camera& camera)
             commandContext.SetPipelineState(pipelineState_);
             for (auto& mesh : instance->model_->meshes_) {
                 commandContext.SetConstantBuffer(ModelRootIndex::Material, mesh.material->constantBuffer.GetGPUVirtualAddress());
-                if (mesh.material->texture) {
-                    commandContext.SetDescriptorTable(ModelRootIndex::Texture, mesh.material->texture->GetSRV());
+                if (instance->coverTexture_) {
+                    commandContext.SetDescriptorTable(ModelRootIndex::Texture, instance->coverTexture_->GetTexture());
+                    commandContext.SetDescriptorTable(ModelRootIndex::Sampler, instance->coverTexture_->GetSampler());
                 }
                 else {
-                    commandContext.SetDescriptorTable(ModelRootIndex::Texture, DefaultTexture::White.GetSRV());
+                    if (mesh.material->texture) {
+                        commandContext.SetDescriptorTable(ModelRootIndex::Texture, mesh.material->texture->GetSRV());
+                    }
+                    else {
+                        commandContext.SetDescriptorTable(ModelRootIndex::Texture, DefaultTexture::White.GetSRV());
+                    }
+                    commandContext.SetDescriptorTable(ModelRootIndex::Sampler, SamplerManager::AnisotropicWrap);
                 }
-                commandContext.SetDescriptorTable(ModelRootIndex::Sampler, SamplerManager::AnisotropicWrap);
 
                 D3D12_VERTEX_BUFFER_VIEW vbv{};
                 vbv.BufferLocation = mesh.vertexBuffer.GetGPUVirtualAddress();

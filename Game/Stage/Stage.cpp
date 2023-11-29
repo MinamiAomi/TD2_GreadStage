@@ -3,8 +3,13 @@
 #include "GlobalVariables/GlobalVariables.h"
 #include <cassert>
 #include "Graphics/RenderManager.h"
-
+#include "Audio/Audio.h"
+#include "Graphics/ResourceManager.h"
 #include "Graphics/ImGuiManager.h"
+
+Stage::~Stage() {
+    Audio::GetInstance()->SoundPlayLoopEnd(bgmPlayHandle_);
+}
 
 void Stage::Initialize() {
     goal_ = std::make_shared<Goal>();
@@ -23,15 +28,14 @@ void Stage::Initialize() {
     lights_[3]->direction = Vector3::left;
     lights_[3]->color = { 0.2f, 0.2f,0.2f };
 
-    sha_ = CircleShadow::Create();
-    sha_->position = { 0.0f,10.0f,0.0f };
-
     starrySky_ = std::make_shared<StarrySky>();
     starrySky_->Initialize();
     RenderManager::GetInstance()->AddCustomRenderer(starrySky_);
     starrySky_->SetCamera(RenderManager::GetInstance()->GetCamera());
     starrySky_->SetVolume(0.8f);
 
+    bgmPlayHandle_ = Audio::GetInstance()->SoundPlayLoopStart(ResourceManager::GetInstance()->FindSound("BGM"));
+    Audio::GetInstance()->SetValume(bgmPlayHandle_, 1.0f);
 }
 
 void Stage::Update() {
@@ -73,6 +77,7 @@ void Stage::Update() {
     starrySky_->SetVolume(volume);
     RenderManager::GetInstance()->GetBloom().SetKnee(knee);
     RenderManager::GetInstance()->GetBloom().SetThreshold(threshold);
+
 
 #endif // DEBUG
 

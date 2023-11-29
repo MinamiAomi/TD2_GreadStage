@@ -44,7 +44,7 @@ public:
     Vector3 direction = Vector3::down;
     float decay = 2.0f;
     float angle = Math::Pi / 3.0f;
-    float falloffStartAngle = Math::Pi / 2.0f;
+    float falloffStartAngle = Math::Pi / 4.0f;
     bool isActive = true;
 
 private:

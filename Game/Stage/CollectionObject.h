@@ -36,6 +36,8 @@ private:
         Get,
     };
     AnimationType animationType_ = AnimationType::Normal;
+    size_t soundHandle_;
+    size_t playHandle_;
 
 private:
     void OnCollision(const CollisionInfo& collisionInfo);

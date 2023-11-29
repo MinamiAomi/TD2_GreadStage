@@ -2,6 +2,7 @@
 #include "Graphics/ResourceManager.h"
 #include "Graphics/ImGuiManager.h"
 #include "CollisionConfig.h"
+#include "Audio/Audio.h"
 
 
 void CollectionObject::Initialize() {
@@ -22,6 +23,8 @@ void CollectionObject::Initialize() {
     collider_->SetCollisionMask(CollisionConfig::Player);
     collider_->SetCallback([this](const CollisionInfo& collisionInfo) { OnCollision(collisionInfo); });
 
+    soundHandle_ = ResourceManager::GetInstance()->FindSound("StarGet");
+
     isAlive_ = true;
     animationType_ = AnimationType::Normal;
 }
@@ -38,8 +41,12 @@ void CollectionObject::Update() {
 }
 
 void CollectionObject::OnCollision(const CollisionInfo& collisionInfo) {
-    if (collisionInfo.collider->GetName() == "Player") {
-        animationType_ = AnimationType::Get;
+    if (animationType_ != AnimationType::Get) {
+        if (collisionInfo.collider->GetName() == "Player") {
+            animationType_ = AnimationType::Get;
+            playHandle_ = Audio::GetInstance()->SoundPlayWave(soundHandle_);
+            Audio::GetInstance()->SetValume(playHandle_, 0.5f);
+        }
     }
 }
 
