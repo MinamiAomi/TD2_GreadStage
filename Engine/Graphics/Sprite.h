@@ -51,6 +51,7 @@ public:
     void SetIsActive(bool isActive) { isActive_ = isActive; }
 
     uint8_t GetDrawOrder() const { return drawOrder_; }
+    const std::shared_ptr<Texture>& GetTexture() const { return texture_; }
 
 private:
     static std::list<Sprite*> instanceList_;

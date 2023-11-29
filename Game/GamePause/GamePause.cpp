@@ -67,6 +67,7 @@ void GamePause::TextureInitialize(Sprite* sprite, TextureParam param) {
 	sprite->SetScale(param.scale_);
 	sprite->SetRotate(param.rotate_);
 	sprite->SetPosition(param.position_);
+	sprite->SetTexcoordRect({0.0f,0.0f}, { sprite->GetTexture()->GetWidth(), sprite->GetTexture()->GetHeight() });
 	//sprite->SetDrawOrder(param.order_);
 	//sprite->SetColor(param.color_);
 	//sprite->SetIsActive(param.isActive_);
