@@ -112,8 +112,16 @@ void MasterGame::OnInitialize() {
 	resourceManager->AddTexture("Controller", sprite);
 
 	sprite = std::make_shared<Texture>();
-	sprite->Load("Resources/Texture/Pause/pose_backGround.png");
+	sprite->Load("Resources/Texture/Pause/risou.png");
 	resourceManager->AddTexture("BackGround", sprite);
+
+	sprite = std::make_shared<Texture>();
+	sprite->Load("Resources/Texture/Pause/waku.png");
+	resourceManager->AddTexture("Frame", sprite);
+
+	sprite = std::make_shared<Texture>();
+	sprite->Load("Resources/Texture/Pause/moon.png");
+	resourceManager->AddTexture("Moon", sprite);
 
 	resourceManager->AddSound("BGM", audio->SoundLoadWave("Resources/Sound/bgm.wav"));
 	resourceManager->AddSound("GravityChange", audio->SoundLoadWave("Resources/Sound/gravityChange.wav"));
