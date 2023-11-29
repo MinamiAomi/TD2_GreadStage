@@ -1,6 +1,6 @@
 # Blender 3.3.0
 # www.blender.org
-mtllib stageSelect.mtl
+mtllib stageselect.mtl
 o 0
 v 15.000000 0.000000 -5.000000
 v 15.000000 5.000000 -5.000000
