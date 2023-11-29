@@ -20,7 +20,7 @@ void BattleScene::OnInitialize() {
 	player_->Initialize();
 	camera_->Initialize();
 	stage_->Initialize();
-	pause_->Initialize();
+	pause_->Initialize(1);
 
 	// セット
 	stage_->SetPlayerPtr(player_);

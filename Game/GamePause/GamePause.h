@@ -7,7 +7,7 @@
 
 class GamePause {
 public:
-	void Initialize();
+	void Initialize(const uint32_t& num);
 	void Update();
 	void SetDraw(const bool& flag);
 
@@ -36,6 +36,8 @@ private:
 		MaxTexture,
 	};
 	TextureParam textureParam_[TextureName::MaxTexture];
+	std::unique_ptr<Sprite> optionText_;
+	TextureParam optionParam_;
 
 	bool isSelected_ = false; // true : ステージセレクトへ / false : リスタート
 	bool preIsSelected_ = false;
@@ -44,6 +46,8 @@ private:
 	bool changeFlag_ = false;
 
 	Vector4 noSelectColor_;
+
+	uint32_t sceneNumber = 0;
 
 private:
 	void TextureUpdate();

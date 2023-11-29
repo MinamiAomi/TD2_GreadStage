@@ -154,7 +154,9 @@ void MasterGame::OnInitialize() {
 	texture->Load("Resources/Texture/Pause/moon.png");
 	resourceManager->AddTexture("Moon", texture);
 
-
+	texture = std::make_shared<Texture>();
+	texture->Load("Resources/Texture/Pause/option.png");
+	resourceManager->AddTexture("Option", texture);
 
 	resourceManager->AddSound("BGM", audio->SoundLoadWave("Resources/Sound/bgm.wav"));
 	resourceManager->AddSound("GravityChange", audio->SoundLoadWave("Resources/Sound/gravityChange.wav"));

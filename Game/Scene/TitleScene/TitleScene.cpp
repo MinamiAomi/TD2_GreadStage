@@ -17,12 +17,14 @@ void TitleScene::OnInitialize() {
 	camera_ = std::make_shared<CameraAnimation>();
 	stage_ = std::make_shared<Stage>();
 	titleText_ = std::make_shared<TitleText>();
+	pause_ = std::make_unique<GamePause>();
 
 	// 初期化
 	player_->Initialize();
 	camera_->Initialize();
 	stage_->Initialize();
 	titleText_->Initialize();
+	pause_->Initialize(0);
 
 	// セット
 	stage_->SetPlayerPtr(player_);
@@ -41,13 +43,32 @@ void TitleScene::OnUpdate() {
 	ImGui::End();
 #endif // _DEBUG
 
+	auto input = Input::GetInstance();
+	auto& xInput = input->GetXInputState();
+	auto& preXInput = input->GetPreXInputState();
+
 	CheckInput() ? leavingTime_ = 0u : leavingTime_++;
+
+	// ポーズ : Back(左のなんか)
+	if (xInput.Gamepad.wButtons & XINPUT_GAMEPAD_BACK && !(preXInput.Gamepad.wButtons & XINPUT_GAMEPAD_BACK)) {
+		isPaused_ = !isPaused_;
+	}
+
+	isPaused_ ? PauseUpdate() : NormalUpdate();
+
+}
+
+void TitleScene::NormalUpdate() {
+	auto trans = Transition::GetInstance();
+	pause_->SetDraw(false);
 	
 	titleText_->DrawImGui();
 
 	stage_->Update();
 	titleText_->Update();
-	player_->Update();
+	if (!trans->GetIsTransition()) {
+		player_->Update();
+	}
 
 	player_->PreCollisionUpdate();
 	CollisionManager::GetInstance()->CheckCollision();
@@ -58,22 +79,26 @@ void TitleScene::OnUpdate() {
 	leavingTime_ = std::clamp(leavingTime_, 0u, kMaxTime);
 	if (leavingTime_ >= kMaxTime) {
 		camera_->SetTitleMove(true);
+		CameraAnimation::nowTitle_ = true;
 	}
 	else {
 		camera_->SetTitleMove(false);
+		CameraAnimation::nowTitle_ = true;
 	}
 
 	// カメラの更新
 	camera_->TitleUpdate();
 
-	auto trans = Transition::GetInstance();
 	if (trans->Update()) {
 		// シーンのシングルトンの取得
 		SceneManager* sceneManager = SceneManager::GetInstance();
 		// シーンの設定
 		sceneManager->ChangeScene<BattleScene>();
 	}
+}
 
+void TitleScene::PauseUpdate() {
+	pause_->Update();
 }
 
 void TitleScene::OnFinalize() {

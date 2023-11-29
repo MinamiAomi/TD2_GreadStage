@@ -6,6 +6,7 @@
 #include "Game/CameraAnimation/CameraAnimation.h"
 #include "Game/Stage/Stage.h"
 #include "Game/Stage/TitleText.h"
+#include "Game/GamePause/GamePause.h"
 
 class TitleScene : public BaseScene {
 public:
@@ -19,7 +20,12 @@ private: // メンバ変数
 	std::shared_ptr<CameraAnimation> camera_;
 	std::shared_ptr<Stage> stage_;
 	std::shared_ptr<TitleText> titleText_;
+	std::unique_ptr<GamePause> pause_;
+	bool isPaused_ = false; // true : ポーズ中/false : 通常
 
+private:
+	void NormalUpdate();
+	void PauseUpdate();
 	bool CheckInput();
 public:
 	// 放置時間
