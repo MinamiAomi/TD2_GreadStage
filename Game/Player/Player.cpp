@@ -356,7 +356,7 @@ void Player::Landing() {
 void Player::FallTimer() {
     fallCount_++;
     if (fallCount_ >= kMaxCount_) {
-        //Landing();
+        Landing();
         PlayerReset();
     }
 }

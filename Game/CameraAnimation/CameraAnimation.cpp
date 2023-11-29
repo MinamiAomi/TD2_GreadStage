@@ -7,6 +7,7 @@
 #include "Collision/CollisionManager.h"
 #include "CollisionConfig.h"
 #include "Input/Input.h"
+#include "Easing/Easing.h"
 
 
 decltype(CameraAnimation::nowTitle_) CameraAnimation::nowTitle_ = true;
@@ -37,11 +38,14 @@ void CameraAnimation::Initialize() {
     offset_ = Vector3{ 0.0f, 2.0f, 0.0f };
     upDown.x = -70.0f;
     upDown.y = 70.0f;
+
+    isStageMove_ = false;
 }
 
 void CameraAnimation::Update() {
-    
-    NormalUpdate();
+    //DrawImGui();
+
+    isStageMove_ ? StageMoveUpdate() : NormalUpdate();
 
     TransUpdate();
 }
@@ -54,7 +58,8 @@ void CameraAnimation::DrawImGui() {
 #ifdef _DEBUG
     ImGui::Begin("camera");
     ImGui::DragFloat3("Position", &transform.translate.x, 0.01f);
-    ImGui::DragFloat2("radR", &angles_.x, 0.1f);
+    ImGui::DragFloat2("rotate", &angles_.x, 0.1f, -360.0f, 360.0f);
+    transform.rotate = Quaternion::MakeFromEulerAngle(Vector3(angles_.x, angles_.y, 0.0f) * Math::ToRadian);
     ImGui::DragFloat2("Limit Down:Up", &upDown.x, 0.01f);
     ImGui::End();
 #endif // _DEBUG
@@ -130,6 +135,11 @@ void CameraAnimation::NormalUpdate() {
     }
 }
 
+void CameraAnimation::StageMoveUpdate() {
+    
+
+}
+
 void CameraAnimation::TitleUpdate() {
     
     static bool flag = false;
@@ -153,7 +163,6 @@ void CameraAnimation::TitleUpdate() {
         flag = false;
     }
 
-    DrawImGui();
     if (isTitleMove_) {
         NormalUpdate();
     }
@@ -167,4 +176,12 @@ void CameraAnimation::TitleUpdate() {
 
 void CameraAnimation::SetCamera() {
     RenderManager::GetInstance()->SetCamera(camera_);
+}
+
+void CameraAnimation::EaseUpdate() {
+    easeCount_ = std::clamp(easeCount_, 0.0f, 1.0f);
+    float T = Easing::EaseInSine(easeCount_);
+    transform.translate = Vector3::Lerp(T, startPos_, endPos_);
+    angles_ = Vector2::Lerp(T, startAngle_, endAngle_);
+    transform.rotate = Quaternion::MakeFromEulerAngle(Vector3(angles_.x, angles_.y, 0.0f) * Math::ToRadian);
 }
