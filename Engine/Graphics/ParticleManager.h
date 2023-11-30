@@ -23,7 +23,7 @@ public:
 
     void AddParticles(std::list<Particle>&& particle) { particles_.splice(particles_.end(), particle); }
     void Update();
-
+    void Reset() { particles_.clear(); }
     const std::list<Particle>& GetParticles() const { return particles_; }
 
 private:
