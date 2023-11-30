@@ -38,8 +38,8 @@ void TitleScene::OnInitialize() {
 	operation_ = std::make_unique<Sprite>();
 	operation_->SetTexture(ResourceManager::GetInstance()->FindTexture("Operation"));
 	operation_->SetTexcoordRect({ 0.0f,0.0f }, { operation_->GetTexture()->GetWidth(), operation_->GetTexture()->GetHeight() });
-	operation_->SetScale(Vector2(1280.0f,720.0f));
-	operation_->SetPosition(Vector2(640.0f,360.0f));
+	operation_->SetScale(Vector2(640.0f,360.0f));
+	operation_->SetPosition(Vector2(960.0f,180.0f));
 	operation_->SetDrawOrder(1);
 	operation_->SetIsActive(true);
 }
