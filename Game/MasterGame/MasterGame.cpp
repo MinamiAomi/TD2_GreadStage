@@ -116,6 +116,8 @@ void MasterGame::OnInitialize() {
 
     LoadTexture("Ground00", "Resources/Texture/Ground/ground00.png");
 
+    LoadTexture("Operation", "Resources/Texture/operation.png");
+
     // BGM
     LoadSound("BGM", "Resources/Sound/bgm.wav");
     // ジャンプ

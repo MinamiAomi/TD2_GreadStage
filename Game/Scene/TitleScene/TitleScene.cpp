@@ -8,6 +8,7 @@
 #include <algorithm>
 
 #include "Graphics/ImGuiManager.h"
+#include "Graphics/ResourceManager.h"
 
 decltype(TitleScene::leavingTime_) TitleScene::leavingTime_ = 300u;
 
@@ -34,6 +35,13 @@ void TitleScene::OnInitialize() {
 	stage_->Load("StageSelect");
 	stage_->SetModel("StageSelect");
 
+	operation_ = std::make_unique<Sprite>();
+	operation_->SetTexture(ResourceManager::GetInstance()->FindTexture("Operation"));
+	operation_->SetTexcoordRect({ 0.0f,0.0f }, { operation_->GetTexture()->GetWidth(), operation_->GetTexture()->GetHeight() });
+	operation_->SetScale(Vector2(1280.0f,720.0f));
+	operation_->SetPosition(Vector2(640.0f,360.0f));
+	operation_->SetDrawOrder(1);
+	operation_->SetIsActive(true);
 }
 
 void TitleScene::OnUpdate() {

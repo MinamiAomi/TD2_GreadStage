@@ -23,6 +23,8 @@ private: // メンバ変数
 	std::unique_ptr<GamePause> pause_;
 	bool isPaused_ = false; // true : ポーズ中/false : 通常
 
+	std::unique_ptr<Sprite> operation_;
+
 private:
 	void NormalUpdate();
 	void PauseUpdate();
