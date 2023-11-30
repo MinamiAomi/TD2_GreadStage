@@ -2,6 +2,7 @@
 #include "Graphics/ResourceManager.h"
 #include "Graphics/ImGuiManager.h"
 #include "CollisionConfig.h"
+#include "Graphics/ParticleManager.h"
 
 void Goal::Initialize() {
     SetName("Goal");
@@ -24,7 +25,37 @@ void Goal::Initialize() {
     model_->SetColor(Vector3::one);
 }
 
-void Goal::Update() {
+void Goal::Update(uint32_t currentItemCount) {
+
+    if (currentItemCount == 0) {
+        const uint32_t numParticles = 3;
+        std::list<Particle> particles(numParticles);
+
+        Vector3 base = transform.worldMatrix.GetTranslate();
+
+        for (auto& particle : particles) {
+            particle.position = base;
+
+            particle.velocity.x = ranGen_.NextFloatRange(-1.0f, 1.0f) * 0.2f;
+            particle.velocity.y = ranGen_.NextFloatRange(0.0f, 1.0f) * 2.0f;
+            particle.velocity.z = ranGen_.NextFloatRange(-1.0f, 1.0f) * 0.2f;
+            particle.velocity = particle.velocity * 0.2f;
+            particle.velocity = transform.rotate * particle.velocity;
+
+            particle.startSize = 0.2f;
+            particle.endSize = 0.1f;
+            particle.startColor = Vector3::unitZ;
+            particle.endColor = Vector3::unitZ;
+            particle.startAlpha = 1.0f;
+            particle.endAlpha = 0.0f;
+            particle.existenceTime = 0;
+            particle.lifeTime = 60;
+        }
+
+        ParticleManager::GetInstance()->AddParticles(std::move(particles));
+    }
+
+
     transform.scale = Vector3::one;
     // 当たり判定、描画を更新
     transform.UpdateMatrix();

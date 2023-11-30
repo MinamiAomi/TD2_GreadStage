@@ -6,6 +6,7 @@
 #include "Audio/Audio.h"
 #include "Graphics/ResourceManager.h"
 #include "Graphics/ImGuiManager.h"
+#include "Graphics/ParticleManager.h"
 
 decltype(Stage::ItemCount_) Stage::ItemCount_ = 3u;
 
@@ -63,10 +64,10 @@ void Stage::Update() {
         return !collect->GetIsAlived();
         });
 
-    goal_->Update();
 
     ItemCount_ = static_cast<uint32_t>(items_.size());
 
+    goal_->Update(ItemCount_);
     player_->SimpleUpdate();
 
 #ifdef _DEBUG
@@ -87,7 +88,6 @@ void Stage::Update() {
 
     starrySky_->SetVolume(1.0f - float(collects_.size()) / numMaxCollects_);
     starrySky_->Update();
-
 }
 
 void Stage::Add(const std::shared_ptr<Box>& box) {

@@ -150,6 +150,8 @@
     <ClCompile Include="Graphics\InkRenderer.cpp" />
     <ClCompile Include="Graphics\LightManager.cpp" />
     <ClCompile Include="Graphics\ModelLoader.cpp" />
+    <ClCompile Include="Graphics\ParticleManager.cpp" />
+    <ClCompile Include="Graphics\ParticleRenderer.cpp" />
     <ClCompile Include="Graphics\PostEffect.cpp" />
     <ClCompile Include="Graphics\RenderManager.cpp" />
     <ClCompile Include="Graphics\ResourceManager.cpp" />
@@ -235,6 +237,8 @@
     <ClInclude Include="Graphics\InkRenderer.h" />
     <ClInclude Include="Graphics\LightManager.h" />
     <ClInclude Include="Graphics\ModelLoader.h" />
+    <ClInclude Include="Graphics\ParticleManager.h" />
+    <ClInclude Include="Graphics\ParticleRenderer.h" />
     <ClInclude Include="Graphics\PostEffect.h" />
     <ClInclude Include="Graphics\Renderable.h" />
     <ClInclude Include="Graphics\RenderManager.h" />
@@ -364,6 +368,18 @@
     <None Include="Graphics\Shader\StarrySkyPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Graphics\Shader\ParticlePS.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="Graphics\Shader\ParticleVS.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <FileType>Document</FileType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>

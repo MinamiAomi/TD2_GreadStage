@@ -201,6 +201,12 @@
     <ClCompile Include="Math\Animation.cpp">
       <Filter>Math</Filter>
     </ClCompile>
+    <ClCompile Include="Graphics\ParticleRenderer.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\ParticleManager.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene\BaseScene.h">
@@ -419,6 +425,12 @@
     <ClInclude Include="Graphics\Renderable.h">
       <Filter>Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Graphics\ParticleRenderer.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\ParticleManager.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\Shader\Lighting.hlsli">
@@ -476,6 +488,12 @@
       <Filter>Graphics\Shader</Filter>
     </None>
     <None Include="Graphics\Shader\StarrySkyPS.hlsl">
+      <Filter>Graphics\Shader</Filter>
+    </None>
+    <None Include="Graphics\Shader\ParticleVS.hlsl">
+      <Filter>Graphics\Shader</Filter>
+    </None>
+    <None Include="Graphics\Shader\ParticlePS.hlsl">
       <Filter>Graphics\Shader</Filter>
     </None>
   </ItemGroup>

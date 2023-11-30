@@ -13,6 +13,7 @@
 #include "PostEffect.h"
 #include "Timer.h"
 #include "SpriteRenderer.h"
+#include "ParticleRenderer.h"
 #include "Renderable.h"
 
 #ifdef _DEBUG
@@ -58,6 +59,7 @@ private:
 
     ModelRenderer renderer_;
     SpriteRenderer spriteRenderer_;
+    ParticleRenderer particleRenderer_;
     GaussianBlur gaussianBlur_;
     Bloom bloom_;
     PostEffect postEffect_;

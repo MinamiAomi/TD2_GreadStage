@@ -35,6 +35,7 @@ void RenderManager::Initialize() {
     mainDepthBuffer_.Create(L"MainDepthBuffer", swapChainBuffer.GetWidth(), swapChainBuffer.GetHeight(), DXGI_FORMAT_D32_FLOAT);
 
     renderer_.Initialize(mainColorBuffer_, mainDepthBuffer_);
+    particleRenderer_.Initialize(mainColorBuffer_, mainDepthBuffer_);
 
     useGaussianBlur_ = true;
     gaussianBlur_.Initialize(&mainColorBuffer_);
@@ -74,6 +75,7 @@ void RenderManager::Render() {
 
     if (camera_) {
         renderer_.Render(commandContext, *camera_);
+        particleRenderer_.Render(commandContext, *camera_);
     }
 
 
