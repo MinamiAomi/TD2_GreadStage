@@ -199,6 +199,8 @@ void Stage::Load(const std::filesystem::path& loadFile) {
     if (collects_.empty()) {
         numMaxCollects_ = 1;
     }
+
+    ParticleManager::GetInstance()->Reset();
 }
 
 void Stage::StageSelectload(const std::filesystem::path& loadFile) {
