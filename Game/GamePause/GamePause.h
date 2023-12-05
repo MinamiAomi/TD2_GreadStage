@@ -4,12 +4,14 @@
 #include "Math/Color.h"
 #include <vector>
 #include <string>
+#include <array>
 
 class GamePause {
 public:
 	void Initialize(const uint32_t& num);
 	void Update();
 	void SetDraw(const bool& flag);
+	void MoonHudUpdate();
 
 private:
 	std::vector<std::unique_ptr<Sprite>> texture_;
@@ -38,6 +40,13 @@ private:
 	TextureParam textureParam_[TextureName::MaxTexture];
 	std::unique_ptr<Sprite> optionText_;
 	TextureParam optionParam_;
+
+	struct ScaleTrans {
+		Vector2 scale_;
+		Vector2 translate_;
+	};
+	std::array<ScaleTrans,4> hudPosition_;
+	std::array<ScaleTrans, 4> pausePosition_;
 
 	bool isSelected_ = false; // true : ステージセレクトへ / false : リスタート
 	bool preIsSelected_ = false;
