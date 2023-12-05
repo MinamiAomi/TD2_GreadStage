@@ -41,10 +41,10 @@ private: //	メンバ変数
     Vector3 destinationTranslate_;
     Quaternion destinationRotate_;
     float followDelay_ = 0.95f;
-    float distance_ = 15.0f;
+    float distance_ = 16.5f;
 
     // 度数法(pitch, yaw)
-    Vector2 cameraSpeed_ = { 2.0f,2.0f };
+    Vector2 cameraSpeed_ = { 1.5f,1.5f };
     // pitch角の制限(up, down)
     Vector2 pitchAngleLimits_ = { 60.0f, -50.0f };
 
@@ -56,8 +56,6 @@ private: //	メンバ変数
     bool isLeaved_ = true;
     bool preIsLeaved_ = true;
     bool isTitleMove_ = false;
-
-    Vector2 upDown = Vector2::zero;
 
     // ステージのゴールからのカメラ移動用フラグ
     bool isStageMove_ = false;

@@ -36,14 +36,13 @@ void CameraAnimation::Initialize() {
     destinationRotate_ = transform.rotate;
 
     offset_ = Vector3{ 0.0f, 2.0f, 0.0f };
-    upDown.x = -70.0f;
-    upDown.y = 70.0f;
 
     isStageMove_ = true;
 }
 
 void CameraAnimation::Update() {
-    
+    DrawImGui();
+
     isStageMove_ ? StageMoveUpdate() : NormalUpdate();
     
     TransUpdate();
@@ -59,7 +58,9 @@ void CameraAnimation::DrawImGui() {
     ImGui::DragFloat3("Position", &offset_.x, 0.1f);
     //ImGui::DragFloat2("rotate", &angles_.x, 0.1f, -360.0f, 360.0f);
     //transform.rotate = Quaternion::MakeFromEulerAngle(Vector3(angles_.x, angles_.y, 0.0f) * Math::ToRadian);
-    ImGui::DragFloat2("Limit Down:Up", &upDown.x, 0.01f);
+    ImGui::DragFloat("Delay", &followDelay_, 0.01f);
+    ImGui::DragFloat("Distance", &distance_, 0.01f);
+    ImGui::DragFloat2("Speed", &cameraSpeed_.x, 0.01f);
     ImGui::End();
 #endif // _DEBUG
 }
@@ -80,6 +81,9 @@ void CameraAnimation::UpdateInput() {
     if (input->IsKeyPressed(DIK_RIGHTARROW)) { viewMove.x += 1.0f; }
     if (input->IsKeyPressed(DIK_UPARROW)) { viewMove.y += 1.0f; }
     if (input->IsKeyPressed(DIK_DOWNARROW)) { viewMove.y += -1.0f; }
+
+    // ジャンプフラグがあった時に下を向く
+    //if(gamepad.Gamepad.wButtons & XINPUT_GAMEPAD_A) { viewMove.x += 1.0f; }
 
     if (std::abs(gamepad.Gamepad.sThumbRY) > XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) {
         viewMove.x = 0.0f;
@@ -127,7 +131,6 @@ void CameraAnimation::NormalUpdate() {
         info.nearest = 1.0f;
     }
     transform.translate = lastTargetPosition_ + diff * info.nearest;
-
     if (rayCastResult) {
         auto nearestInfo = CollisionManager::GetInstance()->NearestCollider(transform.translate, CollisionConfig::Stage);
         transform.translate += nearestInfo.normal * 0.5f;
