@@ -21,6 +21,7 @@ private:
 
     void NormalUpdate();
     void StageMoveUpdate();
+    void ResetMove();
 
 public: // ゲッター
     const std::shared_ptr<Camera>& GetCamera() { return camera_; }
@@ -97,7 +98,7 @@ private:
 
     bool isDuringReset_ = false;
     bool skipFlg_ = false;
-
+    bool easeChangeFlag_ = true;
 public:
     void SetEaseParameter(const EaseParameter& param) { easeParameter_ = param; }
     bool GetStageMove() const { return isStageMove_; }
