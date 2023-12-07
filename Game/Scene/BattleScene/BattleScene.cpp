@@ -103,6 +103,7 @@ void BattleScene::OnFinalize() {
 void BattleScene::NormalUpdate() {
 	auto trans = Transition::GetInstance();
 	pause_->SetDraw(false);
+	pause_->MoonHudUpdate();
 
 	stage_->Update();
 	if (!trans->GetIsTransition() && !camera_->GetStageMove()) {
