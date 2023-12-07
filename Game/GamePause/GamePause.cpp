@@ -20,9 +20,9 @@ void GamePause::Initialize(const uint32_t& num) {
 	hudPosition_.at(3) = {Vector2(100.0f,100.0f),Vector2(1175.0f,655.0f)};
 
 	pausePosition_.at(0) = {Vector2(570.0f,170.0f),Vector2(647.0f,390.0f)};
-	pausePosition_.at(1) = {Vector2(160.0f,160.0f),Vector2(502.0f,390.0f)};
-	pausePosition_.at(2) = {Vector2(160.0f,160.0f),Vector2(675.0f,390.0f)};
-	pausePosition_.at(3) = {Vector2(160.0f,160.0f),Vector2(848.0f,390.0f)};
+	pausePosition_.at(1) = {Vector2(160.0f,160.0f),Vector2(475.0f,390.0f)};
+	pausePosition_.at(2) = {Vector2(160.0f,160.0f),Vector2(645.0f,390.0f)};
+	pausePosition_.at(3) = {Vector2(160.0f,160.0f),Vector2(820.0f,390.0f)};
 
 	textureParam_[StageSelect] = { "StageSelect",{900.0f,256.0f},0.0f,{425.0f,73.0f},2u,Vector4(0.02f,0.63f,0.01f,1.0f),true };
 	textureParam_[Restart] = { "Restart",{900.0f,256.0f},0.0f,{325.0f,175.0f},2u,Vector4(0.02f,0.63f,0.01f,1.0f),true };
@@ -30,13 +30,13 @@ void GamePause::Initialize(const uint32_t& num) {
 	textureParam_[Controller] = { "Controller",{525.0f,290.0f},0.0f,{1020.0f,110.0f},2u,Vector4::one,true };
 	textureParam_[BackGround] = { "BackGround",{1280.0f,720.0f},0.0f,{640.0f,360.0f},1u,Color::Convert(0xffffffaa),true };
 	//textureParam_[Frame] = { "Frame",{570.0f,170.0f},0.0f,{647.0f,390.0f},1u,Vector4::one,true };
-	textureParam_[Frame] = { "Frame",hudPosition_.at(0).scale_,0.0f,hudPosition_.at(0).translate_,1u,Vector4::one,true};
+	textureParam_[Frame] = { "Frame",pausePosition_.at(0).scale_,0.0f,pausePosition_.at(0).translate_,1u,Vector4::one,true};
 	//textureParam_[Moon1] = { "Moon",{160.0f,160.0f},0.0f,{502.0f,390.0f},1u,Vector4::one,false };
-	textureParam_[Moon1] = { "Moon",hudPosition_.at(1).scale_,0.0f,hudPosition_.at(1).translate_,1u,Vector4::one,false };
+	textureParam_[Moon1] = { "Moon",pausePosition_.at(1).scale_,0.0f,pausePosition_.at(1).translate_,1u,Vector4::one,false };
 	//textureParam_[Moon2] = { "Moon",{160.0f,160.0f},0.0f,{675.0f,390.0f},1u,Vector4::one,false };
-	textureParam_[Moon2] = { "Moon",hudPosition_.at(2).scale_,0.0f,hudPosition_.at(2).translate_,1u,Vector4::one,false };
+	textureParam_[Moon2] = { "Moon",pausePosition_.at(2).scale_,0.0f,pausePosition_.at(2).translate_,1u,Vector4::one,false };
 	//textureParam_[Moon3] = { "Moon",{160.0f,160.0f},0.0f,{848.0f,390.0f},1u,Vector4::one,false };
-	textureParam_[Moon3] = { "Moon",hudPosition_.at(3).scale_,0.0f,hudPosition_.at(3).translate_,1u,Vector4::one,false };
+	textureParam_[Moon3] = { "Moon",pausePosition_.at(3).scale_,0.0f,pausePosition_.at(3).translate_,1u,Vector4::one,false };
 
 	for (uint32_t index = 0; index < TextureName::MaxTexture; index++) {
 		auto& sprite = texture_.emplace_back(std::make_unique<Sprite>());

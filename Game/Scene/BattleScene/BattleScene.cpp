@@ -114,6 +114,7 @@ void BattleScene::NormalUpdate() {
 	CollisionManager::GetInstance()->CheckCollision();
 	player_->PostCollisionUpdate();
 	// カメラの更新
+	camera_->SetReseted(player_->GetReseted());
 	camera_->Update();
 
 	//float playerToCameraDistance = (player_->transform.worldMatrix.GetTranslate() - camera_->transform.worldMatrix.GetTranslate()).Length();
