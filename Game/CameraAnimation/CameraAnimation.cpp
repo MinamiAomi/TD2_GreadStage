@@ -268,20 +268,26 @@ void CameraAnimation::ResetMove() {
     // 初期設定
     if (easeChangeFlag_) {
         easeStart_.pos = transform.translate;
+
+        easeStart_.angle = Vector2(0.0f,0.0f);
         easeStart_.angle = angles_;
         if (target_) {
             // 注視点
             Vector3 localTarget = offset_;
-            Vector3 diff = -transform.rotate.GetForward() * distance_;
+            Vector3 diff = Vector3(0.0f,0.0f,1.0f) * distance_;
             easeEnd_.pos = localTarget * target_->worldMatrix + diff;
             destinationTargetPosition_ = easeEnd_.pos - diff;
             lastTargetPosition_ = easeEnd_.pos - diff;
 
             easeEnd_.angle = Vector2(0.0f, 0.0f);
-            auto localRotate = Quaternion::MakeFromEulerAngle(Vector3(angles_.x, angles_.y, 0.0f) * Math::ToRadian);
-            //destinationRotate_ = target_->rotate * localRotate;
+            auto localRotate = Quaternion::MakeFromEulerAngle(Vector3(easeEnd_.angle.x, easeEnd_.angle.y, 0.0f) * Math::ToRadian);
+            destinationRotate_ = target_->rotate * localRotate;
         }
-        easeCount_ = 0u;
+        easeStart_.pos = easeEnd_.pos;
+        easeStart_.angle = easeEnd_.angle;
+        easeCount_ = 1.0f;
+
+        //easeCount_ = 0.0f;
         easeChangeFlag_ = false;
         easeSpeed_ = 1.0f / 30.0f;
     }
@@ -290,8 +296,8 @@ void CameraAnimation::ResetMove() {
     easeCount_ = std::clamp(easeCount_, 0.0f, 1.0f);
     float T = Easing::EaseOutSine(easeCount_);
     transform.translate = Vector3::Lerp(T, easeStart_.pos, easeEnd_.pos);
-    //angles_ = Vector2::Lerp(T, easeStart_.angle, easeEnd_.angle);
-    //transform.rotate = Quaternion::MakeFromEulerAngle(Vector3(angles_.x, angles_.y, 0.0f) * Math::ToRadian);
+    angles_ = Vector2::Lerp(T, easeStart_.angle, easeEnd_.angle);
+    transform.rotate = Quaternion::MakeForYAxis(angles_.y) * Quaternion::MakeForXAxis(angles_.x);
 }
 
 
