@@ -190,7 +190,12 @@ bool CameraAnimation::EaseUpdate() {
 }
 
 void CameraAnimation::StageMoveUpdate() {
-    
+    auto& input = Input::GetInstance()->GetXInputState();
+    auto& preInput = Input::GetInstance()->GetPreXInputState();
+    if (input.Gamepad.wButtons & XINPUT_GAMEPAD_A && !(preInput.Gamepad.wButtons & XINPUT_GAMEPAD_A)) {
+        skipFlg_ = true;
+    }
+
     auto& ease = easeParameter_;
     // 初期化段階
     if (behaviorRequest_) {
@@ -230,6 +235,7 @@ void CameraAnimation::StageMoveUpdate() {
         }
         behaviorRequest_ = std::nullopt;
     }
+    if (skipFlg_) { easeSpeed_ = 0.2f; }
 
     // 更新
     switch (nowFase_) {
