@@ -50,7 +50,7 @@ void Player::Initialize() {
     upperCollider_->SetCollisionMask(~CollisionConfig::Player);
 
     // パラメーター初期化
-    moveSpeed_ = 0.15f;
+    moveSpeed_ = 0.151f;
     jumpParameters_.isJumped = false;
     jumpParameters_.fallSpeed = 0.0f;
     jumpParameters_.jumpPower = 0.5f;
@@ -274,13 +274,20 @@ void Player::JumpUpdate() {
     Vector3 gravityDirection = transform.rotate.GetUp();
 
     auto animeType = playerModel_.GetAnimationType();
+    //auto nextAnimeType = playerModel_.GetNextAnimationType();
     if (!jumpParameters_.isJumped &&
         (input->IsKeyTrigger(DIK_SPACE) ||
             xInput.Gamepad.wButtons & XINPUT_GAMEPAD_A && !(preXInput.Gamepad.wButtons & XINPUT_GAMEPAD_A)) &&
-        animeType != PlayerModel::kLanding && animeType != PlayerModel::kBlend) {
+        animeType != PlayerModel::kLanding && 
+        animeType != PlayerModel::kBlend) {
         jumpParameters_.isJumped = true;
         jumpParameters_.fallSpeed = jumpParameters_.jumpPower;
-        jumpParameters_.direction = modelTrans_.worldMatrix.ApplyRotation(Vector3::unitZ).Normalized();
+        
+        jumpParameters_.direction = moveDirection_;
+        if (moveDirection_ == Vector3::zero) {
+            jumpParameters_.direction = modelTrans_.worldMatrix.ApplyRotation(Vector3::unitZ).Normalized();
+        }
+        
         jumpParameters_.jumpHeight = Vector3::Dot(transform.translate, gravityDirection);
 
         playerModel_.PlayAnimation(PlayerModel::kJump, false, true, 30);

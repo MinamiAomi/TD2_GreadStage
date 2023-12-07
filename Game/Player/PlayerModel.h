@@ -39,6 +39,7 @@ public:
     void StopAnimation();
     bool IsPlayingAnimation() { return animation_.has_value(); }
     const std::optional<AnimationType>& GetAnimationType() const { return animation_; }
+    const AnimationType& GetNextAnimationType() const { return blendAnimationParameter_.nextAnimationType; }
 
 private:
     struct TransformParameter {
