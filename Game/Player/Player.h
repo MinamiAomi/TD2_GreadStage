@@ -83,7 +83,7 @@ private: // メンバ変数
     size_t landingSoundHandle_;
 
     uint32_t resetCoolTime_ = 0u;
-    const uint32_t kMaxCoolTime_ = 60u;
+    const uint32_t kMaxCoolTime_ = 30u;
     bool isDuringReset_ = false;
 
 private: // メンバ関数

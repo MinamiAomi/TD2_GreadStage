@@ -43,7 +43,8 @@ void CameraAnimation::Initialize() {
 void CameraAnimation::Update() {
     DrawImGui();
 
-    isStageMove_ ? StageMoveUpdate() : NormalUpdate();
+    if (!isDuringReset_) { easeChangeFlag_ = true; }
+    isStageMove_ ? StageMoveUpdate() : isDuringReset_ ? ResetMove() : NormalUpdate();
     
     TransUpdate();
 }
@@ -55,8 +56,8 @@ void CameraAnimation::Restart() {
 void CameraAnimation::DrawImGui() {
 #ifdef _DEBUG
     ImGui::Begin("camera");
-    ImGui::DragFloat3("Position", &offset_.x, 0.1f);
-    //ImGui::DragFloat2("rotate", &angles_.x, 0.1f, -360.0f, 360.0f);
+    ImGui::DragFloat3("Position", &transform.translate.x, 0.1f);
+    ImGui::DragFloat2("rotate", &angles_.x, 0.1f, -360.0f, 360.0f);
     //transform.rotate = Quaternion::MakeFromEulerAngle(Vector3(angles_.x, angles_.y, 0.0f) * Math::ToRadian);
     ImGui::DragFloat("Delay", &followDelay_, 0.01f);
     ImGui::DragFloat("Distance", &distance_, 0.01f);
@@ -261,6 +262,36 @@ void CameraAnimation::StageMoveUpdate() {
         break;
     }
 
+}
+
+void CameraAnimation::ResetMove() {
+    // 初期設定
+    if (easeChangeFlag_) {
+        easeStart_.pos = transform.translate;
+        easeStart_.angle = angles_;
+        if (target_) {
+            // 注視点
+            Vector3 localTarget = offset_;
+            Vector3 diff = -transform.rotate.GetForward() * distance_;
+            easeEnd_.pos = localTarget * target_->worldMatrix + diff;
+            destinationTargetPosition_ = easeEnd_.pos - diff;
+            lastTargetPosition_ = easeEnd_.pos - diff;
+
+            easeEnd_.angle = Vector2(0.0f, 0.0f);
+            auto localRotate = Quaternion::MakeFromEulerAngle(Vector3(angles_.x, angles_.y, 0.0f) * Math::ToRadian);
+            //destinationRotate_ = target_->rotate * localRotate;
+        }
+        easeCount_ = 0u;
+        easeChangeFlag_ = false;
+        easeSpeed_ = 1.0f / 30.0f;
+    }
+
+    easeCount_ += easeSpeed_;
+    easeCount_ = std::clamp(easeCount_, 0.0f, 1.0f);
+    float T = Easing::EaseOutSine(easeCount_);
+    transform.translate = Vector3::Lerp(T, easeStart_.pos, easeEnd_.pos);
+    //angles_ = Vector2::Lerp(T, easeStart_.angle, easeEnd_.angle);
+    //transform.rotate = Quaternion::MakeFromEulerAngle(Vector3(angles_.x, angles_.y, 0.0f) * Math::ToRadian);
 }
 
 
