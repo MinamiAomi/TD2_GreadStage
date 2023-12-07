@@ -146,7 +146,7 @@ void Player::PostCollisionUpdate() {
 
         Vector3 lookDir = transform.rotate.Conjugate() * moveDirection_;
         if (Cross(lookDir, Vector3::up) != Vector3::zero) {
-            modelTrans_.rotate = Quaternion::Slerp(0.1f, modelTrans_.rotate, Quaternion::MakeLookRotation(lookDir));
+            modelTrans_.rotate = Quaternion::Slerp(0.2f, modelTrans_.rotate, Quaternion::MakeLookRotation(lookDir));
         }
     }
 
@@ -276,7 +276,7 @@ void Player::JumpUpdate() {
         animeType != PlayerModel::kLanding && animeType != PlayerModel::kBlend) {
         jumpParameters_.isJumped = true;
         jumpParameters_.fallSpeed = jumpParameters_.jumpPower;
-        jumpParameters_.direction = moveDirection_;
+        jumpParameters_.direction = modelTrans_.worldMatrix.ApplyRotation(Vector3::unitZ).Normalized();
         jumpParameters_.jumpHeight = Vector3::Dot(transform.translate, gravityDirection);
 
         playerModel_.PlayAnimation(PlayerModel::kJump, false, true, 30);
