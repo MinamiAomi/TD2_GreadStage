@@ -131,9 +131,11 @@ void CameraAnimation::NormalUpdate() {
         info.nearest = 1.0f;
     }
     transform.translate = lastTargetPosition_ + diff * info.nearest;
-    if (rayCastResult) {
-        auto nearestInfo = CollisionManager::GetInstance()->NearestCollider(transform.translate, CollisionConfig::Stage);
-        transform.translate += nearestInfo.normal * 0.5f;
+    if (!isDuringReset_) {
+        if (rayCastResult) {
+            auto nearestInfo = CollisionManager::GetInstance()->NearestCollider(transform.translate, CollisionConfig::Stage);
+            transform.translate += nearestInfo.normal * 0.5f;
+        }
     }
 }
 

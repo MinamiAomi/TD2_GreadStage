@@ -27,6 +27,7 @@ public:
 public: // ゲッター
     Transform GetTransform() { return transform; }
     bool GetCleared() { return isCleared_; }
+    bool GetReseted() { return isDuringReset_; }
 
 public: // セッター
     void SetCamera(const std::shared_ptr<CameraAnimation>& camera) { camera_ = camera; }
@@ -81,6 +82,10 @@ private: // メンバ変数
     size_t jumpSoundHandle_;
     size_t landingSoundHandle_;
 
+    uint32_t resetCoolTime_ = 0u;
+    const uint32_t kMaxCoolTime_ = 60u;
+    bool isDuringReset_ = false;
+
 private: // メンバ関数
     // 座標更新
     void UpdateTransform();
@@ -100,6 +105,8 @@ private: // メンバ関数
     void DrawImGui();
 
     void FallTimer();
+
+    void ResetTimer();
 
     void PlayerReset();
 

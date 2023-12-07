@@ -95,9 +95,11 @@ private:
     float easeSpeed_ = 0.0f;
     bool EaseUpdate();
 
+    bool isDuringReset_ = false;
 public:
     void SetEaseParameter(const EaseParameter& param) { easeParameter_ = param; }
     bool GetStageMove() const { return isStageMove_; }
     static bool nowTitle_;
+    void SetReseted(const bool& flag) { isDuringReset_ = flag; }
 
 };
