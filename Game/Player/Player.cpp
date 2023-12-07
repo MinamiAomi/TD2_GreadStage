@@ -292,7 +292,7 @@ void Player::JumpUpdate() {
         auto jumpPlayHandle = Audio::GetInstance()->SoundPlayWave(jumpSoundHandle_);
         Audio::GetInstance()->SetValume(jumpPlayHandle, 1.2f);
 
-        fallCount_ = 0u;
+        //fallCount_ = 0u;
     }
 
     jumpParameters_.fallSpeed -= jumpParameters_.gravity;
@@ -403,8 +403,9 @@ void Player::Landing() {
 void Player::FallTimer() {
     fallCount_++;
     if (fallCount_ >= kMaxCount_) {
-        Landing();
+        //Landing();
         PlayerReset();
+        fallCount_ = 0u;
     }
 }
 
@@ -418,10 +419,12 @@ void Player::ResetTimer() {
 
 void Player::PlayerReset() {
     jumpParameters_.isJumped = false;
-    transform.translate = respawnPos_;
+    Vector3 resP = respawnPos_;
+    resP.y += 10.0f;
+    transform.translate = resP;
     transform.rotate = respawnRot_;
-    jumpParameters_.fallSpeed = 0.0f;
-    playerModel_.PlayAnimation(PlayerModel::kWait, true);
+    //jumpParameters_.fallSpeed = 0.0f;
+    //playerModel_.PlayAnimation(PlayerModel::kWait, true);
     if (walkPlayHandle_ != (size_t)-1) {
         Audio::GetInstance()->SoundPlayLoopEnd(walkPlayHandle_);
         walkPlayHandle_ = (size_t)-1;
