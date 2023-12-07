@@ -12,6 +12,7 @@ public:
 	void Update();
 	void SetDraw(const bool& flag);
 	void MoonHudUpdate();
+	void PoseDraw(const bool& flag) { optionText_->SetIsActive(flag); }
 
 private:
 	std::vector<std::unique_ptr<Sprite>> texture_;

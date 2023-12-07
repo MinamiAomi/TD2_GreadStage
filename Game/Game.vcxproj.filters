@@ -17,9 +17,6 @@
     <ClCompile Include="Editor\CreateStageScene\CreateStageScene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\SelectScene\SelectScene.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
     <ClCompile Include="Scene\TitleScene\TitleScene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
@@ -79,9 +76,6 @@
       <Filter>Stage\Box</Filter>
     </ClInclude>
     <ClInclude Include="Editor\CreateStageScene\CreateStageScene.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\SelectScene\SelectScene.h">
       <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="Scene\TitleScene\TitleScene.h">
