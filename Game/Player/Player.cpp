@@ -425,7 +425,7 @@ void Player::ResetTimer() {
 }
 
 void Player::PlayerReset() {
-    jumpParameters_.isJumped = false;
+    //jumpParameters_.isJumped = false;
     Vector3 resP = respawnPos_;
     resP.y += 10.0f;
     transform.translate = resP;
@@ -436,5 +436,6 @@ void Player::PlayerReset() {
         Audio::GetInstance()->SoundPlayLoopEnd(walkPlayHandle_);
         walkPlayHandle_ = (size_t)-1;
     }
+    jumpParameters_.jumpHeight = 100.0f;
     isDuringReset_ = true;
 }
