@@ -35,13 +35,13 @@ void TitleScene::OnInitialize() {
 	stage_->Load("StageSelect");
 	stage_->SetModel("StageSelect");
 
-	operation_ = std::make_unique<Sprite>();
+	/*operation_ = std::make_unique<Sprite>();
 	operation_->SetTexture(ResourceManager::GetInstance()->FindTexture("Operation"));
 	operation_->SetTexcoordRect({ 0.0f,0.0f }, { operation_->GetTexture()->GetWidth(), operation_->GetTexture()->GetHeight() });
 	operation_->SetScale(Vector2(640.0f,360.0f));
 	operation_->SetPosition(Vector2(960.0f,180.0f));
 	operation_->SetDrawOrder(1);
-	operation_->SetIsActive(true);
+	operation_->SetIsActive(true);*/
 }
 
 void TitleScene::OnUpdate() {
@@ -89,10 +89,12 @@ void TitleScene::NormalUpdate() {
 	if (leavingTime_ >= kMaxTime) {
 		camera_->SetTitleMove(true);
 		CameraAnimation::nowTitle_ = true;
+		pause_->PoseDraw(false);
 	}
 	else {
 		camera_->SetTitleMove(false);
 		CameraAnimation::nowTitle_ = true;
+		pause_->PoseDraw(true);
 	}
 
 	// カメラの更新
