@@ -299,7 +299,7 @@ void Player::JumpUpdate() {
         auto jumpPlayHandle = Audio::GetInstance()->SoundPlayWave(jumpSoundHandle_);
         Audio::GetInstance()->SetValume(jumpPlayHandle, 1.2f);
 
-        //fallCount_ = 0u;
+        fallCount_ = 0u;
     }
 
     jumpParameters_.fallSpeed -= jumpParameters_.gravity;
