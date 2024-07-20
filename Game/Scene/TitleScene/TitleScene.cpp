@@ -19,6 +19,7 @@ void TitleScene::OnInitialize() {
 	stage_ = std::make_shared<Stage>();
 	titleText_ = std::make_shared<TitleText>();
 	pause_ = std::make_unique<GamePause>();
+	titleController_ = std::make_unique<Sprite>();
 
 	// 初期化
 	player_->Initialize();
@@ -26,6 +27,14 @@ void TitleScene::OnInitialize() {
 	stage_->Initialize();
 	titleText_->Initialize();
 	pause_->Initialize(0);
+
+	titleController_->SetTexture(ResourceManager::GetInstance()->FindTexture("Controller"));
+	titleController_->SetTexcoordRect({ 0.0f,0.0f }, { titleController_->GetTexture()->GetWidth(), titleController_->GetTexture()->GetHeight() });
+	titleController_->SetScale({ titleController_->GetTexture()->GetWidth() / 4, titleController_->GetTexture()->GetHeight() / 4 });
+	titleController_->SetPosition({ 1100.0f,90.0f });
+	titleController_->SetDrawOrder(2u);
+	titleController_->SetIsActive(true);
+
 
 	// セット
 	stage_->SetPlayerPtr(player_);
@@ -90,11 +99,13 @@ void TitleScene::NormalUpdate() {
 		camera_->SetTitleMove(true);
 		CameraAnimation::nowTitle_ = true;
 		pause_->PoseDraw(false);
+		titleController_->SetIsActive(true);
 	}
 	else {
 		camera_->SetTitleMove(false);
 		CameraAnimation::nowTitle_ = true;
 		pause_->PoseDraw(true);
+		titleController_->SetIsActive(false);
 	}
 
 	// カメラの更新

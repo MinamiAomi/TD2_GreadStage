@@ -21,6 +21,7 @@ private: // メンバ変数
 	std::shared_ptr<Stage> stage_;
 	std::shared_ptr<TitleText> titleText_;
 	std::unique_ptr<GamePause> pause_;
+	std::unique_ptr<Sprite> titleController_;
 	bool isPaused_ = false; // true : ポーズ中/false : 通常
 
 	//std::unique_ptr<Sprite> operation_;
