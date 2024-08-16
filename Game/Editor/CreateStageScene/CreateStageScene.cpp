@@ -134,7 +134,7 @@ void CreateStageScene::DrawImGui() {
         if (ImGui::BeginMenu("Boxes")) {
             if (ImGui::Button("Create")) {
                 auto box = std::make_shared<Box>();
-                stage_->Add(box);
+                stage_->Add(box, false);
             }
             // 要素数確認
             ImGui::Text("ElementCount = %d", stage_->GetBoxes().size());

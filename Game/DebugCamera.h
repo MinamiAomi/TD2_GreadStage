@@ -11,6 +11,7 @@ public:
 	void SetCamera();
 
 public: // ゲッター
+	void SetRotate(const Quaternion& rotate) { eulerAngle_ = rotate.EulerAngle(); }
 	const std::shared_ptr<Transform>& GetTransform() { return transform_; }
 	const std::shared_ptr<Camera>& GetCamera() { return camera_; }
 

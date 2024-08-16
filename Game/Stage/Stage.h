@@ -20,7 +20,7 @@ public:
     void Initialize();
     void Update();
 
-    void Add(const std::shared_ptr<Box>& box);
+    void Add(const std::shared_ptr<Box>& box, bool drawModel = false);
     void Add(const std::shared_ptr<RequiredItem>& item);
     void Add(const std::shared_ptr<CollectionObject>& collect);
     void Add(const std::shared_ptr<Entrance>& entrance);

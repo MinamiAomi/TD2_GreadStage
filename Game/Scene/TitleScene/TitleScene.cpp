@@ -22,6 +22,9 @@ void TitleScene::OnInitialize() {
 	titleController_ = std::make_unique<Sprite>();
 
 	// 初期化
+#ifdef _DEBUG
+	debugCamera_.Initialize();
+#endif // _DEBUG
 	player_->Initialize();
 	camera_->Initialize();
 	stage_->Initialize();
@@ -74,6 +77,20 @@ void TitleScene::OnUpdate() {
 
 	isPaused_ ? PauseUpdate() : NormalUpdate();
 
+	ImGui::Begin("test");
+	if (ImGui::Checkbox("Use DebugCamera", &useDebugCamera_)) {
+		if (useDebugCamera_) {
+			debugCamera_.GetTransform()->translate = camera_->GetCamera()->GetPosition();
+			debugCamera_.GetTransform()->rotate = camera_->GetCamera()->GetRotate();
+			debugCamera_.Update();
+			debugCamera_.SetCamera();
+		}
+		else {
+			camera_->SetCamera();
+		}
+	}
+	ImGui::End();
+
 }
 
 void TitleScene::NormalUpdate() {
@@ -110,6 +127,11 @@ void TitleScene::NormalUpdate() {
 
 	// カメラの更新
 	camera_->TitleUpdate();
+#ifdef _DEBUG
+	if (useDebugCamera_) {
+		debugCamera_.Update();
+	}
+#endif // _DEBUG
 
 	if (trans->Update()) {
 		// シーンのシングルトンの取得

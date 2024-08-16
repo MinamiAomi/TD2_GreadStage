@@ -90,8 +90,8 @@ void Stage::Update() {
     starrySky_->Update();
 }
 
-void Stage::Add(const std::shared_ptr<Box>& box) {
-    boxes_.emplace_back(box)->Initialize();
+void Stage::Add(const std::shared_ptr<Box>& box, bool drawModel) {
+    boxes_.emplace_back(box)->Initialize(drawModel);
 }
 
 void Stage::Add(const std::shared_ptr<RequiredItem>& item) {
@@ -140,7 +140,7 @@ void Stage::Load(const std::filesystem::path& loadFile) {
         box->transform.translate = trans;
         box->transform.rotate = rot;
         box->transform.scale = scal;
-        box->Initialize();
+        box->Initialize(false);
         std::string texture = global->GetStringValue(selectName, "BoxNumber : " + std::to_string(i) + " : Texture");
         if (!texture.empty()) {
             box->SetTexture(ResourceManager::GetInstance()->FindTexture(texture));

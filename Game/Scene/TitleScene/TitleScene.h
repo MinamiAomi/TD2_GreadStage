@@ -7,6 +7,7 @@
 #include "Game/Stage/Stage.h"
 #include "Game/Stage/TitleText.h"
 #include "Game/GamePause/GamePause.h"
+#include "Game/DebugCamera.h"
 
 class TitleScene : public BaseScene {
 public:
@@ -23,6 +24,12 @@ private: // メンバ変数
 	std::unique_ptr<GamePause> pause_;
 	std::unique_ptr<Sprite> titleController_;
 	bool isPaused_ = false; // true : ポーズ中/false : 通常
+
+#ifdef _DEBUG
+	DebugCamera debugCamera_;
+	bool useDebugCamera_ = false;
+#endif // _DEBUG
+
 
 	//std::unique_ptr<Sprite> operation_;
 

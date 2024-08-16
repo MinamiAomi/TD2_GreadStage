@@ -3,13 +3,13 @@
 #include "Graphics/ImGuiManager.h"
 #include "CollisionConfig.h"
 
-void Box::Initialize() {
+void Box::Initialize(bool drawModel) {
     SetName("Box");
     model_ = std::make_unique<ModelInstance>();
     collider_ = std::make_unique<BoxCollider>();
 
     model_->SetModel(ResourceManager::GetInstance()->FindModel("Box"));
-    model_->SetIsActive(false);
+    model_->SetIsActive(drawModel);
 
     //rotate_ = Vector3(rotate.x, rotate.y, rotate.z) * Math::ToRadian;
 

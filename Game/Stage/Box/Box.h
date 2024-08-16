@@ -11,7 +11,7 @@ class Box : public GameObject {
 public:
     ~Box() {}
 
-    void Initialize();
+    void Initialize(bool drawModel = false);
     void Update();
 
     void SetTexture(const std::shared_ptr<Texture>& texture);
