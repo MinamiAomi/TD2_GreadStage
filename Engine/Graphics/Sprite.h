@@ -6,6 +6,7 @@
 #include "Core/TextureResource.h"
 
 #include "Math/MathUtils.h"
+#include <list>
 
 class Texture {
 public:
