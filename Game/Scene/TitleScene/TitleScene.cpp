@@ -77,6 +77,8 @@ void TitleScene::OnUpdate() {
 
 	isPaused_ ? PauseUpdate() : NormalUpdate();
 
+
+#ifdef _DEBUG
 	ImGui::Begin("test");
 	if (ImGui::Checkbox("Use DebugCamera", &useDebugCamera_)) {
 		if (useDebugCamera_) {
@@ -90,6 +92,7 @@ void TitleScene::OnUpdate() {
 		}
 	}
 	ImGui::End();
+#endif // _DEBUG
 
 }
 
