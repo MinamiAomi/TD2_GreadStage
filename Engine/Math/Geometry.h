@@ -19,7 +19,7 @@ namespace Math {
 
     struct Sphere {
         Vector3 center;
-        float radius;
+        float radius = 0.5f;
     };
 
     struct AABB {
@@ -79,8 +79,8 @@ namespace Math {
 
     struct OBB {
         Vector3 center;
-        Vector3 orientations[3];
-        Vector3 size;
+        Vector3 orientations[3] = { Vector3::unitX, Vector3::unitY, Vector3::unitZ };
+        Vector3 size = Vector3::one;
     };
 
     struct Line {
